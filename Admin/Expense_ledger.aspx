@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Expense_ledger.aspx.cs" Inherits="Admin_Expense_ledger" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" CodeFile="Expense_ledger.aspx.cs" Inherits="Admin_Expense_ledger" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -152,6 +152,8 @@
         </style>
     </head>
     <body>
+        <p>
+            </p>
         <!-- Static navbar -->
  <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
@@ -534,12 +536,10 @@
   </ContentTemplate>
     <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="GridView1"  />
-                 <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
+              
                                </Triggers>
     </asp:UpdatePanel>
-
-
-
+    
      <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
         <asp:Button ID="Button15" runat="server" Text="Button" style="display:none"  />
@@ -617,21 +617,26 @@
                   </Triggers>
 
                            </asp:UpdatePanel>
-                           <asp:Button ID="Button1" runat="server" 
+                        
+                       <asp:Button ID="Button1" runat="server" 
            Text="Export to excel" onclick="Button1_Click"></asp:Button>
+         
+                           
+</div>
 
 
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
                 </div>
                 </div>
                 </div>
                 </div>
                 
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+               
                    
                   
                            

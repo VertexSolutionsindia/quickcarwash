@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Billing_entry.aspx.cs" Inherits="Admin_Billing_entry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" CodeFile="Billing_entry.aspx.cs" Inherits="Admin_Billing_entry" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
@@ -692,7 +692,7 @@
 
  <div class="col-sm-4">
  <div class="col-sm-12">
-          <div class="form-group"><label class="col-lg-5 control-label">Mobile No : </label>
+          <div class="form-group"><label class="col-lg-5 control-label"Mobile No : </label>
                               
                                     <div class="col-lg-7">
                                      <asp:UpdatePanel ID="UpdatePanel18" runat="server">
@@ -844,7 +844,7 @@
        </asp:GridView>
   </ContentTemplate>
     <Triggers>
-                 <asp:AsyncPostBackTrigger ControlID="GridView1"  />
+                 <asp:AsyncPostBackTrigger ControlID="GridView1" />
                  <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
                  
                    <asp:AsyncPostBackTrigger ControlID="Button16" EventName="Click"  />
@@ -855,13 +855,13 @@
                 </Triggers>
     </asp:UpdatePanel>
 
-
+    <br /><asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+      <asp:Button ID="Button3" runat="server" Text="Button" 
+        onclick="Button3_Click"></asp:Button>
 
      <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
-       <asp:Button ID="Button3" runat="server" Text="Export To Excel" 
-           onclick="Button5_Click"></asp:Button>
+    
        
         <asp:Button ID="Button15" runat="server" Text="Button" style="display:none" />
   

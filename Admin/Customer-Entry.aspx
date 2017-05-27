@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Customer-Entry.aspx.cs" Inherits="Admin_Customer_Entry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false"  CodeFile="Customer-Entry.aspx.cs" Inherits="Admin_Customer_Entry" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -833,13 +833,14 @@
                 </Triggers>
     </asp:UpdatePanel>
 
-
-
+     
+      <br />
+              <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+              <asp:Button ID="Button5" runat="server" Text="Export To Excel"  onclick="Button5_Click"></asp:Button>
      <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
-       <asp:Button ID="Button5" runat="server" Text="Export To Excel" 
-           onclick="Button5_Click"></asp:Button>
+ 
+     
        
         <asp:Button ID="Button15" runat="server" Text="Button" style="display:none" />
   
