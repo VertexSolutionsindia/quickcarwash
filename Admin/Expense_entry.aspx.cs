@@ -358,15 +358,17 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-
+        int value = 0;
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("insert into Expence_Entry values(@Exp_Id,@date,@ExpName_Id,@Expense_Name,@Com_Id,@Amount)", CON);
+        SqlCommand cmd = new SqlCommand("insert into Expence_Entry values(@Exp_Id,@date,@ExpName_Id,@Expense_Name,@Com_Id,@Amount,@status,@value)", CON);
         cmd.Parameters.AddWithValue("@Exp_Id", Label1.Text);
         cmd.Parameters.AddWithValue("@date", TextBox8.Text);
         cmd.Parameters.AddWithValue("@ExpName_Id", DropDownList3.SelectedItem.Value);
         cmd.Parameters.AddWithValue("@Expense_Name", DropDownList3.SelectedItem.Text);
         cmd.Parameters.AddWithValue("@Com_Id", company_id);
         cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
+        cmd.Parameters.AddWithValue("@status", "Expense-" + DropDownList3.SelectedItem.Text);
+        cmd.Parameters.AddWithValue("@value", value);
         CON.Open();
         cmd.ExecuteNonQuery();
         CON.Close();
@@ -395,9 +397,15 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     protected void Button5_Click(object sender, EventArgs e)
     {
 
-
+        int value = 0;
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update Expence_Entry set date='" + TextBox2.Text + "',ExpName_Id='" + DropDownList4.SelectedItem.Text + "', Expense_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where Exp_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
+        SqlCommand cmd = new SqlCommand("update Expence_Entry set date='" + TextBox2.Text +
+            "',ExpName_Id='" + DropDownList4.SelectedItem.Value + 
+            "', Expense_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + 
+            "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) +
+                "', status='" + HttpUtility.HtmlDecode("Expense-" + DropDownList4.SelectedItem.Text) +
+             "', value='" + value +
+            "' where Exp_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
 
         CON.Open();
         cmd.ExecuteNonQuery();

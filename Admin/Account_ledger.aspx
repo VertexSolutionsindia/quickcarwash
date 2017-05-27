@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Account_ledger.aspx.cs" Inherits="Admin_Account_ledger" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Account_Ledger.aspx.cs" Inherits="Admin_Account_Ledger" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -285,9 +285,9 @@
                             </li>--%>
 
                              <li>
-                                <a href="Account_ledger.aspx"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i><span class="nav-label">&nbsp;&nbsp; Accounts </span><span class="fa arrow"></span></a>
-                             <ul class="nav nav-second-level collapse">
-                                    <li><a href="Account_ledger.aspx">Account ledger</a></li>
+                                <a href="Account_Ledger.aspx"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i><span class="nav-label">&nbsp;&nbsp; Accounts </span><span class="fa arrow"></span></a>
+                             <ul class="nav nav-second-level collapse">          
+                                 <li><a href="Account_Ledger.aspx">Account Ledger</a></li>                      
                                       <li><a href="Cost_of_Service_entry.aspx">Cost of Service Entry</a></li>  
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Expense_ledger.aspx">Expense ledger</a></li>
@@ -344,6 +344,7 @@
                                 <a href="Billing_entry.aspx"><i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Billing </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
+                                    <li><a href="Sales_Report.aspx">Sales Report</a></li>
                                    <%--  <li><a href="sales_report_details.aspx">Retail Report</a></li>
                                      <li><a href="Sales_entry_wholesales.aspx">Wholesales Entry</a></li>
                                        <li><a href="Wholesales_report_details.aspx">wholesale Report</a></li>--%>
@@ -457,6 +458,7 @@
 <div class="col-lg-6">
                   <asp:UpdatePanel ID="UpdatePanel2" runat="server">
    <ContentTemplate>
+   <asp:Button ID="Button2" runat="server" class="btn-primary" Width="70px" Height="30px" Text="Button" onclick="Button2_Click"></asp:Button>
  <asp:Button ID="Button3" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button3_Click" 
                           ></asp:Button>
                           </ContentTemplate>
@@ -492,33 +494,12 @@
    <ContentTemplate>
    <asp:GridView ID="GridView1" runat="server" class="Grd1" Width="100%" CellPadding="3" 
          Font-Size="16px" 
-           AutoGenerateColumns="False" AllowPaging="True" 
+            AllowPaging="True" 
         onpageindexchanging="GridView1_PageIndexChanging" 
         onrowdatabound="GridView1_RowDataBound" PageSize="20" BackColor="White" 
            BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
-       <Columns>
-         
-           <asp:BoundField HeaderText="Invoice No" DataField="Invoice_id"  >
-            <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
-            <asp:BoundField HeaderText="Date" DataField="date" 
-               DataFormatString="{0:dd/MM/yyyy}" >
-           <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
-           <asp:BoundField HeaderText="Customer Name" DataField="Customer_name" >
-            <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
-            <asp:BoundField HeaderText="Mobile No" DataField="Mobile_No" >
-             <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
-             <asp:BoundField HeaderText="Amount" DataField="Amount" >
-
-  
-           <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
-
-  
-       </Columns>
+           
+   
        <FooterStyle BackColor="White" ForeColor="#000066" />
        <HeaderStyle Height="40px" BackColor="#006699" Font-Bold="True" CssClass="red" 
            ForeColor="White" />
@@ -536,7 +517,9 @@
   </ContentTemplate>
     <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="GridView1"  />
-                 <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
+                 <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click"  />
+                  <asp:AsyncPostBackTrigger ControlID="TextBox4" EventName="TextChanged"  />
+
                                </Triggers>
     </asp:UpdatePanel>
 
@@ -607,7 +590,26 @@
                 </Triggers>
     </asp:UpdatePanel>
 
-  
+  <br />
+  <div class="col-sm-12">
+   <div class="col-sm-10" >
+ <label class="col-lg-3 control-label" style="float:right; font-size:20px">Total :</label>
+  </div>
+  <div class="col-sm-1" style="margin-left:-80px" >
+
+ <div class="form-group">
+ <asp:TextBox ID="TextBox1" runat="server" Font-Bold="True" Font-Size="Medium" style="text-align:center"  
+         BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black" Width="130px" ></asp:TextBox>
+
+       
+</div>
+
+</div>
+<div class="col-md-1" style="margin-left:30px; ">
+<asp:TextBox ID="TextBox2" runat="server" Font-Bold="True" Font-Size="Medium" style="text-align:center" 
+         BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black" Width="130px" ></asp:TextBox>
+</div></div>
+</div>
 </div>
 
         </ContentTemplate>

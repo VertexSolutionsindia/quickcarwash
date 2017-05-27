@@ -496,7 +496,7 @@
                            <div class="form-horizontal">
                                <br />
 
-                               <div class="form-group"><label class="col-lg-3 control-label">Cost No</label>
+                               <div class="form-group"><label class="col-lg-3 control-label">Cost ID</label>
 
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel19" runat="server">
@@ -531,7 +531,7 @@
                                 
                                 </div>
 
-                                <div class="form-group"><label class="col-lg-3 control-label">Cost of Service name</label>
+                                <div class="form-group"><label class="col-lg-3 control-label">Service name</label>
                               
                                     <div class="col-lg-6">
                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -562,7 +562,7 @@
     
        
        <div style="padding:12px; border:1px solid #e5e5e5;   border-radius:10px; background-color:#E6E6FA;color:#233445; font-size:15px; font-weight:400px; font-family: 'Open Sans',"HelveticaNeue", "Helvetica Neue", Helvetica, Arial,sans-serif; ">
-                     <h3 style="font-size:20px; float:left; " class="control-label"> </h3>Add Cost of Service  <asp:ImageButton ID="ImageButton6" runat="server" ImageUrl="~/exit11.png" width="30px" height="30px" style="float:right" />
+                     <h3 style="font-size:20px; float:left; " class="control-label"> </h3>Add Service  <asp:ImageButton ID="ImageButton6" runat="server" ImageUrl="~/exit11.png" width="30px" height="30px" style="float:right" />
   
   
          
@@ -578,7 +578,7 @@
         </tr>
         <tr>
         <td>
-            <asp:Label ID="Label3" runat="server" Text="Cost of Service Name" Width="200px" class="col-lg-3 control-label"></asp:Label></td>
+            <asp:Label ID="Label3" runat="server" Text="Service Name" Width="200px" class="col-lg-3 control-label"></asp:Label></td>
         <td>
             <asp:TextBox ID="TextBox1" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox></td>
         </tr>
@@ -592,18 +592,20 @@
                         <ContentTemplate>
                             <asp:Button ID="Button16" runat="server" CssClass="btn-primary" 
                                 onclick="Button16_Click" style="height: 26px" Text="Add Service" />
+                            &nbsp;
+                                  <asp:Button ID="Button7" runat="server" CssClass="btn-primary" 
+                                onclick="Button7_Click" style="height: 26px" Text="Clear" />
                         </ContentTemplate>
 
                        
 
                     </asp:UpdatePanel>
 
-                 
+                  
                 </td>
-                 <td>       <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                 <td>       <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
-                            <asp:Button ID="Button7" runat="server" CssClass="btn-primary" 
-                                onclick="Button7_Click" style="height: 26px" Text="Clear" />
+                         
                         </ContentTemplate>
                     </asp:UpdatePanel></td>
                 <td>
@@ -685,7 +687,7 @@
                DataFormatString="{0:MM/dd/yyyy}">
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-            <asp:BoundField HeaderText="Cost of Service Name" 
+            <asp:BoundField HeaderText="Service Name" 
                DataField="CostofService_Name" >
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>

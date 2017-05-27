@@ -125,40 +125,57 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd1 = new SqlCommand("select * from Product_entry where Service_name='" + TextBox4.Text + "' ", con1);
-            con1.Open();
-            SqlDataReader dr1;
-            dr1=cmd1.ExecuteReader();
-            if (dr1.HasRows)
+        if (TextBox4.Text != "")
+        {
+            if (TextBox2.Text != "")
             {
 
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service already exist')", true);
-                TextBox4.Text = "";
+
+                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd1 = new SqlCommand("select * from Product_entry where Service_name='" + TextBox4.Text + "' ", con1);
+                con1.Open();
+                SqlDataReader dr1;
+                dr1 = cmd1.ExecuteReader();
+                if (dr1.HasRows)
+                {
+
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service already exist')", true);
+                    TextBox4.Text = "";
+                }
+                else
+                {
+
+
+
+
+                    SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd = new SqlCommand("insert into Product_entry values(@code,@Service_name,@Com_Id,@Amount)", CON);
+                    cmd.Parameters.AddWithValue("@code", Label1.Text);
+                    cmd.Parameters.AddWithValue("@Service_name", TextBox4.Text);
+                    cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                    cmd.Parameters.AddWithValue("@Amount", TextBox2.Text);
+                    CON.Open();
+                    cmd.ExecuteNonQuery();
+                    CON.Close();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Added successfully')", true);
+                    BindData();
+                    SearchServicename();
+                    getinvoiceno();
+
+                    TextBox4.Text = "";
+                    TextBox2.Text = "";
+                }
             }
             else
             {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Amount')", true);
+            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Service name')", true);
 
-
-              
-
-                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd = new SqlCommand("insert into Product_entry values(@code,@Service_name,@Com_Id,@Amount)", CON);
-                cmd.Parameters.AddWithValue("@code", Label1.Text);
-                cmd.Parameters.AddWithValue("@Service_name", TextBox4.Text);
-                cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                cmd.Parameters.AddWithValue("@Amount", TextBox2.Text);  
-                CON.Open();
-                cmd.ExecuteNonQuery();
-                CON.Close();
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Added successfully')", true);
-                BindData();
-                SearchServicename();
-                getinvoiceno();
-             
-                TextBox4.Text = "";
-                TextBox2.Text = "";
-            }     
+        }
     }
     private void SaveDetail(GridViewRow row)
     {
@@ -236,33 +253,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     [System.Web.Script.Services.ScriptMethod()]
     [System.Web.Services.WebMethod]
 
-    public static List<string> SearchCustomers(string prefixText, int count)
-    {
-        using (SqlConnection conn = new SqlConnection())
-        {
-            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
 
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                cmd.CommandText = "select Service_name from Product_entry where Com_Id=@Com_Id and " +
-                "product_name like @product_name + '%'";
-                cmd.Parameters.AddWithValue("@product_name", prefixText);
-                cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                cmd.Connection = conn;
-                conn.Open();
-                List<string> customers = new List<string>();
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(sdr["product_name"].ToString());
-                    }
-                }
-                conn.Close();
-                return customers;
-            }
-        }
-    }
 
     private void SearchServicename()
     {
@@ -346,25 +337,11 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
-       // getsubcategory();
+      
     }
 
-    //private void getsubcategory()
-    //{
-       
-
-    //    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-    //    SqlCommand cmd = new SqlCommand("Select * from subcategory where category_id='" + DropDownList3.SelectedItem.Value + "' and Com_Id='" + company_id + "'", con);
-    //    con.Open();
-    //    DataSet ds = new DataSet();
-    //    SqlDataAdapter da = new SqlDataAdapter(cmd);
-    //    da.Fill(ds);
-    //    con.Close();
-    //}
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
-       
-
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand CMD = new SqlCommand("select * from Product_entry where Service_name='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
         DataTable dt1 = new DataTable();
