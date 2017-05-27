@@ -22,7 +22,7 @@ using System.Net;
 
 public partial class Admin_Expense_entry : System.Web.UI.Page
 {
-   
+
     public static int company_id = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -65,8 +65,8 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
         GridView1.DataBind();
     }
 
-   
-    
+
+
     //A method that returns a string which calls the connection string from the web.config
     private string GetConnectionString()
     {
@@ -88,7 +88,7 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     }
     protected void Gridview1_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
     {
- 
+
     }
     protected void Gridview1_SelectedIndexChanged(object sender, System.EventArgs e)
     {
@@ -99,10 +99,10 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     {
 
     }
-   
+
     protected void TextBox1_TextChanged(object sender, System.EventArgs e)
     {
-       
+
     }
     protected void Gridview1_Load(object sender, System.EventArgs e)
     {
@@ -111,7 +111,7 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     private void getinvoiceno()
     {
-       
+
 
         int a;
 
@@ -187,14 +187,14 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     }
     private void SaveDetail(GridViewRow row)
     {
-        
+
 
     }
 
     protected void Button2_Click(object sender, EventArgs e)
     {
         TextBox8.Text = "";
-        TextBox12.Text = "";    
+        TextBox12.Text = "";
         SearchExpense();
         BindData();
     }
@@ -246,7 +246,7 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
         TextBox2.Text = ROW.Cells[2].Text;
         DropDownList4.SelectedItem.Text = ROW.Cells[3].Text;
         TextBox3.Text = ROW.Cells[4].Text;
-    
+
         this.ModalPopupExtender1.Show();
     }
 
@@ -259,7 +259,7 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     protected void btnRandom_Click(object sender, EventArgs e)
     {
-       // this.ModalPopupExtender2.Show();
+        // this.ModalPopupExtender2.Show();
     }
 
     private void showcustomertype()
@@ -292,11 +292,11 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
 
-       // this.ModalPopupExtender4.Show();
+        // this.ModalPopupExtender4.Show();
     }
 
-   
-   
+
+
 
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -313,7 +313,7 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     protected void TextBox2_TextChanged(object sender, System.EventArgs e)
     {
-       // TextBox3.Focus();
+        // TextBox3.Focus();
     }
 
     protected void Button6_Click(object sender, EventArgs e)
@@ -345,16 +345,16 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@ExpName_Code", Label29.Text);
             cmd.Parameters.AddWithValue("@Expense_Name", TextBox1.Text);
             cmd.Parameters.AddWithValue("@Com_Id", company_id);
-          
+
             CON.Open();
             cmd.ExecuteNonQuery();
             CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Name Added successfully')", true);         
-            TextBox1.Text = "";    
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Name Added successfully')", true);
+            TextBox1.Text = "";
             getExpenseNameID();
             SearchExpense();
-     
-        }     
+
+        }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -371,13 +371,13 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         CON.Close();
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Entry Added successfully')", true);
-     
+
         TextBox8.Text = "";
-        TextBox12.Text = "";     
+        TextBox12.Text = "";
         getinvoiceno();
         SearchExpense();
         BindData();
-      
+
     }
     protected void Button7_Click(object sender, EventArgs e)
     {
@@ -386,18 +386,18 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     protected void Button14_Click(object sender, EventArgs e)
     {
-       
+
     }
     protected void Button8_Click(object sender, EventArgs e)
     {
-        
+
     }
     protected void Button5_Click(object sender, EventArgs e)
     {
 
 
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update Expence_Entry set ExpName_Id='" + DropDownList4.SelectedItem.Value + "', Expense_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where Exp_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
+        SqlCommand cmd = new SqlCommand("update Expence_Entry set date='" + TextBox2.Text + "',ExpName_Id='" + DropDownList4.SelectedItem.Text + "', Expense_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where Exp_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
 
         CON.Open();
         cmd.ExecuteNonQuery();
