@@ -85,6 +85,10 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 BindData();
                 BindData1();
                 BindData2();
+
+
+                //----------------------------------------------Finding Grossporift
+
                 int Tot_Income = Convert.ToInt32(TextBox1.Text);
 
                 int Tol_CostofService = Convert.ToInt32(TextBox2.Text);
@@ -103,6 +107,9 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
 
                 TextBox7.Text = Convert.ToString(NetProfit);
                 TextBox8.Text = Convert.ToString(NetProfit);
+
+                //--------------------------------------------------------------------
+
             }
             else
             {
@@ -113,9 +120,13 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Selete From Date')", true);
         }
+
         //----------------------------------------------Finding Grossporift
        
         //---------------------------------------------------------------------
+
+      
+
     }
 
     protected void BindData()

@@ -682,7 +682,7 @@
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
            <asp:BoundField HeaderText="Date" DataField="date" 
-               DataFormatString="{0:dd/MM/yyyy}">
+               DataFormatString="{0:MM/dd/yyyy}">
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
             <asp:BoundField HeaderText="Expense Name" DataField="Expense_Name" >
@@ -764,6 +764,7 @@
             <asp:Label ID="Label5" runat="server" class="col-lg-3 control-label" Width="200px"  Text="Date"></asp:Label></td>
         <td>
             <asp:TextBox ID="TextBox2" runat="server" DataFormatString="{0:MM/dd/yyyy}" class="form-control input-x2 dropbox"></asp:TextBox></td>
+            <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2"></asp:CalendarExtender>
         </tr>
         <tr>
         <td>
