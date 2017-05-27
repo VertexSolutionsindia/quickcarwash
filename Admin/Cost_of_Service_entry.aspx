@@ -531,7 +531,7 @@
                                 
                                 </div>
 
-                                <div class="form-group"><label class="col-lg-3 control-label">Cost of Service Name</label>
+                                <div class="form-group"><label class="col-lg-3 control-label">Cost of Service name</label>
                               
                                     <div class="col-lg-6">
                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
