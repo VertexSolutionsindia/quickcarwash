@@ -43,46 +43,140 @@ public partial class RabbitDashboard : System.Web.UI.Page
             }
 
 
-            //DataTable dt = new DataTable();
-            //using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
-            //{
-            //    con.Open();
-            //    SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),date,101),sum(total_amount) from purchase_entry group by date", con);
-            //    SqlDataAdapter da = new SqlDataAdapter(cmd);
-            //    da.Fill(dt);
-            //    con.Close();
-            //}
-            //string[] x = new string[dt.Rows.Count];
-            //int[] y = new int[dt.Rows.Count];
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-            //    x[i] = dt.Rows[i][0].ToString();
-            //    y[i] = Convert.ToInt32(dt.Rows[i][1]);
-            //}
-            //Chart2.Series[0].Points.DataBindXY(x, y);
+            DataTable dt = new DataTable();
+           using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select  CONVERT(VARCHAR(10),Month(date),101),sum(Amount) from Billing_Entry group by Month(date)", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                con.Close();
+            }
+            string[] x = new string[dt.Rows.Count];
+            int[] y = new int[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i][0].ToString() == "1")
+                {
+                    x[i] = "Jan";
+                }
+                if (dt.Rows[i][0].ToString() == "2")
+                {
+                    x[i] = "Feb";
+                }
+                if (dt.Rows[i][0].ToString() == "3")
+                {
+                    x[i] = "Mar";
+                }
+                if (dt.Rows[i][0].ToString() == "3")
+                {
+                    x[i] = "Apr";
+                }
+                if (dt.Rows[i][0].ToString() == "5")
+                {
+                    x[i] = "May";
+                }
+                if (dt.Rows[i][0].ToString() == "6")
+                {
+                    x[i] = "Jun";
+                }
+                 if (dt.Rows[i][0].ToString() == "7")
+                {
+                    x[i] = "Jul";
+                }
+                 if (dt.Rows[i][0].ToString() == "8")
+                 {
+                     x[i] = "Aug";
+                 }
+                 if (dt.Rows[i][0].ToString() == "9")
+                 {
+                     x[i] = "Sep";
+                 }
+                 if (dt.Rows[i][0].ToString() == "10")
+                 {
+                     x[i] = "Oct";
+                 }
+                 if (dt.Rows[i][0].ToString() == "11")
+                 {
+                     x[i] = "Oct";
+                 }
+                 if (dt.Rows[i][0].ToString() == "12")
+                 {
+                     x[i] = "Dec";
+                 }
+                y[i] = Convert.ToInt32(dt.Rows[i][1]);
+            }
+            Chart2.Series[0].Points.DataBindXY(x, y);
         }
 
 
-       
+      
         if(!IsPostBack)
 {
-//DataTable dt = new DataTable();
-//using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
-//{
-//con.Open();
-//SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),date,101),sum(total_amount) from sales_entry group by date", con);
-//SqlDataAdapter da = new SqlDataAdapter(cmd);
-//da.Fill(dt);
-//con.Close();
-//}
-//string []x=new string[dt.Rows.Count];
-//int [] y = new int[dt.Rows.Count];
-//for(int i=0;i<dt.Rows.Count;i++)
-//{
-//x[i] = dt.Rows[i][0].ToString();
-//y[i] = Convert.ToInt32(dt.Rows[i][1]);
-//}
-//Chart1.Series[0].Points.DataBindXY(x,y);
+DataTable dt = new DataTable();
+using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
+{
+con.Open();
+SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),Month(date),101),sum(Invoice_id) from Billing_Entry group by Month(date)", con);
+SqlDataAdapter da = new SqlDataAdapter(cmd);
+da.Fill(dt);
+con.Close();
+}
+string []x=new string[dt.Rows.Count];
+int [] y = new int[dt.Rows.Count];
+for(int i=0;i<dt.Rows.Count;i++)
+{
+    if (dt.Rows[i][0].ToString() == "1")
+    {
+        x[i] = "Jan";
+    }
+    if (dt.Rows[i][0].ToString() == "2")
+    {
+        x[i] = "Feb";
+    }
+    if (dt.Rows[i][0].ToString() == "3")
+    {
+        x[i] = "Mar";
+    }
+    if (dt.Rows[i][0].ToString() == "3")
+    {
+        x[i] = "Apr";
+    }
+    if (dt.Rows[i][0].ToString() == "5")
+    {
+        x[i] = "May";
+    }
+    if (dt.Rows[i][0].ToString() == "6")
+    {
+        x[i] = "Jun";
+    }
+    if (dt.Rows[i][0].ToString() == "7")
+    {
+        x[i] = "Jul";
+    }
+    if (dt.Rows[i][0].ToString() == "8")
+    {
+        x[i] = "Aug";
+    }
+    if (dt.Rows[i][0].ToString() == "9")
+    {
+        x[i] = "Sep";
+    }
+    if (dt.Rows[i][0].ToString() == "10")
+    {
+        x[i] = "Oct";
+    }
+    if (dt.Rows[i][0].ToString() == "11")
+    {
+        x[i] = "Oct";
+    }
+    if (dt.Rows[i][0].ToString() == "12")
+    {
+        x[i] = "Dec";
+    }
+y[i] = Convert.ToInt32(dt.Rows[i][1]);
+}
+Chart1.Series[0].Points.DataBindXY(x,y);
 }
        
     }

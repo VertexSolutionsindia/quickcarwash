@@ -379,56 +379,42 @@
                         </div>
                     </div><!-- end .page title-->
                      <div class="row see">
-   <div style="float:left; width:100%";>
+   <div style="float:left; width:100%; margin-bottom:30px">
 
  
-  <%-- <div class="top">
-<a href="Main.aspx" ><button type="button" class="btn btn-default2 btn-circle btn-xl"><i class="fa fa-product-hunt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label" >Category Entry</span></a></div>
   <div class="top">
-<a href="Sub_category.aspx" ><button type="button" class="btn btn-default1 btn-circle btn-xl"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label">Brand Entry</span></a></div>
+<a href="Customer-Entry.aspx" ><button type="button" class="btn btn-default2 btn-circle btn-xl"><i class="fa fa-product-hunt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label" >Customer entry</span></a></div>
+  <div class="top">
+<a href="Service_entry.aspx" ><button type="button" class="btn btn-default1 btn-circle btn-xl"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label" >Service type</span></a></div>
 
    <div class="top">
-<a href="Product_entry.aspx" ><button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label">Product Entry</span></a></div>
- <div class="top" >
-<a href="Purchase_entry.aspx" ><button type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button><br /><span class="col-lg-3 control-label">Purchase Entry</span></a></div>
+<a href="Cost_of_Service_entry.aspx" ><button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span >Cost of service entry</span></a></div>
 <div class="top" >
-<a href="Customer-Entry.aspx" >
-<button type="button" class="btn btn-success btn-circle btn-xl"><i class="fa fa-check-square-o" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label">Customer Entry</span> </a></div>
+<a href="Expense_entry.aspx" ><button type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button><br /><span class="col-lg-3 control-label">Expenses entry</span></a></div>
+
 <div class="top" >
-<a href="Vendor.aspx" >
+<a href="Billing_entry.aspx" >
 
-<button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-pencil-square" aria-hidden="true"></i></button><br />&nbsp;&nbsp;<span class="col-lg-3 control-label">Vendor Entry</span></a></div>
-<div class="top">
-<a href="Staff-Entry.aspx" >
+<button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-pencil-square" aria-hidden="true"></i></button><br />&nbsp;&nbsp;<span class="col-lg-3 control-label">Billing entry</span></a></div>
 
-<button type="button" class="btn btn-warning btn-circle btn-xl"><i class="fa fa-briefcase" aria-hidden="true"></i></button><br /><span class="col-lg-3 control-label">Staff entry</span></a></div>
-<div class="top" >
-<a href="Sales_entry.aspx" >
 
-<button type="button" class="btn btn-danger btn-circle btn-xl"><i class="fa fa-ticket" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label">Sales entry</span></a></div>
-<div class="top" >
-<a href="">
-
-<button type="button" class="btn btn-see btn-circle btn-xl"><i class="fa fa-plus" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label">Add</span></a></div>
-
---%>
-<br />
-<br />
-<div style="width:100%">
-    <%-- <div style="float:left; width:50%">
-             <h3 style="clear:both" class="col-lg-3 control-label">Purchase Report</h3>
-            
-     </div>--%>
-    <%-- <div style="float:left; width:50%;">
-                 <h3 class="col-lg-3 control-label">Sales report</h3>
-
-              
-      </div>--%>
-</div>
 
 </div>
+<br />
+<div style="width:100%; clear:both; margin-top:20px"">
+     <div style="float:left; width:50%">
+             <h3 style="clear:both" class="col-lg-3 control-label">Month wise sales</h3>
+            <asp:Chart ID="Chart2" width="400px"   runat="server" Palette="Chocolate"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
+     </div>
+     <div style="float:left; width:50%;">
+                 <h3 class="col-lg-3 control-label">Month wise total vehicle</h3>
 
-<%--<h1 style="margin-top:20px" class="col-lg-3 control-label">Product Stock</h1>--%>
+              <asp:Chart ID="Chart1" width="400px"   runat="server"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
+      </div>
+</div>
+
+
+
                         
                     <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="4" 
          Font-Size="16px" 
