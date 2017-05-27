@@ -509,7 +509,7 @@
                        <asp:TextBox ID="TextBox1" runat="server" width="100%" 
                                     ontextchanged="TextBox1_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search Product Name"></asp:TextBoxWatermarkExtender>
+                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search Service Type"></asp:TextBoxWatermarkExtender>
                            <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox1"  CompletionListCssClass="completionList"
      CompletionListItemCssClass="listItem"
      CompletionListHighlightedItemCssClass="itemHighlighted">
@@ -546,8 +546,7 @@
           <div class="col-md-3">
             <asp:UpdatePanel ID="UpdatePanel6" runat="server">
    <ContentTemplate>   
-       <br>   
-   </br>              
+ <br />          
  <asp:Button ID="Button6" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button6_Click" ></asp:Button>
                           </ContentTemplate>
                            </asp:UpdatePanel>

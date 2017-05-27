@@ -764,7 +764,7 @@
             <asp:Label ID="Label5" runat="server" class="col-lg-3 control-label" Width="200px"  Text="Date"></asp:Label></td>
         <td>
             <asp:TextBox ID="TextBox2" runat="server" DataFormatString="{0:MM/dd/yyyy}" class="form-control input-x2 dropbox"></asp:TextBox></td>
-            <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2"></asp:CalendarExtender>
+             <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2"></asp:CalendarExtender>
         </tr>
         <tr>
         <td>
