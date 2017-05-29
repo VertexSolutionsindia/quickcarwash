@@ -84,7 +84,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
 
     protected void Button4_Click(object sender, EventArgs e)
     {
-
+        int value = 0;
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand cmd = new SqlCommand("update Billing_Entry set date='" + TextBox8.Text +
             "', Customer_name='" + HttpUtility.HtmlDecode(TextBox3.Text) +
@@ -94,12 +94,14 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
              "', Com_Id='" + company_id +
              "', Customer_VehNo='" + HttpUtility.HtmlDecode(TextBox6.Text) +
              "', Service_Name='" + HttpUtility.HtmlDecode(TextBox14.Text) +
+             "', status='" + HttpUtility.HtmlDecode("Sales-" + TextBox14.Text) +
+             "', value='" + value +
             "' where Invoice_id='" + Label1.Text + "'  and Com_Id='" + company_id + "' ", CON);
 
         CON.Open();
         cmd.ExecuteNonQuery();
         CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Billing Updated successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Invoice Updated successfully')", true);
 
         BindData();
         getinvoiceno();
@@ -154,7 +156,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
 
             }
         }
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Billing deleted successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Invoice deleted successfully')", true);
         BindData();
         getinvoiceno();
 
@@ -172,8 +174,9 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         }
         else
         {
+            int value = 0;
             SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd = new SqlCommand("insert into Billing_Entry values(@Invoice_id,@date,@Customer_name,@Mobile_No,@Address,@Amount,@Com_Id,@Customer_VehNo,@Service_Name)", CON);
+            SqlCommand cmd = new SqlCommand("insert into Billing_Entry values(@Invoice_id,@date,@Customer_name,@Mobile_No,@Address,@Amount,@Com_Id,@Customer_VehNo,@Service_Name,@status,@value)", CON);
             cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
             cmd.Parameters.AddWithValue("@date", TextBox8.Text);    
             cmd.Parameters.AddWithValue("@Customer_name", HttpUtility.HtmlDecode(TextBox3.Text));
@@ -183,11 +186,12 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@Com_Id", company_id);
             cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox6.Text));
             cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(TextBox14.Text));
-
+            cmd.Parameters.AddWithValue("@status","Sales-" +TextBox14.Text);
+            cmd.Parameters.AddWithValue("@value", value);
             CON.Open();
             cmd.ExecuteNonQuery();
             CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Billing created successfully')", true);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Invoice created successfully')", true);
             BindData();
             getinvoiceno();
             show_category();
@@ -214,6 +218,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         TextBox4.Text = "";
         TextBox5.Text = "";
         TextBox6.Text = "";
+        TextBox1.Text = "";
         getinvoiceno();
         show_category();
         show_VehicleNO();
@@ -264,7 +269,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         con.Close();
 
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Billing Deleted successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Invoice Deleted successfully')", true);
 
         BindData();
         getinvoiceno();
@@ -478,7 +483,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
        
 
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from subcategory where subcategoryname='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -547,6 +552,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         DropDownList2.Items.Clear();
         DropDownList5.Items.Clear();
         DropDownList6.Items.Clear();
+        TextBox1.Text = "";
         show_VehicleNO();
         SearchMobileno();
         SearchCustomer();

@@ -336,39 +336,47 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     }
     protected void Button16_Click(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd1 = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + TextBox1.Text + "' ", con1);
-        con1.Open();
-        SqlDataReader dr1;
-        dr1 = cmd1.ExecuteReader();
-        if (dr1.HasRows)
+        if (TextBox1.Text != "")
         {
+            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + TextBox1.Text + "' ", con1);
+            con1.Open();
+            SqlDataReader dr1;
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.HasRows)
+            {
 
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Name already exist')", true);
-            TextBox1.Text = "";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Name already exist')", true);
+                TextBox1.Text = "";
+            }
+            else
+            {
+
+
+
+
+                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
+                cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
+                cmd.Parameters.AddWithValue("@CostofService_Name", TextBox1.Text);
+                cmd.Parameters.AddWithValue("@Com_Id", company_id);
+
+                CON.Open();
+                cmd.ExecuteNonQuery();
+                CON.Close();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Added successfully')", true);
+                DropDownList3.Items.Clear();
+                TextBox1.Text = "";
+                getCostofServiceADD_ID();
+                SearchExpense();
+
+            }
         }
         else
         {
-
-
-
-
-            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
-            cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
-            cmd.Parameters.AddWithValue("@CostofService_Name", TextBox1.Text);
-            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-          
-            CON.Open();
-            cmd.ExecuteNonQuery();
-            CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Name Added successfully')", true);
-            DropDownList3.Items.Clear();
-            TextBox1.Text = "";
-            getCostofServiceADD_ID();
-            SearchExpense();
-     
-        }     
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Enter the Service Name')", true);
+            this.ModalPopupExtender3.Show();
+        }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -383,7 +391,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
         CON.Open();
         cmd.ExecuteNonQuery();
         CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Entry Added successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Cost Added successfully')", true);
      
         TextBox8.Text = "";
         TextBox12.Text = "";
@@ -396,6 +404,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     protected void Button7_Click(object sender, EventArgs e)
     {
         TextBox1.Text = "";
+        this.ModalPopupExtender3.Show();
     }
 
     protected void Button14_Click(object sender, EventArgs e)

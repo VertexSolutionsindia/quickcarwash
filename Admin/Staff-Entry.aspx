@@ -432,11 +432,9 @@
                                  
                             </div><!-- End .panel -->  
 
-
-
-
-                       <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search"></asp:TextBoxWatermarkExtender>
+     <asp:TextBox ID="TextBox1" runat="server" width="30%" 
+                                    ontextchanged="TextBox1_TextChanged" AutoPostBack="true"></asp:TextBox>
+                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search Mobile Number"></asp:TextBoxWatermarkExtender>
                          <br />
                         
 
@@ -462,9 +460,17 @@
            data-style="btn-primary1" data-width="100%" AutoPostBack="true" 
            onselectedindexchanged="DropDownList2_SelectedIndexChanged" ></asp:DropDownList>
    
-   
-   </div>
     
+   </div>
+   <br />
+    <div class="col-md-4">
+  <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+   <ContentTemplate>
+                   <asp:Button ID="Button4" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button4_Click" 
+                          ></asp:Button>
+                          </ContentTemplate>
+                           </asp:UpdatePanel>
+    </div>
 
 
 

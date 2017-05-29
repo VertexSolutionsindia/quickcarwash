@@ -518,9 +518,10 @@
                           </ContentTemplate>
                            </asp:UpdatePanel>        
           <br />
-               <asp:TextBox ID="TextBox1" runat="server" ontextchanged="TextBox1_TextChanged" 
-          ></asp:TextBox>
-                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search"></asp:TextBoxWatermarkExtender>
+                 <asp:TextBox ID="TextBox1" runat="server" width="100%" 
+                                    ontextchanged="TextBox1_TextChanged" AutoPostBack="true"></asp:TextBox>
+        
+                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search Customer Name"></asp:TextBoxWatermarkExtender>
                  <br />         
 </div>
                                         <!-- End .form-group  -->
@@ -736,8 +737,8 @@
                                     </asp:DropDownList>&nbsp; Entries </h3>
                                     <hr />
                                     <div class="panel-actions">
-                                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                                        <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+                                       <%-- <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>--%>
+                                      <%--  <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>--%>
                                     </div>
                                 </div>
 
@@ -793,8 +794,9 @@
            </asp:BoundField>
            <asp:TemplateField>
           <ItemTemplate>
-            
+ 
           <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/edit4.jpg" Height="20px" Width="20px" onclick="ImageButton1_Click"  ></asp:ImageButton>
+           
           </ItemTemplate>
           
           </asp:TemplateField>

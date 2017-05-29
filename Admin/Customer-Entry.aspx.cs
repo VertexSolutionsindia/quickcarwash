@@ -241,55 +241,56 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        if (TextBox3.Text == "")
+        if (TextBox3.Text != "")
         {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter customer name')", true);
+            if (TextBox9.Text != "")
+            {
+                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("insert into Customer_Entry values(@Custom_Code,@Custom_Name,@Custom_Add,@Mobile_no,@Emailid,@Customer_VehNo,@Com_Id,@Vehicle_Brand,@Vehicle_Make)", CON);
+                cmd.Parameters.AddWithValue("@Custom_Code", Label1.Text);
+                cmd.Parameters.AddWithValue("@Custom_Name", HttpUtility.HtmlDecode(TextBox3.Text));
+                cmd.Parameters.AddWithValue("@Custom_Add", HttpUtility.HtmlDecode(TextBox2.Text));
+                cmd.Parameters.AddWithValue("@Mobile_no", HttpUtility.HtmlDecode(TextBox9.Text));
+                cmd.Parameters.AddWithValue("@Emailid", HttpUtility.HtmlDecode(TextBox4.Text));
+                cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox11.Text));
+                cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                cmd.Parameters.AddWithValue("@Vehicle_Brand", HttpUtility.HtmlDecode(TextBox15.Text));
+                cmd.Parameters.AddWithValue("@Vehicle_Make", HttpUtility.HtmlDecode(TextBox17.Text));
 
-        }
-        else if (TextBox9.Text == "")
-        {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter mobile no')", true);
+
+
+                CON.Open();
+                cmd.ExecuteNonQuery();
+                CON.Close();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Customer Entry created successfully')", true);
+                BindData();
+                show_category();
+                getinvoiceno();
+                Searchvehicle();
+                SearchMobileno();
+                SearchCustomer();
+                SearchBrand();
+                SearchMake();
+                TextBox3.Text = "";
+                TextBox2.Text = "";
+                TextBox4.Text = "";
+                // show_type();
+                TextBox9.Text = "";
+                TextBox11.Text = "";
+                TextBox15.Text = "";
+                TextBox17.Text = "";
+
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter mobile no')", true);
+            }
         }
         else
         {
-
-         
-            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd = new SqlCommand("insert into Customer_Entry values(@Custom_Code,@Custom_Name,@Custom_Add,@Mobile_no,@Emailid,@Customer_VehNo,@Com_Id,@Vehicle_Brand,@Vehicle_Make)", CON);
-            cmd.Parameters.AddWithValue("@Custom_Code", Label1.Text);
-            cmd.Parameters.AddWithValue("@Custom_Name", HttpUtility.HtmlDecode(TextBox3.Text));
-            cmd.Parameters.AddWithValue("@Custom_Add", HttpUtility.HtmlDecode(TextBox2.Text));
-            cmd.Parameters.AddWithValue("@Mobile_no", HttpUtility.HtmlDecode(TextBox9.Text));
-            cmd.Parameters.AddWithValue("@Emailid", HttpUtility.HtmlDecode(TextBox4.Text));
-            cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox11.Text));
-            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-            cmd.Parameters.AddWithValue("@Vehicle_Brand", HttpUtility.HtmlDecode(TextBox15.Text));
-            cmd.Parameters.AddWithValue("@Vehicle_Make", HttpUtility.HtmlDecode(TextBox17.Text));
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter customer name')", true);
            
-
-            
-            CON.Open();
-            cmd.ExecuteNonQuery();
-            CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Customer Entry created successfully')", true);
-            BindData();
-            show_category();
-            getinvoiceno();
-            Searchvehicle();
-            SearchMobileno();
-            SearchCustomer();
-            SearchBrand();
-            SearchMake();
-            TextBox3.Text = "";
-            TextBox2.Text = "";
-            TextBox4.Text = "";
-           // show_type();
-            TextBox9.Text = "";
-            TextBox11.Text = "";
-            TextBox15.Text = "";
-            TextBox17.Text = "";
         }
-
     }
 
     protected void Button2_Click(object sender, EventArgs e)
@@ -306,6 +307,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
         TextBox11.Text = "";
         TextBox17.Text = "";
         TextBox15.Text = "";
+        TextBox1.Text = "";
     }
     private void active()
     {
@@ -330,8 +332,6 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
     }
     protected void BindData()
     {
-       
-
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand CMD = new SqlCommand("select * from Customer_Entry where Com_Id='" + company_id + "' ORDER BY Custom_Code asc", con);
         DataTable dt1 = new DataTable();
@@ -339,6 +339,8 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
         da1.Fill(dt1);
         GridView1.DataSource = dt1;
         GridView1.DataBind();
+        TextBox1.Text = "";
+
 
     }
     protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
@@ -482,11 +484,18 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
 
     }
 
-
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
-
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Customer_Entry where Custom_Name='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
     }
+ 
 
 
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
@@ -548,17 +557,21 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
  
     protected void Button7_Click(object sender, EventArgs e)
     {
+        BindData();
+      
+
         DropDownList3.Items.Clear();
         DropDownList1.Items.Clear();
         DropDownList2.Items.Clear();
         DropDownList5.Items.Clear();
         DropDownList6.Items.Clear();
+
         Searchvehicle();
         SearchMobileno();
         SearchCustomer();
         SearchBrand();
         SearchMake();
-        BindData();
+      
     }
 
 }
