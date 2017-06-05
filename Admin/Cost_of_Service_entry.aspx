@@ -463,8 +463,16 @@
                                     <div class="col-lg-6">
                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
    <ContentTemplate>
+<asp:TextBox ID="TextBox5" runat="server" AutoPostBack="true" class="form-control input-x2 dropbox"  
+                                      ontextchanged="TextBox5_TextChanged"></asp:TextBox>
+ 
+        
+                                        <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCostofservices" FirstRowSelected = "false" CompletionInterval="0" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox5"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
    
-                                  <asp:DropDownList ID="DropDownList3" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" onselectedindexchanged="DropDownList3_SelectedIndexChanged"></asp:DropDownList>
+                                 <%-- <asp:DropDownList ID="DropDownList3" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" onselectedindexchanged="DropDownList3_SelectedIndexChanged"></asp:DropDownList>--%>
                               
                                     </ContentTemplate>
                                      <Triggers>
@@ -567,7 +575,7 @@
                                     </ContentTemplate>
                                      <Triggers>
              
-                    <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
+                   <%-- <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />--%>
                    
                 </Triggers>
                            </asp:UpdatePanel>
@@ -576,7 +584,7 @@
                                  
                                 
                                 </div>
-                                 <div class="form-group"><label class="col-lg-3 control-label">Partners name</label>
+                                 <div class="form-group"><label class="col-lg-3 control-label">Paid By</label>
                               
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel5" runat="server" >
@@ -585,7 +593,7 @@
                                     </ContentTemplate>
                                      <Triggers>
              
-                    <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
+                   <%-- <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />--%>
                    
                 </Triggers>
                            </asp:UpdatePanel>

@@ -59,6 +59,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             SearchExpense();
             BindData();
             showpartners();
+         
         }
     }
 
@@ -227,11 +228,11 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 da.Fill(ds);
 
 
-                DropDownList3.DataSource = ds;
-                DropDownList3.DataTextField = "CostofService_Name";
-                DropDownList3.DataValueField = "CostName_Code";
-                DropDownList3.DataBind();
-                DropDownList3.Items.Insert(0, new ListItem("Select service", "0"));
+                //DropDownList3.DataSource = ds;
+                //DropDownList3.DataTextField = "CostofService_Name";
+                //DropDownList3.DataValueField = "CostName_Code";
+                //DropDownList3.DataBind();
+                //DropDownList3.Items.Insert(0, new ListItem("Select service", "0"));
 
                 DropDownList4.DataSource = ds;
                 DropDownList4.DataTextField = "CostofService_Name";
@@ -281,6 +282,37 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             con10.Close();
         }
     }
+
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchCostofservices(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select CostofService_Name from CosServiceName_Add where Com_Id=@Com_Id and " +
+                "CostofService_Name like @CostofService_Name + '%'";
+                cmd.Parameters.AddWithValue("@CostofService_Name", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["CostofService_Name"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
+        }
+    }
     private void SaveDetail(GridViewRow row)
     {
         
@@ -292,6 +324,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
         DateTime date = DateTime.Now;
         TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
         TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+        TextBox5.Text = "";
         getinvoiceno();
         getCostofServiceADD_ID();
         SearchExpense();
@@ -504,7 +537,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                         cmd.ExecuteNonQuery();
                         CON.Close();
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Added successfully')", true);
-                        DropDownList3.Items.Clear();
+                        TextBox5.Text = "";
                         TextBox1.Text = "";
                         getCostofServiceADD_ID();
                         SearchExpense();
@@ -532,9 +565,9 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             if (dr11.Read())
             {
                 company_id = Convert.ToInt32(dr11["com_id"].ToString());
-                if (DropDownList3.SelectedItem.Text == "Select service")
+                if (TextBox5.Text == "")
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please select srvice name')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please select Service name')", true);
                 }
                 else
                 {
@@ -543,11 +576,11 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount,@year,@status,@value,@partner_name)", CON);
                     cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
                     cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-                    cmd.Parameters.AddWithValue("@CostofService_Name", DropDownList3.SelectedItem.Text);
+                    cmd.Parameters.AddWithValue("@CostofService_Name", TextBox5.Text);
                     cmd.Parameters.AddWithValue("@Com_Id", company_id);
                     cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
                     cmd.Parameters.AddWithValue("@year", Label8.Text);
-                    cmd.Parameters.AddWithValue("@status", "Cost Of Service -" + DropDownList3.SelectedItem.Text);
+                    cmd.Parameters.AddWithValue("@status", "Cost Of Service -" + TextBox5.Text);
                     cmd.Parameters.AddWithValue("@value", value);
                     cmd.Parameters.AddWithValue("@partner_name", DropDownList1.SelectedItem.Text);
                     CON.Open();
@@ -558,7 +591,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     DateTime date = DateTime.Now;
                     TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
                     TextBox12.Text = "";
-                    DropDownList3.Items.Clear();
+                    TextBox5.Text = "";
                     getinvoiceno();
                     showpartners();
                     BindData();
@@ -583,5 +616,9 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     {
         
     }
-    
+
+    protected void TextBox5_TextChanged(object sender, EventArgs e)
+    {
+
+    }
 }

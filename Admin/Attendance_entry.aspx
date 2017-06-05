@@ -481,7 +481,7 @@
                               
                                 
                                 </div>
-                                  <div class="form-group"><label class="col-lg-3 control-label">Options</label>
+                                  <div class="form-group"><label class="col-lg-3 control-label">Attendance</label>
                               
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel5" runat="server" >
@@ -505,7 +505,7 @@
                                  
                                 
                                 </div>
- <div class="form-group"><label class="col-lg-3 control-label">Day Amount</label>
+ <div class="form-group"><label class="col-lg-3 control-label">Per Day Salary</label>
                               
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel3" runat="server" >
@@ -523,7 +523,7 @@
                                  
                                 
                                 </div>
-                                    <div class="form-group"><label class="col-lg-3 control-label">Hand Amount</label>
+                                    <div class="form-group"><label class="col-lg-3 control-label">Paid Amount</label>
                               
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel13" runat="server" >
@@ -583,13 +583,13 @@
             <asp:BoundField HeaderText="Staff Name" DataField="Staff_Name" >
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-             <asp:BoundField HeaderText="Option" DataField="option_name" >
+             <asp:BoundField HeaderText="Attendance" DataField="option_name" >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-             <asp:BoundField HeaderText="Salary" DataField="salary_amount" >
+             <asp:BoundField HeaderText="Per Day Salary" DataField="salary_amount" >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-            <asp:BoundField HeaderText="Hand Amount" DataField="Amount" >
+            <asp:BoundField HeaderText="Paid Amount" DataField="Amount" >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
              
@@ -676,7 +676,7 @@
         </tr>
         <tr>
         <td>
-            <asp:Label ID="Label7" runat="server" class="col-lg-3 control-label" Width="200px" Text="Option Name"></asp:Label></td>
+            <asp:Label ID="Label7" runat="server" class="col-lg-3 control-label" Width="200px" Text="Attendance"></asp:Label></td>
         <td>
              <asp:DropDownList ID="DropDownList2" class="form-control input-x2 dropbox" runat="server">
                <asp:ListItem>Select item</asp:ListItem>
@@ -688,13 +688,13 @@
         </tr>
           <tr>
         <td>
-            <asp:Label ID="Label3" runat="server" class="col-lg-3 control-label" Width="200px" Text="Salary Amount"></asp:Label></td>
+            <asp:Label ID="Label3" runat="server" class="col-lg-3 control-label" Width="200px" Text="Per Day Salary"></asp:Label></td>
         <td> <asp:TextBox ID="TextBox4" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox>
           </td>
         </tr>         
                 <tr>
         <td>
-            <asp:Label ID="Label9" runat="server" class="col-lg-3 control-label" Width="200px" Text="Amount"></asp:Label></td>
+            <asp:Label ID="Label9" runat="server" class="col-lg-3 control-label" Width="200px" Text="Paid Amount"></asp:Label></td>
         <td> <asp:TextBox ID="TextBox3" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox>
           </td>
         </tr>              
