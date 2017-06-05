@@ -42,6 +42,15 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 con.Close();
             }
 
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from currentfinancialyear where no='1'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                Label8.Text = dr10["financial_year"].ToString();
+            }
             DateTime date = DateTime.Now;
             TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
             TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
@@ -49,20 +58,33 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             getCostofServiceADD_ID();
             SearchExpense();
             BindData();
+            showpartners();
         }
     }
 
 
     protected void BindData()
     {
-
+         if (User.Identity.IsAuthenticated)
+            {
+                SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+                SqlDataReader dr;
+                con10.Open();
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    company_id = Convert.ToInt32(dr["com_id"].ToString());
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from CostOfService_Entry where Com_Id='" + company_id + "' ORDER BY Cost_Id asc", con);
+        SqlCommand CMD = new SqlCommand("select * from CostOfService_Entry where Com_Id='" + company_id + "' and year='"+Label8.Text+"' ORDER BY Cost_Id asc", con);
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
         GridView1.DataSource = dt1;
         GridView1.DataBind();
+                }
+                con10.Close();
+            }
     }
 
    
@@ -111,33 +133,55 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
 
     private void getinvoiceno()
     {
-       
-
-        int a;
-
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        con1.Open();
-        string query = "Select max(Cost_Id) from CostOfService_Entry where Com_Id='" + company_id + "'";
-        SqlCommand cmd1 = new SqlCommand(query, con1);
-        SqlDataReader dr = cmd1.ExecuteReader();
-        if (dr.Read())
+        if (User.Identity.IsAuthenticated)
         {
-            string val = dr[0].ToString();
-            if (val == "")
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd.ExecuteReader();
+            if (dr1.Read())
             {
-                Label1.Text = "1";
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+
+                int a;
+
+                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                con1.Open();
+                string query = "Select max(Cost_Id) from CostOfService_Entry where year='"+Label8.Text+"' and Com_Id='" + company_id + "'";
+                SqlCommand cmd1 = new SqlCommand(query, con1);
+                SqlDataReader dr = cmd1.ExecuteReader();
+                if (dr.Read())
+                {
+                    string val = dr[0].ToString();
+                    if (val == "")
+                    {
+                        Label1.Text = "1";
+                    }
+                    else
+                    {
+                        a = Convert.ToInt32(dr[0].ToString());
+                        a = a + 1;
+                        Label1.Text = a.ToString();
+                    }
+                }
             }
-            else
-            {
-                a = Convert.ToInt32(dr[0].ToString());
-                a = a + 1;
-                Label1.Text = a.ToString();
-            }
+            con10.Close();
         }
     }
 
     private void getCostofServiceADD_ID()
     {
+        if (User.Identity.IsAuthenticated)
+            {
+                SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+                SqlDataReader dr1;
+                con10.Open();
+                dr1 = cmd.ExecuteReader();
+                if (dr1.Read())
+                {
+                    company_id = Convert.ToInt32(dr1["com_id"].ToString());
         int a;
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         con1.Open();
@@ -158,32 +202,84 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 Label29.Text = a.ToString();
             }
         }
+                }
+                con10.Close();
+        }
     }
 
     private void SearchExpense()
     {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("Select * from CosServiceName_Add where Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con);
+                con.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
 
-        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from CosServiceName_Add where Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con);
-        con.Open();
-        DataSet ds = new DataSet();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(ds);
+
+                DropDownList3.DataSource = ds;
+                DropDownList3.DataTextField = "CostofService_Name";
+                DropDownList3.DataValueField = "CostName_Code";
+                DropDownList3.DataBind();
+                DropDownList3.Items.Insert(0, new ListItem("Select service", "0"));
+
+                DropDownList4.DataSource = ds;
+                DropDownList4.DataTextField = "CostofService_Name";
+                DropDownList4.DataValueField = "CostName_Code";
+                DropDownList4.DataBind();
+                DropDownList4.Items.Insert(0, new ListItem("Select service", "0"));
+
+                con.Close();
+            }
+            con10.Close();
+        }
+    }
+    private void showpartners()
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("Select * from partners_entry where Com_Id='" + company_id + "' ORDER BY partner_Code asc", con);
+                con.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
 
 
-        DropDownList3.DataSource = ds;
-        DropDownList3.DataTextField = "CostofService_Name";
-        DropDownList3.DataValueField = "CostName_Code";
-        DropDownList3.DataBind();
-        DropDownList3.Items.Insert(0, new ListItem("All", "0"));
+                DropDownList1.DataSource = ds;
+                DropDownList1.DataTextField = "partner_Name";
+                DropDownList1.DataValueField = "partner_Code";
+                DropDownList1.DataBind();
+                DropDownList1.Items.Insert(0, new ListItem("Select partner", "0"));
 
-        DropDownList4.DataSource = ds;
-        DropDownList4.DataTextField = "CostofService_Name";
-        DropDownList4.DataValueField = "CostName_Code";
-        DropDownList4.DataBind();
-        DropDownList4.Items.Insert(0, new ListItem("All", "0"));
+                DropDownList2.DataSource = ds;
+                DropDownList2.DataTextField = "partner_Name";
+                DropDownList2.DataValueField = "partner_Code";
+                DropDownList2.DataBind();
+                DropDownList2.Items.Insert(0, new ListItem("Select partner", "0"));
 
-        con.Close();
+                con.Close();
+            }
+            con10.Close();
+        }
     }
     private void SaveDetail(GridViewRow row)
     {
@@ -193,11 +289,14 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        TextBox8.Text = "";
-        TextBox12.Text = "";
-        DropDownList3.Items.Clear();
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+        TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+        getinvoiceno();
+        getCostofServiceADD_ID();
         SearchExpense();
         BindData();
+        showpartners();
     }
     private void active()
     {
@@ -213,58 +312,94 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
     {
 
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                ImageButton img = (ImageButton)sender;
+                GridViewRow row = (GridViewRow)img.NamingContainer;
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("delete from CostOfService_Entry where Cost_Id='" + row.Cells[1].Text + "' and year='"+Label8.Text+"' and Com_Id='" + company_id + "' ", con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service entry deleted successfully')", true);
 
-        ImageButton img = (ImageButton)sender;
-        GridViewRow row = (GridViewRow)img.NamingContainer;
-        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("delete from CostOfService_Entry where Cost_Id='" + row.Cells[1].Text + "' and Com_Id='" + company_id + "' ", con);
-        con.Open();
-        cmd.ExecuteNonQuery();
-        con.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service entry deleted successfully')", true);
-
-        BindData();
+                BindData();
+            }
+            con10.Close();
+        }
     }
     protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
     {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("Select * from CosServiceName_Add where Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con);
+                con.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
 
-        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from CosServiceName_Add where Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con);
-        con.Open();
-        DataSet ds = new DataSet();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(ds);
+                DropDownList4.DataSource = ds;
+                DropDownList4.DataTextField = "CostofService_Name";
+                DropDownList4.DataValueField = "CostName_Code";
+                DropDownList4.DataBind();
+                DropDownList4.Items.Insert(0, new ListItem("All", "0"));
 
-        DropDownList4.DataSource = ds;
-        DropDownList4.DataTextField = "CostofService_Name";
-        DropDownList4.DataValueField = "CostName_Code";
-        DropDownList4.DataBind();
-        DropDownList4.Items.Insert(0, new ListItem("All", "0"));
+                ImageButton IMG = (ImageButton)sender;
+                GridViewRow ROW = (GridViewRow)IMG.NamingContainer;
+                Label4.Text = ROW.Cells[1].Text;
+                TextBox2.Text = ROW.Cells[2].Text;
+                DropDownList4.SelectedItem.Text = ROW.Cells[3].Text;
+                TextBox3.Text = ROW.Cells[4].Text;
 
-        ImageButton IMG = (ImageButton)sender;
-        GridViewRow ROW = (GridViewRow)IMG.NamingContainer;
-        Label4.Text = ROW.Cells[1].Text;
-        TextBox2.Text = ROW.Cells[2].Text;
-        DropDownList4.SelectedItem.Text = ROW.Cells[3].Text;
-        TextBox3.Text = ROW.Cells[4].Text;
-    
-        this.ModalPopupExtender1.Show();
+                this.ModalPopupExtender1.Show();
+            }
+            con10.Close();
+        }
     }
     protected void Button5_Click(object sender, EventArgs e)
     {
+        int value = 0;
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd1.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("update CostOfService_Entry set  date='" + TextBox2.Text + "', CostofService_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "',status='" + "Cost Of Service-" + DropDownList4.SelectedItem.Text + "',value='" + value + "',partner_name='"+DropDownList2.SelectedItem.Text+"' where Cost_Id='" + Label4.Text + "'  and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ", CON);
 
-
-        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update CostOfService_Entry set Cost_Id='" + Label4.Text + "',date='" + TextBox2.Text + "', CostofService_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where Cost_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
-
-        CON.Open();
-        cmd.ExecuteNonQuery();
-        CON.Close();
-        Label31.Text = "Updated successfuly";
-
-        this.ModalPopupExtender1.Hide();
-        BindData();
-        getinvoiceno();
+                CON.Open();
+                cmd.ExecuteNonQuery();
+                CON.Close();
+                Label31.Text = "Updated successfuly";
+                 
+                this.ModalPopupExtender1.Hide();
+                BindData();
+                getinvoiceno();
+            }
+            con10.Close();
+        }
     }
     protected void LoginLink_OnClick(object sender, EventArgs e)
     {
@@ -316,12 +451,6 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
 
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + DropDownList3.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
     }
 
     protected void TextBox2_TextChanged(object sender, System.EventArgs e)
@@ -336,66 +465,114 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     }
     protected void Button16_Click(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd1 = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + TextBox1.Text + "' ", con1);
-        con1.Open();
-        SqlDataReader dr1;
-        dr1 = cmd1.ExecuteReader();
-        if (dr1.HasRows)
+        if (User.Identity.IsAuthenticated)
         {
+            SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd11 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con11);
+            SqlDataReader dr11;
+            con11.Open();
+            dr11 = cmd11.ExecuteReader();
+            if (dr11.Read())
+            {
+                company_id = Convert.ToInt32(dr11["com_id"].ToString());
+                if (TextBox1.Text != "")
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd1 = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + TextBox1.Text + "' ", con1);
+                    con1.Open();
+                    SqlDataReader dr1;
+                    dr1 = cmd1.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
 
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Name already exist')", true);
-            TextBox1.Text = "";
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name already exist')", true);
+                        TextBox1.Text = "";
+                    }
+                    else
+                    {
+
+
+
+
+                        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
+                        cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
+                        cmd.Parameters.AddWithValue("@CostofService_Name", TextBox1.Text);
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+
+                        CON.Open();
+                        cmd.ExecuteNonQuery();
+                        CON.Close();
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Added successfully')", true);
+                        DropDownList3.Items.Clear();
+                        TextBox1.Text = "";
+                        getCostofServiceADD_ID();
+                        SearchExpense();
+
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Enter the Service Name')", true);
+                    this.ModalPopupExtender3.Show();
+                }
+            }
+            con11.Close();
         }
-        else
-        {
-
-
-
-
-            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
-            cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
-            cmd.Parameters.AddWithValue("@CostofService_Name", TextBox1.Text);
-            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-          
-            CON.Open();
-            cmd.ExecuteNonQuery();
-            CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Name Added successfully')", true);
-            DropDownList3.Items.Clear();
-            TextBox1.Text = "";
-            getCostofServiceADD_ID();
-            SearchExpense();
-     
-        }     
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd11 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con11);
+            SqlDataReader dr11;
+            con11.Open();
+            dr11 = cmd11.ExecuteReader();
+            if (dr11.Read())
+            {
+                company_id = Convert.ToInt32(dr11["com_id"].ToString());
+                if (DropDownList3.SelectedItem.Text == "Select service")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please select srvice name')", true);
+                }
+                else
+                {
+                    int value = 0;
+                    SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount,@year,@status,@value,@partner_name)", CON);
+                    cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
+                    cmd.Parameters.AddWithValue("@date", TextBox8.Text);
+                    cmd.Parameters.AddWithValue("@CostofService_Name", DropDownList3.SelectedItem.Text);
+                    cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                    cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
+                    cmd.Parameters.AddWithValue("@year", Label8.Text);
+                    cmd.Parameters.AddWithValue("@status", "Cost Of Service -" + DropDownList3.SelectedItem.Text);
+                    cmd.Parameters.AddWithValue("@value", value);
+                    cmd.Parameters.AddWithValue("@partner_name", DropDownList1.SelectedItem.Text);
+                    CON.Open();
+                    cmd.ExecuteNonQuery();
+                    CON.Close();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Cost Added successfully')", true);
 
-        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount)", CON);
-        cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
-        cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-        cmd.Parameters.AddWithValue("@CostofService_Name", DropDownList3.SelectedItem.Text);
-        cmd.Parameters.AddWithValue("@Com_Id", company_id);
-        cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
-        CON.Open();
-        cmd.ExecuteNonQuery();
-        CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Cost of Service Entry Added successfully')", true);
-     
-        TextBox8.Text = "";
-        TextBox12.Text = "";
-        DropDownList3.Items.Clear();
-        getinvoiceno();
-        BindData();
-        SearchExpense();
+                    DateTime date = DateTime.Now;
+                    TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+                    TextBox12.Text = "";
+                    DropDownList3.Items.Clear();
+                    getinvoiceno();
+                    showpartners();
+                    BindData();
+                    SearchExpense();
+                }
+            }
+            con11.Close();
+        }
       
     }
     protected void Button7_Click(object sender, EventArgs e)
     {
         TextBox1.Text = "";
+        this.ModalPopupExtender3.Show();
     }
 
     protected void Button14_Click(object sender, EventArgs e)

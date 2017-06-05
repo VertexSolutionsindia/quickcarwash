@@ -161,7 +161,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
             CON.Open();
             cmd.ExecuteNonQuery();
             CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Staff Entry created successfully')", true);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Employee Entry created successfully')", true);
             BindData();
             show_category();
             getinvoiceno();
@@ -180,6 +180,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
         TextBox2.Text = "";
         TextBox14.Text = "";
         TextBox13.Text = "";
+        TextBox1.Text = "";
         getinvoiceno();
         show_category();
     }
@@ -225,7 +226,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         con.Close();
 
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Staff Details deleted successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Employee Details deleted successfully')", true);
 
         BindData();
         show_category();
@@ -274,28 +275,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
 
         con.Close();
     }
-    //private void show_department()
-    //{
-       
 
-
-    //    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-    //    SqlCommand cmd = new SqlCommand("Select * from Department where Com_Id='" + company_id + "' ORDER BY Depart_Code asc", con);
-    //    con.Open();
-    //    DataSet ds = new DataSet();
-    //    SqlDataAdapter da = new SqlDataAdapter(cmd);
-    //    da.Fill(ds);
-
-
-     
-    //    DropDownList3.DataSource = ds;
-    //    DropDownList3.DataTextField = "Depart_Name";
-    //    DropDownList3.DataValueField = "Depart_Code";
-    //    DropDownList3.DataBind();
-    //    DropDownList3.Items.Insert(0, new ListItem("All", "0"));
-
-    //    con.Close();
-    //}
     protected void LoginLink_OnClick(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
@@ -333,10 +313,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
     {
 
     }
-    protected void TextBox1_TextChanged(object sender, EventArgs e)
-    {
 
-    }
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -356,5 +333,22 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
     public override void VerifyRenderingInServerForm(Control control)
     {
         /* Verifies that the control is rendered */
+    }
+
+    protected void TextBox1_TextChanged(object sender, EventArgs e)
+    {
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Staff_Entry where Mob_No='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        BindData();
+        show_category();
     }
 }

@@ -15,8 +15,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 #endregion
 
-
-public partial class Admin_Service_entry : System.Web.UI.Page
+public partial class Admin_Partners_entry : System.Web.UI.Page
 {
     DataTable dt = null;
     public static int company_id = 0;
@@ -42,12 +41,12 @@ public partial class Admin_Service_entry : System.Web.UI.Page
             SearchServicename();
             showrating();
             BindData();
-          
+
             active();
             created();
 
 
-           
+
 
         }
     }
@@ -66,7 +65,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update Product_entry set Service_name='" + HttpUtility.HtmlDecode(TextBox16.Text) + "',Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where code='" + Label29.Text + "'  and Com_Id='" + company_id + "' ", CON);
+        SqlCommand cmd = new SqlCommand("update partners_entry set partner_Name='" + HttpUtility.HtmlDecode(TextBox16.Text) + "',Address='" + HttpUtility.HtmlDecode(TextBox3.Text) + "' where partner_Code='" + Label29.Text + "'  and Com_Id='" + company_id + "' ", CON);
         CON.Open();
         cmd.ExecuteNonQuery();
         CON.Close();
@@ -78,15 +77,15 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void Button17_Click(object sender, EventArgs e)
     {
-       
+
 
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd1 = new SqlCommand("delete from Product_entry where code='" + Label29.Text + "' and Com_Id='" + company_id + "' ", con1);
+        SqlCommand cmd1 = new SqlCommand("delete from partners_entry where partner_Code='" + Label29.Text + "' and Com_Id='" + company_id + "' ", con1);
         con1.Open();
         cmd1.ExecuteNonQuery();
         con1.Close();
 
-       
+
 
         Label31.Text = "Deleted successfuly";
 
@@ -97,7 +96,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void Button14_Click(object sender, EventArgs e)
     {
-      
+
         foreach (GridViewRow gvrow in GridView1.Rows)
         {
             //Finiding checkbox control in gridview for particular row
@@ -110,11 +109,11 @@ public partial class Admin_Service_entry : System.Web.UI.Page
                 SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
 
                 con.Open();
-                SqlCommand cmd = new SqlCommand("delete from Product_entry where code='" + usrid+"'  and Com_Id='" + company_id + "'", con);
+                SqlCommand cmd = new SqlCommand("delete from partners_entry where partner_Code='" + usrid + "'  and Com_Id='" + company_id + "'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
-               
+
 
             }
         }
@@ -132,14 +131,14 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
                 SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd1 = new SqlCommand("select * from Product_entry where Service_name='" + TextBox4.Text + "' ", con1);
+                SqlCommand cmd1 = new SqlCommand("select * from partners_entry where partner_Name='" + TextBox4.Text + "' ", con1);
                 con1.Open();
                 SqlDataReader dr1;
                 dr1 = cmd1.ExecuteReader();
                 if (dr1.HasRows)
                 {
 
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service already exist')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Partner already exist')", true);
                     TextBox4.Text = "";
                 }
                 else
@@ -149,15 +148,16 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
                     SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand cmd = new SqlCommand("insert into Product_entry values(@code,@Service_name,@Com_Id,@Amount)", CON);
-                    cmd.Parameters.AddWithValue("@code", Label1.Text);
-                    cmd.Parameters.AddWithValue("@Service_name", TextBox4.Text);
+                    SqlCommand cmd = new SqlCommand("insert into partners_entry values(@partner_Code,@partner_Name,@Address,@Com_Id)", CON);
+                    cmd.Parameters.AddWithValue("@partner_Code", Label1.Text);
+                    cmd.Parameters.AddWithValue("@partner_Name", TextBox4.Text);
+                    cmd.Parameters.AddWithValue("@Address", TextBox2.Text);
                     cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                    cmd.Parameters.AddWithValue("@Amount", TextBox2.Text);
+                  
                     CON.Open();
                     cmd.ExecuteNonQuery();
                     CON.Close();
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Added successfully')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Partners Added successfully')", true);
                     BindData();
                     SearchServicename();
                     getinvoiceno();
@@ -168,18 +168,18 @@ public partial class Admin_Service_entry : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Amount')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter partner amount')", true);
             }
         }
         else
         {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Service name')", true);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter partner name')", true);
 
         }
     }
     private void SaveDetail(GridViewRow row)
     {
-        
+
 
     }
 
@@ -191,8 +191,8 @@ public partial class Admin_Service_entry : System.Web.UI.Page
         BindData();
 
 
-      
-       
+
+
     }
     private void active()
     {
@@ -217,10 +217,10 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void BindData()
     {
-       
+
 
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Product_entry where Com_Id='" + company_id + "' ORDER BY code asc", con);
+        SqlCommand CMD = new SqlCommand("select * from partners_entry where Com_Id='" + company_id + "' ORDER BY partner_Code asc", con);
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
@@ -230,18 +230,18 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
     {
-      
+
 
         ImageButton img = (ImageButton)sender;
         GridViewRow row = (GridViewRow)img.NamingContainer;
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("delete from Product_entry where code='" + row.Cells[1].Text + "' and Com_Id='" + company_id + "' ", con);
+        SqlCommand cmd = new SqlCommand("delete from partners_entry where partner_Code='" + row.Cells[1].Text + "' and Com_Id='" + company_id + "' ", con);
         con.Open();
         cmd.ExecuteNonQuery();
         con.Close();
 
-       
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service entry deleted successfully')", true);
+
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Partner entry deleted successfully')", true);
 
         BindData();
         //show_category();
@@ -249,7 +249,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
     }
-    
+
     [System.Web.Script.Services.ScriptMethod()]
     [System.Web.Services.WebMethod]
 
@@ -258,7 +258,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     private void SearchServicename()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from Product_entry where Com_Id='" + company_id + "' ORDER BY code asc", con);
+        SqlCommand cmd = new SqlCommand("Select * from partners_entry where Com_Id='" + company_id + "' ORDER BY partner_Code asc", con);
         con.Open();
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -266,17 +266,17 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
         DropDownList2.DataSource = ds;
-        DropDownList2.DataTextField = "Service_name";
-        DropDownList2.DataValueField = "code";
+        DropDownList2.DataTextField = "partner_Name";
+        DropDownList2.DataValueField = "partner_Code";
         DropDownList2.DataBind();
         DropDownList2.Items.Insert(0, new ListItem("All", "0"));
-        con.Close();  
-       }
+        con.Close();
+    }
 
 
     private void show_category()
     {
-       
+
 
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand cmd = new SqlCommand("Select * from category where Com_Id='" + company_id + "' ORDER BY category_id asc", con);
@@ -286,16 +286,16 @@ public partial class Admin_Service_entry : System.Web.UI.Page
         da.Fill(ds);
 
 
-     
-    
-     
-     
+
+
+
+
         DropDownList2.Items.Insert(0, new ListItem("All", "0"));
 
 
-       
 
-      
+
+
         con.Close();
     }
     protected void LoginLink_OnClick(object sender, EventArgs e)
@@ -337,13 +337,13 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
-      
+
     }
 
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Product_entry where Service_name='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
+        SqlCommand CMD = new SqlCommand("select * from partners_entry where partner_Name='" + TextBox1.Text + "'  and Com_Id='" + company_id + "'", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -353,12 +353,12 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     private void getinvoiceno()
     {
-       
+
         int a;
 
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         con1.Open();
-        string query = "Select COUNT(code) from Product_entry where Com_Id='" + company_id + "'";
+        string query = "Select COUNT(partner_Code) from partners_entry where Com_Id='" + company_id + "'";
         SqlCommand cmd1 = new SqlCommand(query, con1);
         SqlDataReader dr = cmd1.ExecuteReader();
         if (dr.Read())
@@ -382,12 +382,12 @@ public partial class Admin_Service_entry : System.Web.UI.Page
     }
     protected void Button5_Click(object sender, EventArgs e)
     {
-       
+
     }
     protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Product_entry where Service_name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY code asc", con1);
+        SqlCommand CMD = new SqlCommand("select * from partners_entry where partner_Name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY partner_Code asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);

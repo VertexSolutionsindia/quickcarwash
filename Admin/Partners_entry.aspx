@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Service_entry.aspx.cs" Inherits="Admin_Service_entry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Partners_entry.aspx.cs" Inherits="Admin_Partners_entry" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -303,7 +303,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="page-title see2">
-                                <h2>Service Entry 
+                                <h2>Partners Entry 
                                  </h2>
                              
                              
@@ -348,7 +348,7 @@
                  <div class="panel-body">
                            <div class="form-horizontal">
                                <br />
-                               <div class="form-group"><label class="col-lg-3 control-label">Service Code</label>
+                               <div class="form-group"><label class="col-lg-3 control-label">Partners Code</label>
 
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel3" runat="server">
@@ -364,7 +364,7 @@
                                     </div>
                                 </div>
                 
-                 <div class="form-group"><label class="col-lg-3 control-label">Type of Service</label>
+                 <div class="form-group"><label class="col-lg-3 control-label">Partners Name</label>
                               
                                     <div class="col-lg-9">
                                     <asp:Panel ID="Panel1" runat="server" DefaultButton="Button1">
@@ -383,7 +383,7 @@
                                 
                                 </div>
 
-                                   <div class="form-group"><label class="col-lg-3 control-label">Amount</label>
+                                   <div class="form-group"><label class="col-lg-3 control-label">Address & mobile No</label>
                               
                                     <div class="col-lg-9">
                                     <asp:Panel ID="Panel3" runat="server" DefaultButton="Button1">
@@ -467,7 +467,7 @@
     <div class="col-md-1" ><h2>Filters</h2>
  </div>
   
-   <div class="col-md-3"><h3>Type of Service:</h3>
+   <div class="col-md-3"><h3>Partner Name:</h3>
 
     <asp:UpdatePanel ID="UpdatePanel5" runat="server">
    <ContentTemplate>
@@ -514,13 +514,13 @@
            
            </asp:TemplateField>
          
-           <asp:BoundField HeaderText="Service Code" DataField="code"  >
+           <asp:BoundField HeaderText="Partner Code" DataField="partner_Code"  >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-           <asp:BoundField HeaderText="Type of Service" DataField="Service_name" >
+           <asp:BoundField HeaderText="Partner Name" DataField="partner_Name" >
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-            <asp:BoundField HeaderText="Amount" DataField="Amount" >
+            <asp:BoundField HeaderText="Address" DataField="Address" >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
            <asp:TemplateField>

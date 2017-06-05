@@ -15,12 +15,8 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 #endregion
 
-public partial class Admin_Account_Ledger : System.Web.UI.Page
+public partial class Admin_Sales_Report : System.Web.UI.Page
 {
-    float tot_Credit= 0;
-    float m = 0;
-    float m1 = 0;
-    float tot_Debit = 0;
     public static int company_id = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -39,6 +35,7 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
                 }
                 con.Close();
             }
+
             SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
             SqlCommand cmd10 = new SqlCommand("select * from currentfinancialyear where no='1'", con10);
             SqlDataReader dr10;
@@ -47,19 +44,58 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
             if (dr10.Read())
             {
                 Label1.Text = dr10["financial_year"].ToString();
-                TextBox3.Text = Convert.ToDateTime(dr10["start_date"]).ToString("MM-dd-yyyy");
+                TextBox3.Text =Convert.ToDateTime(  dr10["start_date"]).ToString("MM-dd-yyyy");
             }
-         
             showrating();
             BindData();
 
             active();
             created();
-
-
+            SearchCustomer();
+            show_VehicleNO();
          
 
         }
+    }
+    private void show_VehicleNO()
+    {
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd = new SqlCommand("Select * from Customer_Entry where Com_Id='" + company_id + "' ORDER BY Custom_Code asc", con);
+        con.Open();
+        DataSet ds = new DataSet();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(ds);
+
+
+        DropDownList1.DataSource = ds;
+        DropDownList1.DataTextField = "Customer_VehNo";
+        DropDownList1.DataValueField = "Custom_Code";
+        DropDownList1.DataBind();
+        DropDownList1.Items.Insert(0, new ListItem("All", "0"));
+
+       
+
+        con.Close();
+    }
+
+    private void SearchCustomer()
+    {
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd = new SqlCommand("Select * from Customer_Entry where Com_Id='" + company_id + "' ORDER BY Custom_Code asc", con);
+        con.Open();
+        DataSet ds = new DataSet();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(ds);
+
+
+        DropDownList2.DataSource = ds;
+        DropDownList2.DataTextField = "Custom_Name";
+        DropDownList2.DataValueField = "Custom_Code";
+        DropDownList2.DataBind();
+        DropDownList2.Items.Insert(0, new ListItem("All", "0"));
+        con.Close();
     }
     private void active()
     {
@@ -176,21 +212,20 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
     }
     private void show_category()
     {
-        //SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(date,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where Com_Id='" + company_id + "'  group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry where Com_Id='" + company_id + "'  group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount where Com_Id='" + company_id + "'  group by date,status,amount,value", con1);
-        //DataTable dt1 = new DataTable();
-        //con1.Open();
-        //SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        //da1.Fill(dt1);
-        //GridView1.DataSource = dt1;
-        //GridView1.DataBind();
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("SELECT  CONVERT(date,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where Com_Id='" + company_id + "'  group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry where Com_Id='" + company_id + "'  group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount where Com_Id='" + company_id + "'  group by date,status,amount,value", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
     }
     protected void BindData()
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select date,status AS Particulars, sum(value) as Debit,sum(Amount) as Credit  from Billing_Entry where Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount union select date,status AS Particulars, sum(Amount) as Debit,sum(value) as Credit  from Expence_Entry where  Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount union select date,status AS Particulars, sum(Amount) as Debit,sum(value) as Credit  from CostOfService_Entry where  Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount", con1);
+        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
         DataTable dt1 = new DataTable();
-        con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
         GridView1.DataSource = dt1;
@@ -234,43 +269,10 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
     }
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        try
+        if (e.Row.RowType == DataControlRowType.Footer)
         {
-
-            if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                e.Row.Cells[0].Text = "Total : ";
-            }
-
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                Label Salary = (Label)e.Row.FindControl("lblDebit");
-
-                m = m + float.Parse(Salary.Text);
-
-            }
-            if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                Label lblTotalPrice = (Label)e.Row.FindControl("Debit");
-                lblTotalPrice.Text = m.ToString();
-
-            }
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                Label Salary = (Label)e.Row.FindControl("lblCredit");
-
-                m1 = m1 + float.Parse(Salary.Text);
-
-            }
-            if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                Label lblTotalPrice = (Label)e.Row.FindControl("Credit");
-                lblTotalPrice.Text = m1.ToString();
-
-            }
+            e.Row.Cells[0].Text = "Page " + (GridView1.PageIndex + 1) + " of " + GridView1.PageCount;
         }
-        catch (Exception er)
-        { }
     }
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
@@ -293,6 +295,9 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
     }
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
+       
+
+
 
     }
     protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
@@ -302,11 +307,31 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
     protected void TextBox3_TextChanged(object sender, EventArgs e)
     {
        
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
+
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+       
+        
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
     }
     protected void TextBox4_TextChanged(object sender, EventArgs e)
     {
       
-       
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
     }
     protected void TextBox6_TextChanged(object sender, EventArgs e)
     {
@@ -336,11 +361,23 @@ public partial class Admin_Account_Ledger : System.Web.UI.Page
         BindData();
     }
 
-    protected void Button2_Click(object sender, EventArgs e)
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-        SqlCommand CMD = new SqlCommand("select date,status AS Particulars, sum(value) as Debit,sum(Amount) as Credit  from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount  union select date,status AS Particulars, sum(Amount) as Debit,sum(value) as Credit  from Expence_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount  union select date,status AS Particulars, sum(Amount) as Debit,sum(value) as Credit  from CostOfService_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by date,status,value,Amount", con1);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='" + DropDownList1.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
+    }
+    protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_name='" + DropDownList2.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
