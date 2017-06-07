@@ -383,7 +383,7 @@
                                 
                                 </div>
 
-                                   <div class="form-group"><label class="col-lg-3 control-label">Address & mobile No</label>
+                                   <div class="form-group"><label class="col-lg-3 control-label">Mobile No</label>
                               
                                     <div class="col-lg-9">
                                     <asp:Panel ID="Panel3" runat="server" DefaultButton="Button1">

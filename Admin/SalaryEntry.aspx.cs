@@ -18,8 +18,9 @@ using System.Drawing;
 public partial class Admin_SalaryEntry : System.Web.UI.Page
 {
     //float tot = 0;
-    //float Costofservice_tot = 0;
-    //float Expense_tot = 0;
+    float Salary_tot = 0;
+    float TotalPaidAmt_tot = 0;
+  
     public static int company_id = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -49,14 +50,17 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 Label1.Text = dr10["financial_year"].ToString();
                 //TextBox3.Text = Convert.ToDateTime(dr10["start_date"]).ToString("MM/dd/yyyy");
             }
+            DateTime date = DateTime.Now;
+            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
             showrating();
-            //BindData();
+            getinvoiceno();
+            BindData();
             //BindData1();
             //BindData2();
             active();
             created();
 
-            
+
 
 
 
@@ -87,78 +91,65 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
     {
 
 
-        //if (TextBox3.Text != "")
-        //{
-        //    if (TextBox4.Text != "")
-        //    {
-        //        BindData();
-        //        BindData1();
-        BindData2();
+        if (TextBox3.Text != "")
+        {
+            if (TextBox4.Text != "")
+            {
+                if (TextBox1.Text != "")
+                {
+                    //        BindData();
+                    //        BindData1();
+                    BindData2();
 
 
-        //        //----------------------------------------------Finding Grossporift
+                    //        //----------------------------------------------Finding Balance
 
-        //        int Tot_Income = Convert.ToInt32(TextBox1.Text);
+                    int Tot_Income = Convert.ToInt32(TextBox6.Text);
 
-        //        int Tol_CostofService = Convert.ToInt32(TextBox2.Text);
+                    int Tol_CostofService = Convert.ToInt32(TextBox7.Text);
 
-        //        int Gross_profit = Tot_Income - Tol_CostofService;
+                    int Gross_profit = Tot_Income - Tol_CostofService;
 
-        //        TextBox5.Text = Convert.ToString(Gross_profit);
-        //        //-------------------------------------------------------------------
-
-        //        //------------------------------------------------Finding Net Profit
-        //        int Total_Grossprofit = Convert.ToInt32(TextBox5.Text);
-
-        //        int Total_Expense = Convert.ToInt32(TextBox6.Text);
-
-        //        int NetProfit = Total_Grossprofit - Total_Expense;
-
-        //        TextBox7.Text = Convert.ToString(NetProfit);
-        //        TextBox8.Text = Convert.ToString(NetProfit);
-
-        //        //--------------------------------------------------------------------
-
-        //    }
-        //    else
-        //    {
-        //        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Selete To Date')", true);
-        //    }
-        //}
-        //else
-        //{
-        //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Selete From Date')", true);
-        //}
-
-        ////----------------------------------------------Finding Grossporift
-       
-        ////---------------------------------------------------------------------
-
-      
-
+                    TextBox2.Text = Convert.ToString(Gross_profit);
+                    //        //-------------------------------------------------------------------
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Select Staff Name')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Select To Date')", true);
+            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Select From Date')", true);
+        }
     }
 
     protected void BindData()
     {
-        //if (User.Identity.IsAuthenticated)
-        //    {
-        //        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        //        SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con1);
-        //        SqlDataReader dr;
-        //        con1.Open();
-        //        dr = cmd.ExecuteReader();
-        //        if (dr.Read())
-        //        {
-        //SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        //SqlCommand CMD = new SqlCommand("select Service_Name,Sum(Amount) as Amount from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by Service_Name", con);
-        //DataTable dt1 = new DataTable();
-        //SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        //da1.Fill(dt1);
-        //GridView1.DataSource = dt1;
-        //GridView1.DataBind();
-        //        }
-        //        con1.Close();
-        //    }
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con);
+            SqlDataReader dr;
+            con.Open();
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand CMD = new SqlCommand("select * from Salary_Entry where Com_Id='1' ORDER BY Sal_id asc", con1);
+                DataTable dt1 = new DataTable();
+                SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                da1.Fill(dt1);
+                GridView1.DataSource = dt1;
+                GridView1.DataBind();
+            }
+            con.Close();
+        }
     }
     protected void BindData1()
     {
@@ -196,7 +187,7 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
             if (dr.Read())
             {
                 SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' AND Com_Id='1' ORDER BY No asc", con1);
+                SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where Staff_Name='" + TextBox1.Text + "' AND date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' AND Com_Id='1' ORDER BY No asc", con1);
                 DataTable dt1 = new DataTable();
                 SqlDataAdapter da1 = new SqlDataAdapter(CMD);
                 da1.Fill(dt1);
@@ -207,14 +198,43 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
         }
 
     }
+
+
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchStaffName(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select Emp_Name from Staff_Entry where Com_Id=@Com_Id and " +
+                "Emp_Name like @Emp_Name + '%'";
+                cmd.Parameters.AddWithValue("@Emp_Name", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["Emp_Name"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
+        }
+    }
     protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
     {
 
     }
-    private void getinvoiceno()
-    {
-        
-    }
+
 
     protected void LoginLink_OnClick(object sender, EventArgs e)
     {
@@ -289,13 +309,22 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
         {
             e.Row.Cells[0].Text = "Page " + (GridView3.PageIndex + 1) + " of " + GridView3.PageCount;
         }
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    Expense_tot = Expense_tot + float.Parse(e.Row.Cells[1].Text);
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Salary_tot = Salary_tot + float.Parse(e.Row.Cells[2].Text);
 
-        //}
-        //TextBox6.Text = Expense_tot.ToString();
-        
+        }
+        TextBox6.Text = Salary_tot.ToString();
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            TotalPaidAmt_tot = TotalPaidAmt_tot + float.Parse(e.Row.Cells[3].Text);
+
+        }
+        TextBox7.Text = TotalPaidAmt_tot.ToString();
+
+
+
     }
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
@@ -352,19 +381,149 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
 
     protected void Button3_Click(object sender, EventArgs e)
     {
-        //TextBox1.Text = "";
-        //TextBox2.Text = "";
-        //TextBox3.Text = "";
-        //TextBox4.Text = "";
-        //TextBox5.Text = "";
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+        TextBox3.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
         TextBox6.Text = "";
         TextBox7.Text = "";
-        TextBox8.Text = "";
-        BindData();
-        BindData1();
+        TextBox9.Text = "";
+        //BindData();
+        //BindData1();
         BindData2();
     }
 
 
-  
+
+    protected void TextBox5_TextChanged(object sender, EventArgs e)
+    {
+        //------------------------------------------------Finding pending amount
+        int Total_Grossprofit = Convert.ToInt32(TextBox2.Text);
+
+        int Total_Expense = Convert.ToInt32(TextBox5.Text);
+
+        int NetProfit = Total_Grossprofit - Total_Expense;
+
+        TextBox9.Text = Convert.ToString(NetProfit);
+
+        //----------------------------------------------------------------------
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr;
+            con10.Open();
+            dr = cmd1.ExecuteReader();
+            if (dr.Read())
+            {
+                company_id = Convert.ToInt32(dr["com_id"].ToString());
+
+                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("insert into Salary_Entry values(@Sal_id,@date,@from_date,@To_date,@Staff_Name,@Total_Salary,@TotalPaid_Amount,@Balance_Amount,@ActualPaid_Amount,@Pending_Amount,@Com_id,@year)", CON);
+                cmd.Parameters.AddWithValue("@Sal_id", Label2.Text);
+                cmd.Parameters.AddWithValue("@date", TextBox8.Text);
+                cmd.Parameters.AddWithValue("@from_date", TextBox3.Text);
+                cmd.Parameters.AddWithValue("@To_date", TextBox4.Text);
+                cmd.Parameters.AddWithValue("@Staff_Name", TextBox1.Text);
+                cmd.Parameters.AddWithValue("@Total_Salary", TextBox6.Text);
+                cmd.Parameters.AddWithValue("@TotalPaid_Amount", TextBox7.Text);
+                cmd.Parameters.AddWithValue("@Balance_Amount", TextBox2.Text);
+                cmd.Parameters.AddWithValue("@ActualPaid_Amount", TextBox5.Text);
+                cmd.Parameters.AddWithValue("@Pending_Amount", TextBox9.Text);
+                cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                cmd.Parameters.AddWithValue("@year", Label1.Text);
+
+                CON.Open();
+                cmd.ExecuteNonQuery();
+                CON.Close();
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Salary entry Added successfully')", true);
+
+                if (TextBox1.Text != "")
+                {
+                    SqlConnection Con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd2 = new SqlCommand("insert into SalaryPending_Amt_Dtl values(@SalPending_id,@date,@from_date,@To_date,@Staff_Name,@Pending_Amount,@Com_id,@year)", Con1);
+                    cmd2.Parameters.AddWithValue("@SalPending_id", Label2.Text);
+                    cmd2.Parameters.AddWithValue("@date", TextBox8.Text);
+                    cmd2.Parameters.AddWithValue("@from_date", TextBox3.Text);
+                    cmd2.Parameters.AddWithValue("@To_date", TextBox4.Text);
+                    cmd2.Parameters.AddWithValue("@Staff_Name", TextBox1.Text);
+                    cmd2.Parameters.AddWithValue("@Pending_Amount", TextBox9.Text);
+                    cmd2.Parameters.AddWithValue("@Com_Id", company_id);
+                    cmd2.Parameters.AddWithValue("@year", Label1.Text);
+
+                    Con1.Open();
+                    cmd2.ExecuteNonQuery();
+                    Con1.Close();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Salary entry Added successfully')", true);
+                }
+                TextBox1.Text = "";
+                TextBox2.Text = "";
+                TextBox3.Text = "";
+                TextBox4.Text = "";
+                TextBox5.Text = "";
+                TextBox6.Text = "";
+                TextBox7.Text = "";
+                TextBox9.Text = "";
+                BindData2();
+                BindData();
+                DateTime date = DateTime.Now;
+                TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+
+
+            }
+            con10.Close();
+        }
+    }
+    private void getinvoiceno()
+    {
+
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr1;
+            con10.Open();
+            dr1 = cmd.ExecuteReader();
+            if (dr1.Read())
+            {
+                company_id = Convert.ToInt32(dr1["com_id"].ToString());
+                int a;
+
+                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                con1.Open();
+                string query = "Select max(Sal_id) from Salary_Entry where Com_Id='" + company_id + "'";
+                SqlCommand cmd1 = new SqlCommand(query, con1);
+                SqlDataReader dr = cmd1.ExecuteReader();
+                if (dr.Read())
+                {
+                    string val = dr[0].ToString();
+                    if (val == "")
+                    {
+                        Label2.Text = "1";
+                    }
+                    else
+                    {
+                        a = Convert.ToInt32(dr[0].ToString());
+                        a = a + 1;
+                        Label2.Text = a.ToString();
+                    }
+                }
+                con1.Close();
+            }
+            con10.Close();
+        }
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void TextBox8_TextChanged(object sender, EventArgs e)
+    {
+
+    }
 }

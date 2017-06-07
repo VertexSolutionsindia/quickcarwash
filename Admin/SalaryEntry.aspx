@@ -357,8 +357,11 @@
 
 
 <div class="panel-body">
-   <div class="col-md-6">
-                             <div class="form-group"><label class="col-lg-3 control-label">Salary Id</label>
+<div class="row">
+
+<div class="col-md-4">
+
+                         <div class="form-group"><label class="col-lg-3 control-label">Salary Id</label>
 
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel8" runat="server">
@@ -373,13 +376,62 @@
                            </asp:UpdatePanel>
                                     </div>
                                 </div>
-                                   </div>
-                                   </br></br></br>
-   <div class="col-md-6">
 
-                             <div class="form-group"><label class="col-lg-3 control-label">From Date</label>
 
-                                    <div class="col-lg-9">
+</div>
+
+
+<div class="col-md-4">
+
+                       <div class="form-group"><label class="col-lg-4 control-label">Salary Date</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
+                                        ontextchanged="TextBox8_TextChanged"></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender3" runat="server" 
+                                        TargetControlID="TextBox8" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
+
+
+</div>
+
+
+
+<div class="col-md-4">
+
+
+ <div class="form-group"><label class="col-lg-4 control-label">Staff Name</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+   <ContentTemplate>
+  
+                                  <asp:TextBox ID="TextBox1" runat="server" AutoPostBack="true" class="form-control input-x2 dropbox"  
+                                      ontextchanged="TextBox1_TextChanged"></asp:TextBox>
+        
+                                        <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchStaffName" FirstRowSelected = "false" CompletionInterval="0" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox1"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
+
+</div>
+
+
+       </div>      <br />         
+          
+          
+          <div class="row">
+             <div class="col-md-4">
+
+                             <div class="form-group"><label class="col-lg-4 control-label">From Date</label>
+
+                                    <div class="col-lg-8">
                                      <asp:UpdatePanel ID="UpdatePanel5" runat="server">
    <ContentTemplate>
   
@@ -391,13 +443,11 @@
                                       </asp:UpdatePanel></div></div></div>
 
 
+   <div class="col-md-4">
 
+                        <div class="form-group"><label class="col-lg-4 control-label">To Date</label>
 
-   <div class="col-md-6">
-
-                        <div class="form-group"><label class="col-lg-3 control-label">To Date</label>
-
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-8">
                                      <asp:UpdatePanel ID="UpdatePanel6" runat="server">
    <ContentTemplate>
   <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" 
@@ -408,11 +458,13 @@
                                       </asp:UpdatePanel></div></div></div>
 
 
+</div>
+<div class="row">
 
-<div class="col-lg-6">
+<div class="col-md-4 col-md-offset-0">
                   <asp:UpdatePanel ID="UpdatePanel2" runat="server">
    <ContentTemplate>
-    <asp:Button ID="Button1" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Search" onclick="Button1_Click" 
+    <br /><asp:Button ID="Button1" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Search" onclick="Button1_Click" 
                           ></asp:Button> 
  <asp:Button ID="Button3" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button3_Click" 
                           ></asp:Button>
@@ -420,21 +472,10 @@
                            </asp:UpdatePanel>
 
 </div>
-
-</div>
-
-
-
 </div>
 </div>
-
-
-
-
-
-
-
-
+</div>
+</div>
 
 <div class="container">
 
@@ -444,131 +485,6 @@
   
      <asp:UpdatePanel ID="UpdatePanel7" runat="server">
    <ContentTemplate>
-<%--<div class="col-sm-12"><h3 style="color: #0000FF;margin-top:10px; font-size:20px; padding:10px;" align="left">Income</h3></div>
-<div class="row" >
-<div class="col-md-8  ">
-   <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-   <ContentTemplate>
-   <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="4" 
-         Font-Size="16px" 
-           AutoGenerateColumns="False" AllowPaging="True" 
-        onpageindexchanging="GridView1_PageIndexChanging" 
-        onrowdatabound="GridView1_RowDataBound" 
-        GridLines="Horizontal" PageSize="20" BackColor="White" BorderColor="#336666" 
-           BorderStyle="Double" BorderWidth="3px">
-       <Columns>
-           
-           <asp:BoundField HeaderText="Income" DataField="Service_Name" 
-                ItemStyle-Width="30%" >
-             <ItemStyle Width="30%" />
-            </asp:BoundField>
-             <asp:BoundField HeaderText="Amount" DataField="Amount" ItemStyle-Width="10%"  >
-
-  
-            <HeaderStyle CssClass="algin2" />
-            <ItemStyle Width="10%" CssClass="algin2" />
-            </asp:BoundField>
-
-  
-       </Columns>
-       <FooterStyle BackColor="White" ForeColor="#333333" />
-       <HeaderStyle Height="40px" BackColor="#336666" Font-Bold="True" CssClass="red" 
-           ForeColor="White" />
-       <PagerSettings FirstPageText="First" LastPageText="Last" />
-       <PagerStyle Wrap="true" BorderStyle="Solid" Width="100%" 
-           CssClass="gvwCasesPager" BackColor="#336666" ForeColor="White" 
-           HorizontalAlign="Center" />
-       <RowStyle Height="40px" BackColor="White" ForeColor="#333333" />
-       <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
-       <SortedAscendingCellStyle BackColor="#F7F7F7" />
-       <SortedAscendingHeaderStyle BackColor="#487575" />
-       <SortedDescendingCellStyle BackColor="#E5E5E5" />
-       <SortedDescendingHeaderStyle BackColor="#275353" />
-       </asp:GridView>
-  </ContentTemplate>
-    <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="GridView1"  />
-              
-                               </Triggers>
-    </asp:UpdatePanel>
-   
- 
-</div>
-</div>
-
-<div class="col-md-8"  style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Total Income</label>
-<asp:TextBox ID="TextBox1" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right" 
-          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
-</div>
-</div>
-
- 
-<br />
-<br />
-<div class="col-sm-12"><h3 style="color: #0000FF;margin-top:10px; font-size:20px; padding:10px;" align="left">Cost Of Service</h3></div>
-<div class="row">
-<div class="col-md-8">
-   <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-   <ContentTemplate>
-   <asp:GridView ID="GridView2" runat="server" Width="100%" CellPadding="4" 
-         Font-Size="16px" 
-           AutoGenerateColumns="False" AllowPaging="True" 
-        onpageindexchanging="GridView2_PageIndexChanging" 
-        onrowdatabound="GridView2_RowDataBound" 
-        GridLines="Horizontal" PageSize="20" BackColor="White" 
-           BorderColor="#336666" BorderWidth="3px" BorderStyle="Double">
-       <Columns>
-     
-         <asp:BoundField HeaderText="Cost of Service" DataField="CostofService_Name" 
-               ItemStyle-Width="30%">
-           <ItemStyle Width="30%" />
-           </asp:BoundField>
-         <asp:BoundField HeaderText="Amount" DataField="Amount" ItemStyle-Width="10%">
-
-  
-           <HeaderStyle CssClass="algin2" />
-           <ItemStyle CssClass="algin2" Width="10%" />
-           </asp:BoundField>
-
-  
-       </Columns>
-       <FooterStyle BackColor="White" ForeColor="#333333" />
-       <HeaderStyle Height="40px" BackColor="#336666" Font-Bold="True" CssClass="red" 
-           ForeColor="White" />
-       <PagerSettings FirstPageText="First" LastPageText="Last" />
-       <PagerStyle Wrap="true" BorderStyle="Solid" Width="100%" 
-           CssClass="gvwCasesPager" BackColor="#336666" ForeColor="White" 
-           HorizontalAlign="Center" />
-       <RowStyle Height="40px" BackColor="White" ForeColor="#333333" />
-       <SelectedRowStyle BackColor="#339966" ForeColor="White" Font-Bold="True" />
-       <SortedAscendingCellStyle BackColor="#F7F7F7" />
-       <SortedAscendingHeaderStyle BackColor="#487575" />
-       <SortedDescendingCellStyle BackColor="#E5E5E5" />
-       <SortedDescendingHeaderStyle BackColor="#275353" />
-       </asp:GridView>
-  </ContentTemplate>
-    <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="GridView2"  />
-              
-                               </Triggers>
-    </asp:UpdatePanel>
-</div>
-</div>
-<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Total Loss of Service</label>
- <asp:TextBox ID="TextBox2" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right" 
-          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
-</div>
-</div>
-<br />
-
-<div class="col-md-8"  style="border:1px solid green; padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Gross Profit</label>
- <asp:TextBox ID="TextBox5" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
-          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
-</div>
-</div>--%>
 
 
 <div class="col-sm-12">
@@ -585,30 +501,26 @@
        <Columns>
        
          <asp:BoundField HeaderText="Date" DataField="date" 
-               ItemStyle-Width="30%" DataFormatString="{0:MM/dd/yyyy}" >
-           <ItemStyle Width="30%" />
-           </asp:BoundField>
-         <asp:BoundField HeaderText="Staff Name" DataField="Staff_Name" ItemStyle-Width="10%">
-
-  
-           <HeaderStyle CssClass="algin2" />
-           <ItemStyle CssClass="algin2" Width="10%" />
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
            </asp:BoundField>
 
-                <asp:BoundField HeaderText="Option Name" DataField="option_name" ItemStyle-Width="10%">
+
+                <asp:BoundField HeaderText="Attendance" DataField="option_name" ItemStyle-Width="10%">
  
-           <HeaderStyle CssClass="algin2" />
-           <ItemStyle CssClass="algin2" Width="10%" />
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
-              <asp:BoundField HeaderText="Salary Amount" DataField="salary_amount" ItemStyle-Width="10%">
+              <asp:BoundField HeaderText="Per day salary" DataField="salary_amount" ItemStyle-Width="10%">
  
-           <HeaderStyle CssClass="algin2" />
-           <ItemStyle CssClass="algin2" Width="10%" />
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
-                  <asp:BoundField HeaderText="Hard Amount" DataField="Amount" ItemStyle-Width="10%">
+                  <asp:BoundField HeaderText="Paid Amount" DataField="Amount" ItemStyle-Width="10%">
  
-           <HeaderStyle CssClass="algin2" />
-           <ItemStyle CssClass="algin2" Width="10%" />
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
        </Columns>
        <FooterStyle BackColor="White" ForeColor="#000066" />
@@ -633,33 +545,162 @@
     </asp:UpdatePanel>
 </div>
 </div>
-<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Total Expense</label>
- <asp:TextBox ID="TextBox6" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
-          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
-</div>
-</div>
-<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Net Operating Income</label>
- <asp:TextBox ID="TextBox7" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
-          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
-</div>
-</div>
-<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label" 
-         style="font-size: medium; color: #000000; text-transform: uppercase">Net Income</label>
- <asp:TextBox ID="TextBox8" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
-          BorderColor="Red" BorderStyle="Solid" ForeColor="Black" 
-         BackColor="#99CCFF"></asp:TextBox>
-</div>
-</div>
- </ContentTemplate>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Total Salary</label>
+            <asp:TextBox ID="TextBox6" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Total Paid Amount</label>
+            <asp:TextBox ID="TextBox7" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+    <div class="col-md-6">
+  
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Balance Amount</label>
+            <asp:TextBox ID="TextBox2" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Actual Paid Amount</label>
+            <asp:TextBox ID="TextBox5" runat="server" AutoPostBack="true" 
+                BorderColor="#66CCFF" BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" 
+                ForeColor="Black" ontextchanged="TextBox5_TextChanged" style="float:right" 
+                Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+       
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Pending Amount</label>
+            <asp:TextBox ID="TextBox9" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+        </div>
+    </div>
+    <br />
+      <div class="col-lg-12">
+        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+            <ContentTemplate>
+                <asp:Button ID="Button2" runat="server" class="btn-primary" Height="30px" 
+                    onclick="Button2_Click" Text="Create" Width="70px" />
+                <asp:Button ID="Button4" runat="server" class="btn-primary" Height="30px" 
+                    onclick="Button4_Click" Text="Clear" Width="70px" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+   
+    </ContentTemplate>
 </asp:UpdatePanel>
-               
+              
 
         </div>
         </div>
         </div>
+
+        <div class="row">
+<div class="col-md-12">
+   <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+   <ContentTemplate>
+   <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="3" 
+         Font-Size="16px" 
+           AutoGenerateColumns="False" AllowPaging="True" 
+        onpageindexchanging="GridView1_PageIndexChanging" 
+        onrowdatabound="GridView1_RowDataBound" PageSize="20" BackColor="White" 
+           BorderColor="#CCCCCC" BorderWidth="1px" BorderStyle="None">
+       <Columns>
+                   <asp:BoundField HeaderText="Salary Id" DataField="Sal_id" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+         <asp:BoundField HeaderText="From Date" DataField="from_date" 
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
+                   <asp:BoundField HeaderText="To Date" DataField="To_date" 
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
+
+                <asp:BoundField HeaderText="Staff Name" DataField="Staff_Name" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+              <asp:BoundField HeaderText="Total salary" DataField="Total_Salary" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+                  <asp:BoundField HeaderText="Total Paid Amount" DataField="TotalPaid_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+                        <asp:BoundField HeaderText="Balance Amount" DataField="Balance_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+       </Columns>
+       <FooterStyle BackColor="White" ForeColor="#000066" />
+       <HeaderStyle Height="40px" BackColor="#006699" Font-Bold="True" CssClass="red" 
+           ForeColor="White" />
+       <PagerSettings FirstPageText="First" LastPageText="Last" />
+       <PagerStyle Wrap="true" BorderStyle="Solid" Width="100%" 
+           CssClass="gvwCasesPager" BackColor="White" ForeColor="#000066" 
+           HorizontalAlign="Left" />
+       <RowStyle Height="40px" ForeColor="#000066" />
+       <SelectedRowStyle BackColor="#669999" ForeColor="White" Font-Bold="True" />
+       <SortedAscendingCellStyle BackColor="#F1F1F1" />
+       <SortedAscendingHeaderStyle BackColor="#007DBB" />
+       <SortedDescendingCellStyle BackColor="#CAC9C9" />
+       <SortedDescendingHeaderStyle BackColor="#00547E" />
+       </asp:GridView>
+  </ContentTemplate>
+    <Triggers>
+             <%--   <asp:AsyncPostBackTrigger ControlID="GridView2"  />--%>
+              
+                               </Triggers>
+    </asp:UpdatePanel>
+</div>
+</div>
+
+
+
         </div>
         </div>
         </div>
