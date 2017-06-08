@@ -36,9 +36,6 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
                 con.Close();
             }
 
-<<<<<<< HEAD
-         
-=======
             SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
             SqlCommand cmd10 = new SqlCommand("select * from currentfinancialyear where no='1'", con10);
             SqlDataReader dr10;
@@ -47,27 +44,19 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
             if (dr10.Read())
             {
                 Label1.Text = dr10["financial_year"].ToString();
-                TextBox3.Text =Convert.ToDateTime(  dr10["start_date"]).ToString("MM-dd-yyyy");
+                TextBox3.Text =Convert.ToDateTime(  dr10["start_date"]).ToString("dd-MM-yyyy");
             }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
             showrating();
             BindData();
 
             active();
             created();
-<<<<<<< HEAD
-
-
-=======
             SearchCustomer();
             show_VehicleNO();
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
          
 
         }
     }
-<<<<<<< HEAD
-=======
     private void show_VehicleNO()
     {
 
@@ -108,7 +97,6 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         DropDownList2.Items.Insert(0, new ListItem("All", "0"));
         con.Close();
     }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
     private void active()
     {
 
@@ -236,11 +224,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
     protected void BindData()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con);
-=======
         SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
@@ -326,11 +310,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
 
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "'", con1);
-=======
         SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
        
         
         DataTable dt1 = new DataTable();
@@ -345,11 +325,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
       
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'", con1);
-=======
         SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -384,9 +360,6 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         TextBox4.Text = "";
         BindData();
     }
-<<<<<<< HEAD
-    
-=======
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -412,5 +385,92 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         GridView1.DataSource = dt1;
         GridView1.DataBind();
     }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
+    #region " [ Button Event ] "
+    protected void Button8_Click(object sender, EventArgs e)
+    {
+        // select appropriate contenttype, while binary transfer it identifies filetype
+        string contentType = string.Empty;
+        if (DropDownList5.SelectedValue.Equals(".pdf"))
+            contentType = "application/pdf";
+        if (DropDownList5.SelectedValue.Equals(".doc"))
+            contentType = "application/ms-word";
+        if (DropDownList5.SelectedValue.Equals(".xls"))
+            contentType = "application/xls";
+
+        DataTable dsData = new DataTable();
+
+        DataSet ds = null;
+        SqlDataAdapter da = null;
+
+
+
+        try
+        {
+            string constring = ConfigurationManager.AppSettings["connection"];
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand cmd = new SqlCommand("Billing_report", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@from_date",Convert.ToDateTime( TextBox1.Text).ToString("MM-dd-yyyy"));
+                    cmd.Parameters.AddWithValue("@to_date", Convert.ToDateTime(TextBox2.Text).ToString("MM-dd-yyyy"));
+                    cmd.Parameters.AddWithValue("@Com_Id", Convert.ToInt32(company_id));
+                    cmd.Parameters.AddWithValue("@year", Label1.Text);
+                    da = new SqlDataAdapter(cmd);
+                    ds = new DataSet();
+                    con.Open();
+                    da.Fill(ds);
+                    con.Close();
+
+                }
+            }
+        }
+        catch
+        {
+            throw;
+        }
+
+
+
+        dsData = ds.Tables[0];
+
+        string FileName = "File_" + DateTime.Now.ToString("ddMMyyyyhhmmss") + DropDownList5.SelectedValue;
+        string extension;
+        string encoding;
+        string mimeType;
+        string[] streams;
+        Warning[] warnings;
+
+        LocalReport report = new LocalReport();
+        report.ReportPath = Server.MapPath("~/Admin/Billing_report.rdlc");
+        ReportDataSource rds = new ReportDataSource();
+        rds.Name = "DataSet1";//This refers to the dataset name in the RDLC file
+        rds.Value = dsData;
+        report.DataSources.Add(rds);
+
+        Byte[] mybytes = report.Render(DropDownList5.SelectedItem.Text, null,
+                        out extension, out encoding,
+                        out mimeType, out streams, out warnings); //for exporting to PDF
+        using (FileStream fs = File.Create(Server.MapPath("~/img/") + FileName))
+        {
+            fs.Write(mybytes, 0, mybytes.Length);
+        }
+
+        Response.ClearHeaders();
+        Response.ClearContent();
+        Response.Buffer = true;
+        Response.Clear();
+        Response.ContentType = contentType;
+        Response.AddHeader("Content-Disposition", "attachment; filename=" + FileName);
+        Response.WriteFile(Server.MapPath("~/img/" + FileName));
+        Response.Flush();
+        Response.Close();
+        Response.End();
+
+
+
+
+
+    }
+    #endregion
 }

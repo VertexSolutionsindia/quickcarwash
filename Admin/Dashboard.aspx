@@ -206,9 +206,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                             
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -271,6 +269,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                     <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                            </ul>
                           
                                

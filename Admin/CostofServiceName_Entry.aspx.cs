@@ -375,19 +375,63 @@ public partial class Admin_CostofServiceName_Entry : System.Web.UI.Page
     }
     protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+        if (DropDownList2.SelectedItem.Text == "All")
+        {
+            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand CMD = new SqlCommand("select * from CosServiceName_Add where Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con1);
+            DataTable dt1 = new DataTable();
+            con1.Open();
+            SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+            da1.Fill(dt1);
+            GridView1.DataSource = dt1;
+            GridView1.DataBind();
+        }
+        else
+        {
+            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand CMD = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY CostName_Code asc", con1);
+            DataTable dt1 = new DataTable();
+            con1.Open();
+            SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+            da1.Fill(dt1);
+            GridView1.DataSource = dt1;
+            GridView1.DataBind();
+        }
     }
     protected void Button6_Click(object sender, EventArgs e)
     {
         DropDownList2.Items.Clear();
         SearchServicename();
         BindData();
+    }
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchCustomers(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct CostofService_Name from CosServiceName_Add where Com_Id=@Com_Id and " +
+                "CostofService_Name like @CostofService_Name + '%'";
+                cmd.Parameters.AddWithValue("@CostofService_Name", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["CostofService_Name"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
+        }
     }
 }

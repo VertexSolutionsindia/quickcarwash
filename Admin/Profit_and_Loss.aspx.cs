@@ -150,11 +150,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 if (dr.Read())
                 {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select Service_Name,Sum(Amount) as Amount from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by Service_Name", con);
-=======
         SqlCommand CMD = new SqlCommand("select Service_Name,Sum(Amount) as Amount from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by Service_Name", con);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
@@ -177,11 +173,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 {
         SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
-<<<<<<< HEAD
-        SqlCommand CMD2 = new SqlCommand("select CostofService_Name,Sum(Amount) as Amount from CostOfService_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by CostofService_Name", con2);
-=======
         SqlCommand CMD2 = new SqlCommand("select CostofService_Name,Sum(Amount) as Amount from CostOfService_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by CostofService_Name", con2);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         DataTable dt2 = new DataTable();
         con2.Open();
         SqlDataAdapter da2 = new SqlDataAdapter(CMD2);
@@ -205,11 +197,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 {
         SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
-<<<<<<< HEAD
-        SqlCommand CMD2 = new SqlCommand("select Expense_Name,Sum(Amount) as Amount from Expence_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by Expense_Name", con2);
-=======
         SqlCommand CMD2 = new SqlCommand("select Expense_Name,Sum(Amount) as Amount from Expence_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by Expense_Name", con2);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         DataTable dt2 = new DataTable();
         con2.Open();
         SqlDataAdapter da2 = new SqlDataAdapter(CMD2);

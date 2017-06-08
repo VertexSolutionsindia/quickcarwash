@@ -39,9 +39,9 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
             }
 
             DateTime date = DateTime.Now;
-            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+            TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
 
-            this.Form.DefaultButton = Button1.UniqueID;
+        
             TextBox15.Focus();
           
           
@@ -70,7 +70,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
             active();
             created();
 
-            Button4.Visible = false;
+           
         }
 
     }
@@ -86,7 +86,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
             if (dr.Read())
             {
                 company_id = Convert.ToInt32(dr["com_id"].ToString());
-                Button4.Visible = true;
+             
                 TextBox8.Focus();
                 ImageButton IMG = (ImageButton)sender;
                 GridViewRow ROW = (GridViewRow)IMG.NamingContainer;
@@ -120,58 +120,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
 
     }
 
-    protected void Button4_Click(object sender, EventArgs e)
-    {
-          if (User.Identity.IsAuthenticated)
-            {
-                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con);
-                SqlDataReader dr;
-                con.Open();
-                dr = cmd1.ExecuteReader();
-                if (dr.Read())
-                {
-                    company_id = Convert.ToInt32(dr["com_id"].ToString());
-        int value = 0;
-        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update WorkshopBilling_Entry set date=@date,Workshop_name=@Workshop_name,Mobile_no=@Mobile_No,Address=@Address,Amount=@Amount,Com_Id=@Com_Id,Customer_VehNo=@Customer_VehNo,Service_Name=@Service_Name,status=@status,value=@value,year=@year where Invoice_id=@Invoice_id and year=@year and Com_Id=@Com_Id", CON);
-        cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
-        cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-        cmd.Parameters.AddWithValue("@Workshop_name", HttpUtility.HtmlDecode(TextBox3.Text));
-        cmd.Parameters.AddWithValue("@Mobile_No", HttpUtility.HtmlDecode(TextBox2.Text));
-        cmd.Parameters.AddWithValue("@Address", HttpUtility.HtmlDecode(TextBox4.Text));
-        cmd.Parameters.AddWithValue("@Amount", HttpUtility.HtmlDecode(TextBox5.Text));
-        cmd.Parameters.AddWithValue("@Com_Id", company_id);
-        cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
-        cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
-        cmd.Parameters.AddWithValue("@value", value);
-        cmd.Parameters.AddWithValue("@year", Label8.Text);
-       
-        CON.Open();
-        cmd.ExecuteNonQuery();
-        CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice Updated successfully')", true);
-
-        BindData();
-        getinvoiceno();
-        show_category();
-        show_VehicleNO();
-        TextBox3.Text = "";
-        TextBox2.Text = "";
-        TextBox4.Text = "";
-        TextBox5.Text = "";
-        TextBox6.Text = "";
-        TextBox15.Text = "";
-        Button4.Visible = false;
-        DateTime date = DateTime.Now;
-        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-                }
-              con.Close();
-          }
-
-    }
-
+  
     protected void Button17_Click(object sender, EventArgs e)
     {
         if (User.Identity.IsAuthenticated)
@@ -243,187 +192,8 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
         }
 
     }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        if (User.Identity.IsAuthenticated)
-        {
-            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
-            SqlDataReader dr10;
-            con10.Open();
-            dr10 = cmd10.ExecuteReader();
-            if (dr10.Read())
-            {
-                company_id = Convert.ToInt32(dr10["com_id"].ToString());
-
-                if (TextBox15.Text == "All")
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please Enter valid Vehicle No')", true);
-                }
-                else if (DropDownList1.SelectedItem.Text == "All")
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please Select valid Service Type')", true);
-                }
-                else
-                {
-                    SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand cmd11 = new SqlCommand("select * from Workshop_Entry where WorkShop_Name='" + TextBox3.Text + "' AND Com_Id='" + company_id + "'  ", con11);
-                    con11.Open();
-                    SqlDataReader dr11;
-                    dr11 = cmd11.ExecuteReader();
-                    if (dr11.HasRows)
-                    {
-                        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                        SqlCommand cmd1 = new SqlCommand("select * from WorkshopBilling_Entry where Invoice_id='" + Label1.Text + "' and year='" + Label8.Text + "' AND Com_Id='" + company_id + "'  ", con1);
-                        con1.Open();
-                        SqlDataReader dr1;
-                        dr1 = cmd1.ExecuteReader();
-                        if (dr1.HasRows)
-                        {
-
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice alrady exist')", true);
-                        }
-                        else
-                        {
-                            int value = 0;
-                            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                            SqlCommand cmd = new SqlCommand("insert into WorkshopBilling_Entry values(@Invoice_id,@date,@Workshop_name,@Mobile_No,@Address,@Amount,@Com_Id,@Customer_VehNo,@Service_Name,@status,@value,@year)", CON);
-                            cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
-                            cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-                            cmd.Parameters.AddWithValue("@Workshop_name", HttpUtility.HtmlDecode(TextBox3.Text));
-                            cmd.Parameters.AddWithValue("@Mobile_No", HttpUtility.HtmlDecode(TextBox2.Text));
-                            cmd.Parameters.AddWithValue("@Address", HttpUtility.HtmlDecode(TextBox4.Text));
-                            cmd.Parameters.AddWithValue("@Amount", HttpUtility.HtmlDecode(TextBox5.Text));
-                            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                            cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
-                            cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-                            cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
-                            cmd.Parameters.AddWithValue("@value", value);
-                            cmd.Parameters.AddWithValue("@year", Label8.Text);
-                            CON.Open();
-                            cmd.ExecuteNonQuery();
-                            CON.Close();
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice created successfully')", true);
-                            BindData();
-                            getinvoiceno();
-                            show_category();
-                            show_VehicleNO();
-
-                            TextBox3.Text = "";
-                            TextBox2.Text = "";
-                            TextBox4.Text = "";
-                            TextBox5.Text = "";
-                            TextBox6.Text = "";
-                            TextBox15.Text = "";
-                            DateTime date = DateTime.Now;
-                            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-                        }
-                        con1.Close();
-
-                    }
-                    else
-                    {
-                        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                        SqlCommand cmd1 = new SqlCommand("select * from Workshop_Entry where WorkShop_Name='" + TextBox3.Text + "' ", con1);
-                        con1.Open();
-                        SqlDataReader dr1;
-                        dr1 = cmd1.ExecuteReader();
-                        if (dr1.HasRows)
-                        {
-
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Name already exist')", true);
-                            TextBox4.Text = "";
-                        }
-                        else
-                        {
-                            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                            SqlCommand cmd = new SqlCommand("insert into Workshop_Entry values(@WorkShop_id,@WorkShop_Name,@WorkShop_Add,@Mobile_no,@Com_Id)", CON);
-                            cmd.Parameters.AddWithValue("@WorkShop_id", Label9.Text);
-                            cmd.Parameters.AddWithValue("@WorkShop_Name", TextBox3.Text);
-                            cmd.Parameters.AddWithValue("@WorkShop_Add", TextBox4.Text);
-                            cmd.Parameters.AddWithValue("@Mobile_no", TextBox2.Text);
-                            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-
-                            CON.Open();
-                            cmd.ExecuteNonQuery();
-                            CON.Close();
-                            
-                        }
-                        con1.Close();
-
-                        SqlConnection con13 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                        SqlCommand cmd13 = new SqlCommand("select * from WorkshopBilling_Entry where Invoice_id='" + Label1.Text + "' and year='" + Label8.Text + "' AND Com_Id='" + company_id + "'  ", con13);
-                        con13.Open();
-                        SqlDataReader dr13;
-                        dr13 = cmd13.ExecuteReader();
-                        if (dr13.HasRows)
-                        {
-
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice alrady exist')", true);
-                        }
-                        else
-                        {
-                            int value = 0;
-                            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                            SqlCommand cmd = new SqlCommand("insert into WorkshopBilling_Entry values(@Invoice_id,@date,@Workshop_name,@Mobile_No,@Address,@Amount,@Com_Id,@Customer_VehNo,@Service_Name,@status,@value,@year)", CON);
-                            cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
-                            cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-                            cmd.Parameters.AddWithValue("@Workshop_name", HttpUtility.HtmlDecode(TextBox3.Text));
-                            cmd.Parameters.AddWithValue("@Mobile_No", HttpUtility.HtmlDecode(TextBox2.Text));
-                            cmd.Parameters.AddWithValue("@Address", HttpUtility.HtmlDecode(TextBox4.Text));
-                            cmd.Parameters.AddWithValue("@Amount", HttpUtility.HtmlDecode(TextBox5.Text));
-                            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                            cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
-                            cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-                            cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
-                            cmd.Parameters.AddWithValue("@value", value);
-                            cmd.Parameters.AddWithValue("@year", Label8.Text);
-                            CON.Open();
-                            cmd.ExecuteNonQuery();
-                            CON.Close();
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice created successfully')", true);
-                            BindData();
-                            getinvoiceno();
-                            show_category();
-                            show_VehicleNO();
-
-                            TextBox3.Text = "";
-                            TextBox2.Text = "";
-                            TextBox4.Text = "";
-                            TextBox5.Text = "";
-                            TextBox6.Text = "";
-                            TextBox15.Text = "";
-                            DateTime date = DateTime.Now;
-                            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-                        }
-                        con13.Close();
-
-                    }
-                    con11.Close();
-                }
-                con10.Close();
-            }
-        }
-
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        DateTime date = DateTime.Now;
-        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-
-        TextBox3.Text = "";
-        TextBox2.Text = "";
-        TextBox4.Text = "";
-        TextBox5.Text = "";
-        TextBox6.Text = "";
-        TextBox1.Text = "";
-        TextBox15.Text = "";
-        getinvoiceno();
-        show_category();
-        show_VehicleNO();
-        Button4.Visible = false;
-    }
+    
+   
     private void active()
     {
 
@@ -535,6 +305,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
             else
             {
                 a = Convert.ToInt32(dr[0].ToString());
+                TextBox13.Text = a.ToString();
                 a = a + 1;
                 Label1.Text = a.ToString();
             }
@@ -1131,6 +902,512 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
                 conn.Close();
                 return customers;
             }
+        }
+    }
+    protected void Button9_Click(object sender, EventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                company_id = Convert.ToInt32(dr10["com_id"].ToString());
+
+                if (TextBox15.Text == "All")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please Enter valid Vehicle No')", true);
+                }
+                else if (DropDownList1.SelectedItem.Text == "All")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please Select valid Service Type')", true);
+                }
+                else
+                {
+                    SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd11 = new SqlCommand("select * from Workshop_Entry where WorkShop_Name='" + TextBox3.Text + "' ", con11);
+                    con11.Open();
+                    SqlDataReader dr11;
+                    dr11 = cmd11.ExecuteReader();
+                    if (dr11.HasRows)
+                    {
+
+                    }
+                    else
+                    {
+
+                        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlCommand cmd = new SqlCommand("insert into Workshop_Entry values(@WorkShop_id,@WorkShop_Name,@WorkShop_Add,@Mobile_no,@Com_Id)", CON);
+                        cmd.Parameters.AddWithValue("@WorkShop_id", Label9.Text);
+                        cmd.Parameters.AddWithValue("@WorkShop_Name", TextBox3.Text);
+                        cmd.Parameters.AddWithValue("@WorkShop_Add", TextBox4.Text);
+                        cmd.Parameters.AddWithValue("@Mobile_no", TextBox2.Text);
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+
+                        CON.Open();
+                        cmd.ExecuteNonQuery();
+                        CON.Close();
+
+                    }
+                    con11.Close();
+
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd1 = new SqlCommand("select * from WorkshopBilling_Entry where Invoice_id='" + Label1.Text + "' and year='" + Label8.Text + "' AND Com_Id='" + company_id + "'  ", con1);
+                    con1.Open();
+                    SqlDataReader dr1;
+                    dr1 = cmd1.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
+                        int value = 0;
+                         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd = new SqlCommand("update WorkshopBilling_Entry set date=@date,Workshop_name=@Workshop_name,Mobile_no=@Mobile_No,Address=@Address,Amount=@Amount,Com_Id=@Com_Id,Customer_VehNo=@Customer_VehNo,Service_Name=@Service_Name,status=@status,value=@value,year=@year where Invoice_id=@Invoice_id and year=@year and Com_Id=@Com_Id", CON);
+        cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
+        cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
+        cmd.Parameters.AddWithValue("@Workshop_name", HttpUtility.HtmlDecode(TextBox3.Text));
+        cmd.Parameters.AddWithValue("@Mobile_No", HttpUtility.HtmlDecode(TextBox2.Text));
+        cmd.Parameters.AddWithValue("@Address", HttpUtility.HtmlDecode(TextBox4.Text));
+        cmd.Parameters.AddWithValue("@Amount", HttpUtility.HtmlDecode(TextBox5.Text));
+        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+        cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
+        cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
+        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+        cmd.Parameters.AddWithValue("@value", value);
+        cmd.Parameters.AddWithValue("@year", Label8.Text);
+       
+        CON.Open();
+        cmd.ExecuteNonQuery();
+        CON.Close();
+
+        float b11 = 0;
+        float f11 = 0;
+        float c11 = 0;
+
+        SqlConnection con100 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+        SqlCommand check_User_Name100 = new SqlCommand("SELECT * FROM receive_amount_status WHERE Buyer = @Buyer and Com_Id='" + company_id + "' and year='" + Label8.Text + "' ", con100);
+        check_User_Name100.Parameters.AddWithValue("@Buyer", TextBox3.Text);
+        con100.Open();
+        SqlDataReader reader100 = check_User_Name100.ExecuteReader();
+        if (reader100.HasRows)
+        {
+            SqlConnection con111 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+            SqlCommand cmd111 = new SqlCommand("Select * from receive_amount where Buyer='" + TextBox3.Text + "' and invoice_no='" + Label1.Text + "'  and Com_Id='" + company_id + "' and year='" + Label8.Text + "'", con111);
+            con111.Open();
+            SqlDataReader dr111;
+            dr111 = cmd111.ExecuteReader();
+            if (dr111.Read())
+            {
+
+                b11 = float.Parse(dr111["pending_amount"].ToString());
+
+
+
+
+
+
+                SqlConnection con27 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                SqlCommand cd27 = new SqlCommand("update receive_amount_status set pending_amount=pending_amount-@pending_amount where Buyer='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label8.Text + "'", con27);
+                cd27.Parameters.AddWithValue("@pending_amount", b11);
+                con27.Open();
+                cd27.ExecuteNonQuery();
+                con27.Close();
+
+                SqlConnection con272 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                SqlCommand cd272 = new SqlCommand("update receive_amount set pending_amount=pending_amount-@pending_amount,outstanding=outstanding-@outstanding where Buyer='" + TextBox3.Text + "' and  invoice_no='" + Label1.Text + "' and Com_Id='" + company_id + "' and year='" + Label8.Text + "' ", con272);
+                cd272.Parameters.AddWithValue("@pending_amount", b11);
+                cd272.Parameters.AddWithValue("@outstanding", b11);
+                con272.Open();
+                cd272.ExecuteNonQuery();
+                con272.Close();
+
+                SqlConnection con271 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                SqlCommand cd271 = new SqlCommand("update receive_amount_status set pending_amount=pending_amount+@pending_amount where Buyer='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label8.Text + "'", con271);
+                cd271.Parameters.AddWithValue("@pending_amount", float.Parse(TextBox5.Text));
+                con271.Open();
+                cd271.ExecuteNonQuery();
+                con271.Close();
+
+
+
+                float paid_amount = 0;
+                string status1 = "Bill";
+                SqlConnection con26 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                SqlCommand cmd26 = new SqlCommand("update receive_amount set Estimate_value=@Estimate_value,address=@address,total_amount=@total_amount,pay_amount=@pay_amount,pending_amount=@pending_amount,outstanding=outstanding+@outstanding,status=@status where Buyer='" + TextBox3.Text + "' AND invoice_no='" + Label1.Text + "' and year='" + Label8.Text + "'", con26);
+
+
+                cmd26.Parameters.AddWithValue("@Estimate_value", float.Parse(TextBox5.Text));
+                cmd26.Parameters.AddWithValue("@address", TextBox3.Text);
+
+                cmd26.Parameters.AddWithValue("@total_amount", float.Parse(TextBox5.Text));
+                cmd26.Parameters.AddWithValue("@pay_amount", paid_amount);
+                cmd26.Parameters.AddWithValue("@pending_amount", float.Parse(TextBox5.Text));
+                cmd26.Parameters.AddWithValue("@outstanding", float.Parse(TextBox5.Text));
+                cmd26.Parameters.AddWithValue("@status", status1);
+
+
+                con26.Open();
+                cmd26.ExecuteNonQuery();
+                con26.Close();
+
+
+
+            }
+            con111.Close();
+        }
+
+        con100.Close();
+
+
+
+
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice updated successfully')", true);
+        BindData();
+        getinvoiceno();
+        show_category();
+        show_VehicleNO();
+
+        TextBox3.Text = "";
+        TextBox2.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
+        TextBox6.Text = "";
+        TextBox15.Text = "";
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+
+                    }
+                    else
+                    {
+                        int value = 0;
+                        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlCommand cmd = new SqlCommand("insert into WorkshopBilling_Entry values(@Invoice_id,@date,@Workshop_name,@Mobile_No,@Address,@Amount,@Com_Id,@Customer_VehNo,@Service_Name,@status,@value,@year)", CON);
+                        cmd.Parameters.AddWithValue("@Invoice_id", Label1.Text);
+                        cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(TextBox8.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@Workshop_name", HttpUtility.HtmlDecode(TextBox3.Text));
+                        cmd.Parameters.AddWithValue("@Mobile_No", HttpUtility.HtmlDecode(TextBox2.Text));
+                        cmd.Parameters.AddWithValue("@Address", HttpUtility.HtmlDecode(TextBox4.Text));
+                        cmd.Parameters.AddWithValue("@Amount", HttpUtility.HtmlDecode(TextBox5.Text));
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                        cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
+                        cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
+                        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+                        cmd.Parameters.AddWithValue("@value", value);
+                        cmd.Parameters.AddWithValue("@year", Label8.Text);
+                        CON.Open();
+                        cmd.ExecuteNonQuery();
+                        CON.Close();
+
+
+                        int a111 = 0;
+                        float b11 = 0;
+                        float f11 = 0;
+                        float c11 = 0;
+                        SqlConnection con100 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                        SqlCommand cmd100 = new SqlCommand("SELECT * FROM receive_amount_status WHERE Buyer = @Buyer and Com_Id='" + company_id + "'", con100);
+                        cmd100.Parameters.AddWithValue("@Buyer", TextBox3.Text);
+                        con100.Open();
+                        SqlDataReader reader1 = cmd100.ExecuteReader();
+                        if (reader1.HasRows)
+                        {
+                            SqlConnection con111 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                            SqlCommand cmd111 = new SqlCommand("Select * from receive_amount_status where Buyer='" + TextBox3.Text + "' and  Com_Id='" + company_id + "' ", con111);
+                            con111.Open();
+                            SqlDataReader dr111;
+                            dr111 = cmd111.ExecuteReader();
+                            if (dr111.Read())
+                            {
+
+                                b11 = float.Parse(dr111["pending_amount"].ToString());
+
+
+                                f11 = float.Parse(TextBox5.Text);
+
+                                c11 = (b11 + f11);
+
+
+
+
+                                float paid_amount = 0;
+                                string status1 = "Bill";
+                                SqlConnection con24 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                                SqlCommand cmd24 = new SqlCommand("insert into receive_amount values(@Buyer,@Pay_date,@Estimate_value,@address,@total_amount,@pay_amount,@pending_amount,@outstanding,@invoice_no,@Com_Id,@status,@year)", con24);
+                                cmd24.Parameters.AddWithValue("@Buyer", TextBox3.Text);
+                                cmd24.Parameters.AddWithValue("@pay_date", TextBox8.Text);
+                                cmd24.Parameters.AddWithValue("@Estimate_value", float.Parse(TextBox5.Text));
+                                cmd24.Parameters.AddWithValue("@address", TextBox4.Text);
+
+                                cmd24.Parameters.AddWithValue("@total_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                                cmd24.Parameters.AddWithValue("@pay_amount", paid_amount);
+                                cmd24.Parameters.AddWithValue("@pending_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                                cmd24.Parameters.AddWithValue("@outstanding", float.Parse(string.Format("{0:0.00}", c11)));
+
+                                cmd24.Parameters.AddWithValue("@invoice_no", Label1.Text);
+                                cmd24.Parameters.AddWithValue("@Com_Id", company_id);
+                                cmd24.Parameters.AddWithValue("@status", status1);
+                                cmd24.Parameters.AddWithValue("@year", Label8.Text);
+                                con24.Open();
+                                cmd24.ExecuteNonQuery();
+                                con24.Close();
+
+
+                                SqlConnection con23 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                                SqlCommand cmd23 = new SqlCommand("update receive_amount_status set address=@address,total_amount=total_amount+@total_amount,pending_amount=pending_amount+@pending_amount where Buyer='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='"+Label8.Text+"'", con23);
+
+                                cmd23.Parameters.AddWithValue("@address", TextBox4.Text);
+
+                                cmd23.Parameters.AddWithValue("@total_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+
+                                cmd23.Parameters.AddWithValue("@pending_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+
+                                con23.Open();
+                                cmd23.ExecuteNonQuery();
+                                con23.Close();
+
+
+                            }
+
+                            con111.Close();
+
+
+
+
+
+
+                        }
+                        else
+                        {
+                            float paid_amount = 0;
+                            string status1 = "Bill";
+                            SqlConnection con23 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                            SqlCommand cmd23 = new SqlCommand("insert into receive_amount_status values(@Buyer,@address,@total_amount,@pending_amount,@paid_amount,@Com_Id,@year)", con23);
+                            cmd23.Parameters.AddWithValue("@Buyer", TextBox3.Text);
+                            cmd23.Parameters.AddWithValue("@address", TextBox4.Text);
+
+                            cmd23.Parameters.AddWithValue("@total_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+
+                            cmd23.Parameters.AddWithValue("@pending_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                            cmd23.Parameters.AddWithValue("@paid_amount", paid_amount);
+                            cmd23.Parameters.AddWithValue("@Com_Id", company_id);
+                            cmd23.Parameters.AddWithValue("@year", Label8.Text);
+                            con23.Open();
+                            cmd23.ExecuteNonQuery();
+                            con23.Close();
+                            string return_by = "";
+                            int value1 = 0;
+                            SqlConnection con24 = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["connection"]);
+                            SqlCommand cmd24 = new SqlCommand("insert into receive_amount values(@Buyer,@Pay_date,@Estimate_value,@address,@total_amount,@pay_amount,@pending_amount,@outstanding,@invoice_no,@Com_Id,@status,@year)", con24);
+                            cmd24.Parameters.AddWithValue("@Buyer", TextBox3.Text);
+                            cmd24.Parameters.AddWithValue("@pay_date", TextBox8.Text);
+                            cmd24.Parameters.AddWithValue("@Estimate_value", float.Parse(TextBox5.Text));
+                            cmd24.Parameters.AddWithValue("@address", TextBox4.Text);
+
+                            cmd24.Parameters.AddWithValue("@total_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                            cmd24.Parameters.AddWithValue("@pay_amount", paid_amount);
+                            cmd24.Parameters.AddWithValue("@pending_amount", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                            cmd24.Parameters.AddWithValue("@outstanding", float.Parse(string.Format("{0:0.00}", TextBox5.Text)));
+                            cmd24.Parameters.AddWithValue("@invoice_no", Label1.Text);
+                            cmd24.Parameters.AddWithValue("@Com_Id", company_id);
+                            cmd24.Parameters.AddWithValue("@status", status1);
+                            cmd24.Parameters.AddWithValue("@year", Label8.Text);
+                            con24.Open();
+                            cmd24.ExecuteNonQuery();
+                            con24.Close();
+
+
+                        }
+                        con100.Close();
+
+
+
+
+
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop Invoice created successfully')", true);
+                        BindData();
+                        getinvoiceno();
+                        show_category();
+                        show_VehicleNO();
+
+                        TextBox3.Text = "";
+                        TextBox2.Text = "";
+                        TextBox4.Text = "";
+                        TextBox5.Text = "";
+                        TextBox6.Text = "";
+                        TextBox15.Text = "";
+                        DateTime date = DateTime.Now;
+                        TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+                    }
+                    con1.Close();
+
+
+
+
+
+
+
+                }
+
+            }
+            con10.Close();
+        }
+    }
+    protected void Button10_Click(object sender, EventArgs e)
+    {
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+
+        TextBox3.Text = "";
+        TextBox2.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
+        TextBox6.Text = "";
+        TextBox1.Text = "";
+        TextBox15.Text = "";
+        getinvoiceno();
+        show_category();
+        show_VehicleNO();
+        
+    }
+    protected void Button11_Click(object sender, EventArgs e)
+    {
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+
+        TextBox3.Text = "";
+        TextBox2.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
+        TextBox6.Text = "";
+        TextBox1.Text = "";
+        TextBox15.Text = "";
+        getinvoiceno();
+        show_category();
+        show_VehicleNO();
+        
+    }
+    protected void Button7_Click(object sender, EventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con1000 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1000 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con1000);
+            SqlDataReader dr1000;
+            con1000.Open();
+            dr1000 = cmd1000.ExecuteReader();
+            if (dr1000.Read())
+            {
+                company_id = Convert.ToInt32(dr1000["com_id"].ToString());
+
+                if (Convert.ToInt32(Label1.Text) > Convert.ToInt32(1))
+                {
+                  
+                    Label1.Text = (Convert.ToInt32(Label1.Text) - 1).ToString();
+                }
+
+                SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd2 = new SqlCommand("select * from WorkshopBilling_Entry where Invoice_id='" + Label1.Text + "' and Com_Id='" + company_id + "'", con2);
+                SqlDataReader dr2;
+                con2.Open();
+                dr2 = cmd2.ExecuteReader();
+                if (dr2.Read())
+                {
+
+                    TextBox8.Text = Convert.ToDateTime(dr2["date"]).ToString("dd-MM-yyyy");
+                    TextBox6.Text = dr2["Mobile_no"].ToString();
+
+                    TextBox3.Text = dr2["Workshop_name"].ToString();
+                    TextBox2.Text = dr2["Mobile_No"].ToString();
+                    TextBox4.Text = dr2["Address"].ToString();
+                    TextBox15.Text = dr2["Customer_VehNo"].ToString();
+                    DropDownList1.SelectedItem.Text = dr2["Service_Name"].ToString();
+                    TextBox5.Text = dr2["Amount"].ToString();
+              
+
+
+                }
+                con2.Close();
+
+
+             
+            }
+            con1000.Close();
+        }
+    }
+    protected void Button8_Click(object sender, EventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con1000 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1000 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con1000);
+            SqlDataReader dr1000;
+            con1000.Open();
+            dr1000 = cmd1000.ExecuteReader();
+            if (dr1000.Read())
+            {
+                company_id = Convert.ToInt32(dr1000["com_id"].ToString());
+
+                SqlConnection con21 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd21 = new SqlCommand("select max(Invoice_id) from WorkshopBilling_Entry where  Com_Id='" + company_id + "' and year='" + Label8.Text + "' ", con21);
+                SqlDataReader dr21;
+                con21.Open();
+                dr21 = cmd21.ExecuteReader();
+                if (dr21.Read())
+                {
+                    int value = Convert.ToInt32(dr21[0].ToString());
+                    if (Convert.ToInt32(Label1.Text) < Convert.ToInt32(value + 1))
+                    {
+                       
+                        Label1.Text = (Convert.ToInt32(Label1.Text) + 1).ToString();
+                    }
+                }
+                con21.Close();
+                SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd2 = new SqlCommand("select * from WorkshopBilling_Entry where Invoice_id='" + Label1.Text + "' and Com_Id='" + company_id + "'", con2);
+                SqlDataReader dr2;
+                con2.Open();
+                dr2 = cmd2.ExecuteReader();
+                if (dr2.Read())
+                {
+
+                    TextBox8.Text = Convert.ToDateTime(dr2["date"]).ToString("dd-MM-yyyy");
+                    TextBox6.Text = dr2["Mobile_no"].ToString();
+
+                    TextBox3.Text = dr2["Workshop_name"].ToString();
+                    TextBox2.Text = dr2["Mobile_No"].ToString();
+                    TextBox4.Text = dr2["Address"].ToString();
+                    TextBox15.Text = dr2["Customer_VehNo"].ToString();
+                    DropDownList1.SelectedItem.Text = dr2["Service_Name"].ToString();
+                    TextBox5.Text = dr2["Amount"].ToString();
+              
+
+
+
+                  
+                }
+                else
+                {
+
+
+                    DateTime date = DateTime.Now;
+                    TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+
+                    TextBox3.Text = "";
+                    TextBox2.Text = "";
+                    TextBox4.Text = "";
+                    TextBox5.Text = "";
+                    TextBox6.Text = "";
+                    TextBox1.Text = "";
+                    TextBox15.Text = "";
+                    getinvoiceno();
+                    show_category();
+                    show_VehicleNO();
+
+
+                }
+                con2.Close();
+            }
+            con1000.Close();
         }
     }
 }

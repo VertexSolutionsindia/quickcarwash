@@ -219,9 +219,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                                
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -234,7 +232,7 @@
         </nav>
         <section class="page">
 
-                <nav class="navbar-aside navbar-static-side" role="navigation">
+              <nav class="navbar-aside navbar-static-side" role="navigation">
                 <div class="sidebar-collapse nano">
                     <div class="nano-content">
                         <ul class="nav metismenu" id="side-menu">
@@ -254,9 +252,20 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                          
-                  
-                               
+                            <ul class="nav nav-second-level collapse">
+                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
+                           </ul>
+                       <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                       
+                           
                             </li>
                            
 
@@ -273,6 +282,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                            </ul>
                           
                                
@@ -284,7 +294,13 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
                            </ul>
-                          
+                          <ul class="nav nav-second-level collapse">
+                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
+                           </ul>
+                               <ul class="nav nav-second-level collapse">
+                                    <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
+                           </ul>
+                            
                                
                             </li>
                             
@@ -293,8 +309,8 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
                                       <li><a href="Sales_Report.aspx">Billing Report</a></li>
-                                 <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
-                                 <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
+                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
+                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
                            </ul>
                           
                                
@@ -314,13 +330,27 @@
                             <div class="page-title see2">
                                 <h2>WorkShop report
                                  </h2>
-                             
-                             
-  
 
+ <asp:UpdatePanel ID="UpdatePanel15" runat="server">
+   <ContentTemplate>
+                             <asp:Button ID="Button2" runat="server" Text="<" onclick="Button2_Click"></asp:Button>
+                             <asp:Button ID="Button4" runat="server" Text=">" onclick="Button4_Click"></asp:Button>
+                              <asp:Button ID="Button6" runat="server" Text="New" onclick="Button6_Click"></asp:Button>
+  <asp:Button ID="Button5" runat="server" Text="Save" onclick="Button5_Click"></asp:Button>
+  <asp:Button ID="Button7" runat="server" Text="Clear" onclick="Button7_Click"></asp:Button>
 
-
-                                
+   </ContentTemplate>
+                                      </asp:UpdatePanel>
+                                 <asp:DropDownList ID="DropDownList8" runat="server">
+                                   <asp:ListItem>PDF</asp:ListItem>
+                                   <asp:ListItem>WORD</asp:ListItem>
+                                   <asp:ListItem>EXCEL</asp:ListItem>
+                                </asp:DropDownList>
+                                <asp:TextBox ID="TextBox13" runat="server"></asp:TextBox>
+                       
+                                <asp:Button ID="Button3" runat="server" class="btn-primary" Width="70px" 
+                                    Height="30px"  Text="PRINT" onclick="Button3_Click" 
+                          ></asp:Button>
                             </div>
                             
                         </div>
@@ -355,7 +385,37 @@
 
 <div class="panel-body">
    <div class="col-md-6">
+   
+                             <div class="form-group"><label class="col-lg-3 control-label">No</label>
 
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+   <ContentTemplate>
+  
+                                  <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+                                    
+                                      </ContentTemplate>
+                                      <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="Button6" EventName="Click"  />
+                                         <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click"  />
+                                      </Triggers>
+                                      </asp:UpdatePanel></div></div>
+                                      <br />
+                                       <div class="form-group"><label class="col-lg-3 control-label">Date</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel14" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox9" runat="server" class="form-control input-x2 dropbox"  
+                                       ></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender3" runat="server" 
+                                        TargetControlID="TextBox9" Format="dd-MM-yyyy" ></asp:CalendarExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
+                                      
+                                      <br/>
+                                       <br/>
                              <div class="form-group"><label class="col-lg-3 control-label">From Date</label>
 
                                     <div class="col-lg-9">
@@ -365,7 +425,7 @@
                                     <asp:TextBox ID="TextBox3" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
                                         ontextchanged="TextBox3_TextChanged"></asp:TextBox>
                                       <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox3" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox3" Format="dd-MM-yyyy" ></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
                                       
@@ -380,17 +440,38 @@
   <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" 
            ontextchanged="TextBox4_TextChanged"></asp:TextBox>
                                     <asp:CalendarExtender ID="CalendarExtender2" 
-           runat="server" TargetControlID="TextBox4" Format="MM-dd-yyyy"></asp:CalendarExtender>
+           runat="server" TargetControlID="TextBox4" Format="dd-MM-yyyy"></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>            
                                       
+                                      <br />
+                                      <br />
+                                       <div class="form-group"><label class="col-lg-3 control-label">Total Amount</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel12" runat="server">
+   <ContentTemplate>
+  <asp:TextBox ID="TextBox7" runat="server" class="form-control input-x2 dropbox" 
+           ontextchanged="TextBox4_TextChanged"></asp:TextBox>
+                                 
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div> 
                                       
+                                      <br />
+                                      <br />
+                                       <div class="form-group"><label class="col-lg-3 control-label">Grand total</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel13" runat="server">
+   <ContentTemplate>
+  <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox" 
+           ontextchanged="TextBox4_TextChanged"></asp:TextBox>
+                                 
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div> 
                                       
-                                      
-                                      
-                                      
-                                      
-                                      
+                                      <br />
+                                      <br />
                                       
                                       
                                       </div>
@@ -410,9 +491,12 @@
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel3" runat="server">
    <ContentTemplate>
-<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" 
-           class="form-control input-x2 dropbox" 
-           onselectedindexchanged="DropDownList1_SelectedIndexChanged"></asp:DropDownList>
+<asp:TextBox ID="TextBox1" runat="server" ontextchanged="TextBox1_TextChanged" AutoPostBack="true" class="form-control input-x2 dropbox"></asp:TextBox>
+  <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Enter vehicle No"></asp:TextBoxWatermarkExtender>
+                           <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox1"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
                                
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
@@ -423,26 +507,55 @@
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel4" runat="server">
    <ContentTemplate>
-<asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true"  
-           class="form-control input-x2 dropbox" 
-           onselectedindexchanged="DropDownList2_SelectedIndexChanged"></asp:DropDownList>
+   <asp:TextBox ID="TextBox2" runat="server"  AutoPostBack="true" class="form-control input-x2 dropbox" 
+           ontextchanged="TextBox2_TextChanged"></asp:TextBox>
+  <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender2" runat="server" TargetControlID="TextBox2" WatermarkText="Enter workshop name"></asp:TextBoxWatermarkExtender>
+                           <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers1" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox2"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
                                
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
+                                      <br />
+                                      <br />
                                       
+                             <div class="form-group"><label class="col-lg-3 control-label">Address</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox5" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
+                                        ontextchanged="TextBox3_TextChanged"></asp:TextBox>
+                                     
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
                                       
-                                      
+                                      <br />
+                                      <br />
+                             <div class="form-group"><label class="col-lg-3 control-label">Mobile No</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel11" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox6" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
+                                        ontextchanged="TextBox3_TextChanged"></asp:TextBox>
+                                  
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
                                       </div>
 
-
+                                      <br />
+                                      <br />
 
 
 
 <div class="col-lg-6">
                   <asp:UpdatePanel ID="UpdatePanel2" runat="server">
    <ContentTemplate>
- <asp:Button ID="Button3" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button3_Click" 
-                          ></asp:Button>
+ 
                           </ContentTemplate>
                            </asp:UpdatePanel>
 
@@ -527,8 +640,8 @@
     <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="GridView1"  />
                
-                   <asp:AsyncPostBackTrigger ControlID="DropDownList2" EventName="SelectedIndexChanged"  />
-                     <asp:AsyncPostBackTrigger ControlID="DropDownList1" EventName="SelectedIndexChanged"  />
+                   <asp:AsyncPostBackTrigger ControlID="TextBox2" EventName="TextChanged"  />
+                     <asp:AsyncPostBackTrigger ControlID="TextBox1" EventName="TextChanged"  />
                                </Triggers>
     </asp:UpdatePanel>
 

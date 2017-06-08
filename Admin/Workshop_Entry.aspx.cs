@@ -67,10 +67,10 @@ public partial class Admin_Workshop_Entry : System.Web.UI.Page
 
 
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("update CosServiceName_Add set CostofService_Name='" + HttpUtility.HtmlDecode(TextBox16.Text) +
+        SqlCommand cmd = new SqlCommand("update Workshop_Entry set WorkShop_Name='" + HttpUtility.HtmlDecode(TextBox16.Text) +
               "',WorkShop_Add='" + HttpUtility.HtmlDecode(TextBox5.Text) +
             "',Mobile_no='" + HttpUtility.HtmlDecode(TextBox6.Text) +
-            "' where CostName_Code='" + Label29.Text + "'  and Com_Id='" + company_id + "' ", CON);
+            "' where WorkShop_id='" + Label29.Text + "'  and Com_Id='" + company_id + "' ", CON);
         CON.Open();
         cmd.ExecuteNonQuery();
         CON.Close();
@@ -381,19 +381,63 @@ public partial class Admin_Workshop_Entry : System.Web.UI.Page
     }
     protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Workshop_Entry where WorkShop_Name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY WorkShop_id asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+        if (DropDownList2.SelectedItem.Text == "All")
+        {
+            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand CMD = new SqlCommand("select * from Workshop_Entry where  Com_Id='" + company_id + "' ORDER BY WorkShop_id asc", con1);
+            DataTable dt1 = new DataTable();
+            con1.Open();
+            SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+            da1.Fill(dt1);
+            GridView1.DataSource = dt1;
+            GridView1.DataBind();
+        }
+        else
+        {
+            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand CMD = new SqlCommand("select * from Workshop_Entry where WorkShop_Name='" + DropDownList2.SelectedItem.Text + "' and Com_Id='" + company_id + "' ORDER BY WorkShop_id asc", con1);
+            DataTable dt1 = new DataTable();
+            con1.Open();
+            SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+            da1.Fill(dt1);
+            GridView1.DataSource = dt1;
+            GridView1.DataBind();
+        }
     }
     protected void Button6_Click(object sender, EventArgs e)
     {
         DropDownList2.Items.Clear();
         SearchServicename();
         BindData();
+    }
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchCustomers(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct WorkShop_Name from Workshop_Entry where Com_Id=@Com_Id and " +
+                "WorkShop_Name like @WorkShop_Name + '%'";
+                cmd.Parameters.AddWithValue("@WorkShop_Name", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["WorkShop_Name"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
+        }
     }
 }

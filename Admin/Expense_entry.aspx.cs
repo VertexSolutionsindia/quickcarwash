@@ -51,8 +51,8 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
                 Label8.Text = dr10["financial_year"].ToString();
             }
             DateTime date = DateTime.Now;
-            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-            TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+            TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+            TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             getinvoiceno();
             getExpenseNameID();
             SearchExpense();
@@ -168,10 +168,6 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     private void getinvoiceno()
     {
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
 
         if (User.Identity.IsAuthenticated)
         {
@@ -293,15 +289,16 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        TextBox8.Text = "";
+       
         TextBox12.Text = "";
-<<<<<<< HEAD
-=======
         TextBox4.Text = "";
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         SearchExpense();
         showpartners();
         BindData();
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+        TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+       
     }
     private void active()
     {
@@ -343,30 +340,6 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
     }
     protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
     {
-<<<<<<< HEAD
-
-        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from ExpenceName_Add where Com_Id='" + company_id + "' ORDER BY ExpName_Code asc", con);
-        con.Open();
-        DataSet ds = new DataSet();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(ds);
-
-        DropDownList4.DataSource = ds;
-        DropDownList4.DataTextField = "Expense_Name";
-        DropDownList4.DataValueField = "ExpName_Code";
-        DropDownList4.DataBind();
-        DropDownList4.Items.Insert(0, new ListItem("All", "0"));
-
-        ImageButton IMG = (ImageButton)sender;
-        GridViewRow ROW = (GridViewRow)IMG.NamingContainer;
-        Label4.Text = ROW.Cells[1].Text;
-        TextBox2.Text = ROW.Cells[2].Text;
-        DropDownList4.SelectedItem.Text = ROW.Cells[3].Text;
-        TextBox3.Text = ROW.Cells[4].Text;
-
-        this.ModalPopupExtender1.Show();
-=======
         if (User.Identity.IsAuthenticated)
         {
             SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
@@ -401,7 +374,6 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
             }
             con10.Close();
         }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
     }
 
     protected void LoginLink_OnClick(object sender, EventArgs e)
@@ -449,11 +421,6 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
         // this.ModalPopupExtender4.Show();
     }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
 
 
 
@@ -553,22 +520,6 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
 
 
 
-<<<<<<< HEAD
-            SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd = new SqlCommand("insert into ExpenceName_Add values(@ExpName_Code,@Expense_Name,@Com_Id)", CON);
-            cmd.Parameters.AddWithValue("@ExpName_Code", Label29.Text);
-            cmd.Parameters.AddWithValue("@Expense_Name", TextBox1.Text);
-            cmd.Parameters.AddWithValue("@Com_Id", company_id);
-
-            CON.Open();
-            cmd.ExecuteNonQuery();
-            CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Name Added successfully')", true);
-            TextBox1.Text = "";
-            getExpenseNameID();
-            SearchExpense();
-
-=======
 
                     SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                     SqlCommand cmd = new SqlCommand("insert into ExpenceName_Add values(@ExpName_Code,@Expense_Name,@Com_Id)", CON);
@@ -587,71 +538,55 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
                 }
             }
             con10.Close();
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-<<<<<<< HEAD
-        int value = 0;
-        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("insert into Expence_Entry values(@Exp_Id,@date,@ExpName_Id,@Expense_Name,@Com_Id,@Amount,@status,@value)", CON);
-        cmd.Parameters.AddWithValue("@Exp_Id", Label1.Text);
-        cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-        cmd.Parameters.AddWithValue("@ExpName_Id", DropDownList3.SelectedItem.Value);
-        cmd.Parameters.AddWithValue("@Expense_Name", DropDownList3.SelectedItem.Text);
-        cmd.Parameters.AddWithValue("@Com_Id", company_id);
-        cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
-        cmd.Parameters.AddWithValue("@status", "Expense-" + DropDownList3.SelectedItem.Text);
-        cmd.Parameters.AddWithValue("@value", value);
-        CON.Open();
-        cmd.ExecuteNonQuery();
-        CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Entry Added successfully')", true);
-
-        TextBox8.Text = "";
-        TextBox12.Text = "";
-        getinvoiceno();
-        SearchExpense();
-        BindData();
-=======
-        if (User.Identity.IsAuthenticated)
+        if (TextBox4.Text == "")
         {
-            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
-            SqlDataReader dr;
-            con10.Open();
-            dr = cmd1.ExecuteReader();
-            if (dr.Read())
-            {
-                company_id = Convert.ToInt32(dr["com_id"].ToString());
-                int value = 0;
-                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd = new SqlCommand("insert into Expence_Entry values(@Exp_Id,@date,@Expense_Name,@Com_Id,@Amount,@status,@value,@year,@partner_name)", CON);
-                cmd.Parameters.AddWithValue("@Exp_Id", Label1.Text);
-                cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-                cmd.Parameters.AddWithValue("@Expense_Name", TextBox4.Text);
-                cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
-                cmd.Parameters.AddWithValue("@status", "Expense-" + TextBox4.Text);
-                cmd.Parameters.AddWithValue("@value", value);
-                cmd.Parameters.AddWithValue("@year", Label8.Text);
-                cmd.Parameters.AddWithValue("@partner_name", DropDownList1.SelectedItem.Text);
-                CON.Open();
-                cmd.ExecuteNonQuery();
-                CON.Close();
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Entry Added successfully')", true);
-
-                TextBox8.Text = "";
-                TextBox12.Text = "";
-                getinvoiceno();
-                SearchExpense();
-                showpartners();
-                BindData();
-            }
-            con10.Close();
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter expense name')", true);
         }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
+        else
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+                SqlDataReader dr;
+                con10.Open();
+                dr = cmd1.ExecuteReader();
+                if (dr.Read())
+                {
+                    company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    int value = 0;
+                    SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd = new SqlCommand("insert into Expence_Entry values(@Exp_Id,@date,@Expense_Name,@Com_Id,@Amount,@status,@value,@year,@partner_name)", CON);
+                    cmd.Parameters.AddWithValue("@Exp_Id", Label1.Text);
+                    cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
+                    cmd.Parameters.AddWithValue("@Expense_Name", TextBox4.Text);
+                    cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                    cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
+                    cmd.Parameters.AddWithValue("@status", "Expense-" + TextBox4.Text);
+                    cmd.Parameters.AddWithValue("@value", value);
+                    cmd.Parameters.AddWithValue("@year", Label8.Text);
+                    cmd.Parameters.AddWithValue("@partner_name", DropDownList1.SelectedItem.Text);
+                    CON.Open();
+                    cmd.ExecuteNonQuery();
+                    CON.Close();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Expense Entry Added successfully')", true);
+
+                    DateTime date = DateTime.Now;
+                    TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+                    TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+                    TextBox12.Text = "";
+                    getinvoiceno();
+                    SearchExpense();
+                    showpartners();
+                    BindData();
+                }
+                con10.Close();
+            }
+        }
 
     }
     protected void Button7_Click(object sender, EventArgs e)
@@ -673,21 +608,12 @@ public partial class Admin_Expense_entry : System.Web.UI.Page
         int value = 0;
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand cmd = new SqlCommand("update Expence_Entry set date='" + TextBox2.Text +
-<<<<<<< HEAD
-            "',ExpName_Id='" + DropDownList4.SelectedItem.Value + 
-            "', Expense_Name='" + HttpUtility.HtmlDecode(DropDownList4.SelectedItem.Text) + 
-            "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) +
-                "', status='" + HttpUtility.HtmlDecode("Expense-" + DropDownList4.SelectedItem.Text) +
-             "', value='" + value +
-            "' where Exp_Id='" + Label4.Text + "'  and Com_Id='" + company_id + "' ", CON);
-=======
             "', Expense_Name='" + HttpUtility.HtmlDecode(TextBox5.Text) + 
             "', Amount='" + HttpUtility.HtmlDecode(TextBox3.Text) +
                 "', status='" + HttpUtility.HtmlDecode("Expense-" + TextBox5.Text) +
              "', value='" + value +
             "',partner_name='" + DropDownList2.SelectedItem.Text +
             "' where Exp_Id='" + Label4.Text + "'  and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ", CON);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
 
         CON.Open();
         cmd.ExecuteNonQuery();

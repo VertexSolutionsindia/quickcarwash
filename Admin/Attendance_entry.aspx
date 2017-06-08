@@ -273,9 +273,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                               
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -288,7 +286,7 @@
         </nav>
         <section class="page">
 
-                <nav class="navbar-aside navbar-static-side" role="navigation">
+                 <nav class="navbar-aside navbar-static-side" role="navigation">
                 <div class="sidebar-collapse nano">
                     <div class="nano-content">
                         <ul class="nav metismenu" id="side-menu">
@@ -308,9 +306,20 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                          
-                  
-                               
+                            <ul class="nav nav-second-level collapse">
+                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
+                           </ul>
+                       <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                       
+                           
                             </li>
                            
 
@@ -327,6 +336,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                            </ul>
                           
                                
@@ -338,7 +348,13 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
                            </ul>
-                          
+                          <ul class="nav nav-second-level collapse">
+                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
+                           </ul>
+                               <ul class="nav nav-second-level collapse">
+                                    <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
+                           </ul>
+                            
                                
                             </li>
                             
@@ -347,7 +363,8 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
                                       <li><a href="Sales_Report.aspx">Billing Report</a></li>
-                                 
+                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
+                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
                            </ul>
                           
                                
@@ -452,8 +469,8 @@
    <ContentTemplate>
                                     <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
                                     <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox8" DaysModeTitleFormat="dd-MM-yyyy" Format="MM-dd-yyyy" 
-                                        TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox8"  Format="dd-MM-yyyy" 
+                                        ></asp:CalendarExtender>
                                     </ContentTemplate>
                                      <Triggers>
                              </Triggers>
@@ -486,12 +503,14 @@
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel5" runat="server" >
    <ContentTemplate>
-                                <asp:DropDownList ID="DropDownList1" runat="server" class="form-control input-x2 dropbox">
+                                <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" 
+                                    class="form-control input-x2 dropbox" 
+                                    onselectedindexchanged="DropDownList1_SelectedIndexChanged">
                                  <asp:ListItem>Select item</asp:ListItem>
                                     <asp:ListItem>Present</asp:ListItem>
                                     <asp:ListItem>Absent</asp:ListItem>
                                     
-                                    <asp:ListItem>half day present</asp:ListItem>
+                                    <asp:ListItem>Half day present</asp:ListItem>
                                 </asp:DropDownList>
                                     </ContentTemplate>
                                      <Triggers>
@@ -515,7 +534,7 @@
                                      <Triggers>
              
                     <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
-                   
+                     <asp:AsyncPostBackTrigger ControlID="DropDownList1" EventName="SelectedIndexChanged"  />
                 </Triggers>
                            </asp:UpdatePanel>
                                     
@@ -554,6 +573,16 @@
                                         </div>
                                  
                             </div><!-- End .panel -->  
+                            <div style="clear:both">
+    <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+   <ContentTemplate>
+<asp:TextBox ID="TextBox5" runat="server" AutoPostBack="true"
+           ontextchanged="TextBox5_TextChanged"></asp:TextBox>
+         
+</div>
+<asp:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="TextBox5" Format="dd-MM-yyyy"></asp:CalendarExtender>
+ </ContentTemplate>
+                           </asp:UpdatePanel>
 
 <div class="col-md-12">
    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
@@ -577,7 +606,7 @@
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
            <asp:BoundField HeaderText="Date" DataField="date" 
-               DataFormatString="{0:MM/dd/yyyy}">
+               DataFormatString="{0:dd-MM-yyyy}">
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
             <asp:BoundField HeaderText="Staff Name" DataField="Staff_Name" >
@@ -627,7 +656,7 @@
                 <asp:AsyncPostBackTrigger ControlID="GridView1"  />
                  <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
                  
-                  
+                     <asp:AsyncPostBackTrigger ControlID="TextBox5" EventName="TextChanged"  />
                   
                       <%-- <asp:AsyncPostBackTrigger ControlID="Button14" EventName="Click"  />--%>
                         
@@ -665,8 +694,8 @@
         <td >
             <asp:Label ID="Label5" runat="server" class="col-lg-3 control-label" Width="200px"  Text="Date"></asp:Label></td>
         <td>
-            <asp:TextBox ID="TextBox2" runat="server" DataFormatString="{0:MM/dd/yyyy}" class="form-control input-x2 dropbox"></asp:TextBox></td>
-             <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2"></asp:CalendarExtender>
+            <asp:TextBox ID="TextBox2" runat="server" class="form-control input-x2 dropbox"></asp:TextBox></td>
+             <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2" Format="dd-MM-yyyy"></asp:CalendarExtender>
         </tr>
         <tr>
         <td>

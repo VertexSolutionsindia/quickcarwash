@@ -219,9 +219,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                             
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -254,9 +252,20 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                          
-                  
-                               
+                            <ul class="nav nav-second-level collapse">
+                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
+                           </ul>
+                       <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                       
+                           
                             </li>
                            
 
@@ -273,6 +282,9 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                         <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                           <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                            </ul>
                           
                                
@@ -283,11 +295,14 @@
                                 <a href="Staff-Entry.aspx"><i class="fa fa-users fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Staff </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
-                                
                            </ul>
-                                       <ul class="nav nav-second-level collapse">
+                          <ul class="nav nav-second-level collapse">
+                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
+                           </ul>
+                               <ul class="nav nav-second-level collapse">
                                     <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
                            </ul>
+                            
                                
                             </li>
                             
@@ -296,7 +311,8 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
                                       <li><a href="Sales_Report.aspx">Billing Report</a></li>
-                                 
+                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
+                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
                            </ul>
                           
                                
@@ -309,7 +325,6 @@
                 </div>
                 
             </nav>
-         
             <div id="wrapper">
                 <div class="content-wrapper container">
                     <div class="row">
@@ -392,7 +407,7 @@
                                     <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
                                         ontextchanged="TextBox8_TextChanged"></asp:TextBox>
                                       <asp:CalendarExtender ID="CalendarExtender3" runat="server" 
-                                        TargetControlID="TextBox8" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox8" Format="dd-MM-yyyy" ></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
 
@@ -438,7 +453,7 @@
                                     <asp:TextBox ID="TextBox3" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
                                         ontextchanged="TextBox3_TextChanged"></asp:TextBox>
                                       <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox3" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox3" Format="dd-MM-yyyy" ></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div></div>
 
@@ -453,7 +468,7 @@
   <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" 
            ontextchanged="TextBox4_TextChanged"></asp:TextBox>
                                     <asp:CalendarExtender ID="CalendarExtender2" 
-           runat="server" TargetControlID="TextBox4" Format="MM-dd-yyyy"></asp:CalendarExtender>
+           runat="server" TargetControlID="TextBox4" Format="dd-MM-yyyy"></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div></div>
 
@@ -501,7 +516,7 @@
        <Columns>
        
          <asp:BoundField HeaderText="Date" DataField="date" 
-               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+               ItemStyle-Width="10%" DataFormatString="{0:dd/MM/yyyy}" >
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle Width="10%" CssClass="Grd1" />
            </asp:BoundField>
@@ -562,8 +577,21 @@
     <div class="col-md-6">
         <div class="form-group">
             <label class="col-lg-4 control-label">
-            Total Paid Amount</label>
+             Daily Paid Amount</label>
             <asp:TextBox ID="TextBox7" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+     <div class="row">
+    <div class="col-md-6">
+  
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Last week pending amount</label>
+            <asp:TextBox ID="TextBox10" runat="server" BorderColor="#66CCFF" 
                 BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
                 style="float:right" Width="175px"></asp:TextBox>
         </div>
@@ -582,6 +610,7 @@
         </div>
     </div>
     </div>
+    
     <br />
     <div class="row">
     <div class="col-md-6">
@@ -665,7 +694,7 @@
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
-                  <asp:BoundField HeaderText="Total Paid Amount" DataField="TotalPaid_Amount" ItemStyle-Width="10%">
+                  <asp:BoundField HeaderText="Daily paid aount" DataField="TotalPaid_Amount" ItemStyle-Width="10%">
  
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle CssClass="Grd1" Width="10%" />
@@ -675,6 +704,25 @@
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
+             <asp:BoundField HeaderText="Paid amount" DataField="ActualPaid_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+
+            <asp:BoundField HeaderText="Pending amount" DataField="Pending_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+
+
+           <asp:TemplateField HeaderStyle-CssClass="Grd1" ItemStyle-CssClass="Grd1">
+           <ItemTemplate>
+           <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/delete3.png" Width="20px" Height="20px" onclick="ImageButton1_Click"></asp:ImageButton>
+           </ItemTemplate>
+           
+           </asp:TemplateField>
        </Columns>
        <FooterStyle BackColor="White" ForeColor="#000066" />
        <HeaderStyle Height="40px" BackColor="#006699" Font-Bold="True" CssClass="red" 

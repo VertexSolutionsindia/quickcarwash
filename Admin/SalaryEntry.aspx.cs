@@ -51,7 +51,7 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 //TextBox3.Text = Convert.ToDateTime(dr10["start_date"]).ToString("MM/dd/yyyy");
             }
             DateTime date = DateTime.Now;
-            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+            TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             showrating();
             getinvoiceno();
             BindData();
@@ -127,6 +127,10 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Select From Date')", true);
         }
+
+        float old = float.Parse(TextBox10.Text);
+        float balnace = float.Parse(TextBox2.Text);
+        TextBox2.Text = (old + balnace).ToString();
     }
 
     protected void BindData()
@@ -186,13 +190,21 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where Staff_Name='" + TextBox1.Text + "' AND date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' AND Com_Id='1' ORDER BY No asc", con1);
-                DataTable dt1 = new DataTable();
-                SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-                da1.Fill(dt1);
-                GridView3.DataSource = dt1;
-                GridView3.DataBind();
+                if ((TextBox3.Text != "") && (TextBox4.Text != ""))
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where Staff_Name='" + TextBox1.Text + "' AND date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' AND Com_Id='1' ORDER BY No asc", con1);
+                    DataTable dt1 = new DataTable();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView3.DataSource = dt1;
+                    GridView3.DataBind();
+                }
+                else
+                {
+                    GridView3.DataSource = null;
+                    GridView3.DataBind();
+                }
             }
             con.Close();
         }
@@ -339,7 +351,19 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
 
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
-       
+         SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from staff_pending where staff_name='" + TextBox1.Text + "' and Com_Id='"+company_id+"'", con10);
+            SqlDataReader dr;
+            con10.Open();
+            dr = cmd1.ExecuteReader();
+            if (dr.Read())
+            {
+                TextBox10.Text= dr["amount"].ToString();
+               
+                
+                
+            }
+            con10.Close();
     }
     protected void TextBox2_TextChanged(object sender, EventArgs e)
     {
@@ -398,16 +422,21 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
 
     protected void TextBox5_TextChanged(object sender, EventArgs e)
     {
-        //------------------------------------------------Finding pending amount
-        int Total_Grossprofit = Convert.ToInt32(TextBox2.Text);
+        try
+        {
+            //------------------------------------------------Finding pending amount
+            int Total_Grossprofit = Convert.ToInt32(TextBox2.Text);
 
-        int Total_Expense = Convert.ToInt32(TextBox5.Text);
+            int Total_Expense = Convert.ToInt32(TextBox5.Text);
 
-        int NetProfit = Total_Grossprofit - Total_Expense;
+            int NetProfit = Total_Grossprofit - Total_Expense;
 
-        TextBox9.Text = Convert.ToString(NetProfit);
+            TextBox9.Text = Convert.ToString(NetProfit);
 
-        //----------------------------------------------------------------------
+            //----------------------------------------------------------------------
+        }
+        catch (Exception we)
+        { }
     }
 
     protected void Button2_Click(object sender, EventArgs e)
@@ -443,24 +472,39 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 CON.Close();
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Salary entry Added successfully')", true);
 
-                if (TextBox1.Text != "")
-                {
-                    SqlConnection Con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand cmd2 = new SqlCommand("insert into SalaryPending_Amt_Dtl values(@SalPending_id,@date,@from_date,@To_date,@Staff_Name,@Pending_Amount,@Com_id,@year)", Con1);
-                    cmd2.Parameters.AddWithValue("@SalPending_id", Label2.Text);
-                    cmd2.Parameters.AddWithValue("@date", TextBox8.Text);
-                    cmd2.Parameters.AddWithValue("@from_date", TextBox3.Text);
-                    cmd2.Parameters.AddWithValue("@To_date", TextBox4.Text);
-                    cmd2.Parameters.AddWithValue("@Staff_Name", TextBox1.Text);
-                    cmd2.Parameters.AddWithValue("@Pending_Amount", TextBox9.Text);
-                    cmd2.Parameters.AddWithValue("@Com_Id", company_id);
-                    cmd2.Parameters.AddWithValue("@year", Label1.Text);
+                 SqlConnection con100= new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                 SqlCommand cmd100 = new SqlCommand("select * from staff_pending where staff_name='" + TextBox1.Text + "' and Com_Id='"+company_id+"'", con100);
+            SqlDataReader dr100;
+            con100.Open();
+            dr100 = cmd100.ExecuteReader();
+            if (dr100.HasRows)
+            {
+                SqlConnection Con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd2 = new SqlCommand("update staff_pending set amount=@amount where staff_name='"+TextBox1.Text+"' and Com_id='"+company_id+"'", Con1);
+               
+                cmd2.Parameters.AddWithValue("@amount", TextBox9.Text);
 
-                    Con1.Open();
-                    cmd2.ExecuteNonQuery();
-                    Con1.Close();
+
+                Con1.Open();
+                cmd2.ExecuteNonQuery();
+                Con1.Close();
+            }
+            else
+            {
+
+                SqlConnection Con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd2 = new SqlCommand("insert into staff_pending values(@staff_name,@amount,@Com_Id)", Con1);
+                cmd2.Parameters.AddWithValue("@staff_name", TextBox1.Text);
+                cmd2.Parameters.AddWithValue("@amount", TextBox9.Text);
+                cmd2.Parameters.AddWithValue("@Com_Id", company_id);
+
+                Con1.Open();
+                cmd2.ExecuteNonQuery();
+                Con1.Close();
+            }
+            con100.Close();
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Salary entry Added successfully')", true);
-                }
+               
                 TextBox1.Text = "";
                 TextBox2.Text = "";
                 TextBox3.Text = "";
@@ -469,8 +513,10 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 TextBox6.Text = "";
                 TextBox7.Text = "";
                 TextBox9.Text = "";
+                TextBox10.Text = "";
                 BindData2();
                 BindData();
+                getinvoiceno();
                 DateTime date = DateTime.Now;
                 TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
 
@@ -520,10 +566,62 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-
+        TextBox1.Text = "";
+        TextBox2.Text = "";
+        TextBox3.Text = "";
+        TextBox4.Text = "";
+        TextBox5.Text = "";
+        TextBox6.Text = "";
+        TextBox7.Text = "";
+        TextBox9.Text = "";
+        TextBox10.Text = "";
+        BindData2();
+        BindData();
+        getinvoiceno();
+        DateTime date = DateTime.Now;
+        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
     }
     protected void TextBox8_TextChanged(object sender, EventArgs e)
     {
 
+    }
+    protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+    {
+
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd1 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr;
+            con10.Open();
+            dr = cmd1.ExecuteReader();
+            if (dr.Read())
+            {
+                company_id = Convert.ToInt32(dr["com_id"].ToString());
+                ImageButton img = (ImageButton)sender;
+                GridViewRow row = (GridViewRow)img.NamingContainer;
+
+
+                SqlConnection Con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd2 = new SqlCommand("update staff_pending set amount=amount-@amount where staff_name='" + row.Cells[3].Text + "' and Com_id='" + company_id + "'", Con1);
+
+                cmd2.Parameters.AddWithValue("@amount", row.Cells[8].Text);
+
+
+                Con1.Open();
+                cmd2.ExecuteNonQuery();
+                Con1.Close();
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd = new SqlCommand("delete from Salary_Entry where Sal_id='" + row.Cells[0].Text + "' and Com_Id='" + company_id + "' ", con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Salary entry deleted successfully')", true);
+
+                BindData();
+                getinvoiceno();
+            }
+            con10.Close();
+        }
     }
 }

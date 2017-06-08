@@ -52,8 +52,8 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 Label8.Text = dr10["financial_year"].ToString();
             }
             DateTime date = DateTime.Now;
-            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-            TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+            TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+            TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             getinvoiceno();
             getCostofServiceADD_ID();
             SearchExpense();
@@ -498,23 +498,6 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     }
     protected void Button16_Click(object sender, EventArgs e)
     {
-<<<<<<< HEAD
-        if (TextBox1.Text != "")
-        {
-            SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd1 = new SqlCommand("select * from CosServiceName_Add where CostofService_Name='" + TextBox1.Text + "' ", con1);
-            con1.Open();
-            SqlDataReader dr1;
-            dr1 = cmd1.ExecuteReader();
-            if (dr1.HasRows)
-            {
-
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Name already exist')", true);
-                TextBox1.Text = "";
-            }
-            else
-            {
-=======
         if (User.Identity.IsAuthenticated)
         {
             SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
@@ -540,34 +523,10 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     }
                     else
                     {
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
 
 
 
 
-<<<<<<< HEAD
-                SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
-                cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
-                cmd.Parameters.AddWithValue("@CostofService_Name", TextBox1.Text);
-                cmd.Parameters.AddWithValue("@Com_Id", company_id);
-
-                CON.Open();
-                cmd.ExecuteNonQuery();
-                CON.Close();
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Name Added successfully')", true);
-                DropDownList3.Items.Clear();
-                TextBox1.Text = "";
-                getCostofServiceADD_ID();
-                SearchExpense();
-
-            }
-        }
-        else
-        {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Enter the Service Name')", true);
-            this.ModalPopupExtender3.Show();
-=======
                         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                         SqlCommand cmd = new SqlCommand("insert into CosServiceName_Add values(@CostName_Code,@CostofService_Name,@Com_Id)", CON);
                         cmd.Parameters.AddWithValue("@CostName_Code", Label29.Text);
@@ -592,32 +551,10 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 }
             }
             con11.Close();
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
         }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-<<<<<<< HEAD
-
-        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount)", CON);
-        cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
-        cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-        cmd.Parameters.AddWithValue("@CostofService_Name", DropDownList3.SelectedItem.Text);
-        cmd.Parameters.AddWithValue("@Com_Id", company_id);
-        cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
-        CON.Open();
-        cmd.ExecuteNonQuery();
-        CON.Close();
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Cost Added successfully')", true);
-     
-        TextBox8.Text = "";
-        TextBox12.Text = "";
-        DropDownList3.Items.Clear();
-        getinvoiceno();
-        BindData();
-        SearchExpense();
-=======
         if (User.Identity.IsAuthenticated)
         {
             SqlConnection con11 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
@@ -638,7 +575,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                     SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount,@year,@status,@value,@partner_name)", CON);
                     cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
-                    cmd.Parameters.AddWithValue("@date", TextBox8.Text);
+                    cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
                     cmd.Parameters.AddWithValue("@CostofService_Name", TextBox5.Text);
                     cmd.Parameters.AddWithValue("@Com_Id", company_id);
                     cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
@@ -663,7 +600,6 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             }
             con11.Close();
         }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
       
     }
     protected void Button7_Click(object sender, EventArgs e)

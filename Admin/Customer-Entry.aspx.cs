@@ -243,8 +243,14 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
 
         if (TextBox3.Text != "")
         {
-            if (TextBox9.Text != "")
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter customer name')", true);
+        }
+        else if (TextBox9.Text != "")
             {
+             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Mobile No')", true);
+        }
+        else
+        {
                 SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                 SqlCommand cmd = new SqlCommand("insert into Customer_Entry values(@Custom_Code,@Custom_Name,@Custom_Add,@Mobile_no,@Emailid,@Customer_VehNo,@Com_Id,@Vehicle_Brand,@Vehicle_Make)", CON);
                 cmd.Parameters.AddWithValue("@Custom_Code", Label1.Text);
@@ -281,16 +287,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
                 TextBox17.Text = "";
 
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter mobile no')", true);
-            }
-        }
-        else
-        {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter customer name')", true);
            
-        }
     }
 
     protected void Button2_Click(object sender, EventArgs e)
@@ -307,7 +304,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
         TextBox11.Text = "";
         TextBox17.Text = "";
         TextBox15.Text = "";
-        TextBox1.Text = "";
+       
     }
     private void active()
     {
@@ -339,7 +336,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
         da1.Fill(dt1);
         GridView1.DataSource = dt1;
         GridView1.DataBind();
-        TextBox1.Text = "";
+        
 
 
     }
@@ -486,14 +483,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
 
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Customer_Entry where Custom_Name='" + TextBox1.Text + "' and Com_Id='" + company_id + "'", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+      
     }
  
 

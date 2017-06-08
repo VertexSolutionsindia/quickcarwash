@@ -50,8 +50,8 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
                 Label8.Text = dr10["financial_year"].ToString();
             }
             DateTime date = DateTime.Now;
-            TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-            TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+            TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+            TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             getinvoiceno();
           
             SearchExpense();
@@ -259,6 +259,7 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Attendance entry deleted successfully')", true);
 
                 BindData();
+                getinvoiceno();
             }
             con10.Close();
         }
@@ -275,18 +276,7 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
             if (dr.Read())
             {
                 company_id = Convert.ToInt32(dr["com_id"].ToString());
-                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd = new SqlCommand("Select * from ExpenceName_Add where Com_Id='" + company_id + "' ORDER BY ExpName_Code asc", con);
-                con.Open();
-                DataSet ds = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(ds);
-
-                DropDownList4.DataSource = ds;
-                DropDownList4.DataTextField = "Expense_Name";
-                DropDownList4.DataValueField = "ExpName_Code";
-                DropDownList4.DataBind();
-                DropDownList4.Items.Insert(0, new ListItem("All", "0"));
+              
 
                 ImageButton IMG = (ImageButton)sender;
                 GridViewRow ROW = (GridViewRow)IMG.NamingContainer;
@@ -408,7 +398,7 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
                 SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                 SqlCommand cmd = new SqlCommand("insert into Attendance_Entry values(@No,@date,@Staff_Name,@option_name,@salary_amount,@Amount,@Com_id,@year)", CON);
                 cmd.Parameters.AddWithValue("@No", Label1.Text);
-                cmd.Parameters.AddWithValue("@date", TextBox8.Text);
+                cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
              
                 cmd.Parameters.AddWithValue("@Staff_Name", DropDownList3.SelectedItem.Text);
                 cmd.Parameters.AddWithValue("@option_name",  DropDownList1.SelectedItem.Text);
@@ -421,6 +411,10 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
                 CON.Open();
                 cmd.ExecuteNonQuery();
                 CON.Close();
+
+
+
+
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Attendance entry Added successfully')", true);
 
                 TextBox8.Text = "";
@@ -430,8 +424,8 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
                 SearchExpense();
                 BindData();
                 DateTime date = DateTime.Now;
-                TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-                DropDownList1.SelectedItem.Text = "Select option";
+                TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+                SearchExpense();
 
             }
             con10.Close();
@@ -458,7 +452,7 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
         SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand cmd = new SqlCommand("update Attendance_Entry set date=@date,Staff_Name=@Staff_Name,option_name=@option_name,salary_amount=@salary_amount,Amount=@Amount,Com_Id=@Com_Id,year=@year where No=@No", CON);
         cmd.Parameters.AddWithValue("@No", Label4.Text);
-        cmd.Parameters.AddWithValue("@date", TextBox2.Text);
+        cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox2.Text).ToString("MM-dd-yyyy"));
 
         cmd.Parameters.AddWithValue("@Staff_Name", DropDownList4.SelectedItem.Text);
         cmd.Parameters.AddWithValue("@option_name", DropDownList2.SelectedItem.Text);
@@ -477,4 +471,61 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
         BindData();
         getinvoiceno();
     }
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                company_id = Convert.ToInt32(dr10["com_id"].ToString());
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                con.Open();
+                SqlCommand cmd2 = new SqlCommand("Select * from Staff_Entry where Emp_Name='" + DropDownList3.SelectedItem.Text + "' and Com_Id='" + company_id + "'", con);
+                SqlDataReader dr1;
+                dr1 = cmd2.ExecuteReader();
+                if (dr1.Read())
+                {
+
+                    if (DropDownList1.SelectedItem.Text == "Present")
+                    {
+                        TextBox1.Text = dr1["salary"].ToString();
+
+                    }
+                    if (DropDownList1.SelectedItem.Text == "Absent")
+                    {
+                        TextBox1.Text = "0";
+
+                    }
+                    if (DropDownList1.SelectedItem.Text == "Half day present")
+                    {
+                        float value=float.Parse( dr1["salary"].ToString());
+                        TextBox1.Text = (value / 2).ToString();
+                    }
+
+
+
+                }
+                con.Close();
+            }
+            con10.Close();
+        }
+    }
+    protected void TextBox5_TextChanged(object sender, EventArgs e)
+    {
+        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where date='" + Convert.ToDateTime(TextBox5.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "'", con1);
+        DataTable dt1 = new DataTable();
+        con1.Open();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
+    }
+   
 }

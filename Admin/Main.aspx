@@ -132,9 +132,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                             
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -168,9 +166,20 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                          
-                  
-                               
+                            <ul class="nav nav-second-level collapse">
+                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
+                           </ul>
+                       <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                       
+                           
                             </li>
                            
 
@@ -187,6 +196,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                            </ul>
                           
                                
@@ -198,7 +208,13 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
                            </ul>
-                          
+                          <ul class="nav nav-second-level collapse">
+                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
+                           </ul>
+                               <ul class="nav nav-second-level collapse">
+                                    <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
+                           </ul>
+                            
                                
                             </li>
                             
@@ -207,7 +223,8 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
                                       <li><a href="Sales_Report.aspx">Billing Report</a></li>
-                                 
+                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
+                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
                            </ul>
                           
                                
