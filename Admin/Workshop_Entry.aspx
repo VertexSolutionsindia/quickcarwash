@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Service_entry.aspx.cs" Inherits="Admin_Service_entry" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Workshop_Entry.aspx.cs" Inherits="Admin_Workshop_Entry" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -247,8 +247,17 @@
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
                           
-                  
-                               
+                     <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                           <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                              <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                              
+                              
                             </li>
                            
 
@@ -303,7 +312,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="page-title see2">
-                                <h2>Service Entry 
+                                <h2>Workshop Entry
                                  </h2>
                              
                              
@@ -348,7 +357,7 @@
                  <div class="panel-body">
                            <div class="form-horizontal">
                                <br />
-                               <div class="form-group"><label class="col-lg-3 control-label">Service Code</label>
+                               <div class="form-group"><label class="col-lg-3 control-label">workshop Id</label>
 
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel3" runat="server">
@@ -364,7 +373,7 @@
                                     </div>
                                 </div>
                 
-                 <div class="form-group"><label class="col-lg-3 control-label">Type of Service</label>
+                 <div class="form-group"><label class="col-lg-3 control-label">Workshop Name</label>
                               
                                     <div class="col-lg-9">
                                     <asp:Panel ID="Panel1" runat="server" DefaultButton="Button1">
@@ -383,13 +392,31 @@
                                 
                                 </div>
 
-                                   <div class="form-group"><label class="col-lg-3 control-label">Amount</label>
+                   <div class="form-group"><label class="col-lg-3 control-label">Address</label>
                               
                                     <div class="col-lg-9">
                                     <asp:Panel ID="Panel3" runat="server" DefaultButton="Button1">
                                      <asp:UpdatePanel ID="UpdatePanel4" runat="server">
    <ContentTemplate>
                                     <asp:TextBox ID="TextBox2" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
+                                    </ContentTemplate>
+                                     <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
+                  <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click"  />
+                </Triggers>
+                           </asp:UpdatePanel>
+                                    </asp:Panel>
+                                    </div>
+                                
+                                
+                                </div>
+                                              <div class="form-group"><label class="col-lg-3 control-label">Mobile Number</label>
+                              
+                                    <div class="col-lg-9">
+                                    <asp:Panel ID="Panel4" runat="server" DefaultButton="Button1">
+                                     <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+   <ContentTemplate>
+                                    <asp:TextBox ID="TextBox3" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
                                     </ContentTemplate>
                                      <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
@@ -442,7 +469,7 @@
                        <asp:TextBox ID="TextBox1" runat="server" width="100%" 
                                     ontextchanged="TextBox1_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search Service Type"></asp:TextBoxWatermarkExtender>
+                           <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox1" WatermarkText="Search WosrkShop Name"></asp:TextBoxWatermarkExtender>
                            <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox1"  CompletionListCssClass="completionList"
      CompletionListItemCssClass="listItem"
      CompletionListHighlightedItemCssClass="itemHighlighted">
@@ -514,14 +541,17 @@
            
            </asp:TemplateField>
          
-           <asp:BoundField HeaderText="Service Code" DataField="code"  >
+           <asp:BoundField HeaderText="Workshop Id" DataField="WorkShop_id"  >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-           <asp:BoundField HeaderText="Type of Service" DataField="Service_name" >
+           <asp:BoundField HeaderText="Workshop Name" DataField="WorkShop_Name" >
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-            <asp:BoundField HeaderText="Amount" DataField="Amount" >
-           <HeaderStyle CssClass="Grd1" />
+             <asp:BoundField HeaderText="Address" DataField="WorkShop_Add" >
+            <HeaderStyle CssClass="Grd1" />
+           </asp:BoundField>
+             <asp:BoundField HeaderText="Mobile Number" DataField="Mobile_no" >
+            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
            <asp:TemplateField>
           <ItemTemplate>
@@ -591,21 +621,27 @@
        
         <tr>
         <td>
-            <asp:Label ID="Label28" runat="server" Text="Service Code" class="col-lg-3 control-label"></asp:Label></td>
+            <asp:Label ID="Label28" runat="server" Text="Workshop Id" class="col-lg-3 control-label"></asp:Label></td>
         <td>
             <asp:Label ID="Label29" runat="server" Text=""></asp:Label></td>
         </tr>
         <tr>
         <td>
-            <asp:Label ID="Label30" runat="server" Text="Type of Service" class="col-lg-3 control-label" Width="200px"></asp:Label></td>
+            <asp:Label ID="Label30" runat="server" Text="Workshop Name" class="col-lg-3 control-label" Width="200px"></asp:Label></td>
         <td>
             <asp:TextBox ID="TextBox16" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox></td>
         </tr>
-         <tr>
+            <tr>
         <td>
-            <asp:Label ID="Label4" runat="server" Text="Amount" class="col-lg-3 control-label" Width="200px"></asp:Label></td>
+            <asp:Label ID="Label2" runat="server" Text="Address" class="col-lg-3 control-label" Width="200px"></asp:Label></td>
         <td>
-            <asp:TextBox ID="TextBox3" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox></td>
+            <asp:TextBox ID="TextBox5" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox></td>
+        </tr>
+            <tr>
+        <td>
+            <asp:Label ID="Label3" runat="server" Text="Mobile Number" class="col-lg-3 control-label" Width="200px"></asp:Label></td>
+        <td>
+            <asp:TextBox ID="TextBox6" runat="server"  class="form-control input-x2 dropbox"></asp:TextBox></td>
         </tr>
      <tr>
      <td></td>

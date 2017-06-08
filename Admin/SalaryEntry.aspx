@@ -1,22 +1,40 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="RabbitDashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SalaryEntry.aspx.cs" Inherits="Admin_SalaryEntry" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head runat="server">
-        <meta charset="utf-8">
+    <head id="Head1" runat="server">
+         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>Quick Car Wash</title>
+      
+
+              <script type="text/javascript">
+
+                  $(document).ready(function () {
+
+                      $(".selectpicker").selectpicker();
+
+                  });
+
+                 </script>
+
 
         <!-- Bootstrap -->
+          <script src="bootstrap/js/jquery-3.1.1.min.js"></script>
+
+          <script src="bootstrap/js/bootstrap-select.js"></script>
+           <link href="bootstrap/css/bootstrap-select.css" rel="stylesheet" />
+           <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/waves.min.css" type="text/css" rel="stylesheet">
         <!--        <link rel="stylesheet" href="css/nanoscroller.css">-->
         <link href="css/menu.css" type="text/css" rel="stylesheet">
         <link href="css/style.css" type="text/css" rel="stylesheet">
-         <link href="css1/Dashboardcss.css" type="text/css" rel="stylesheet">
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,12 +43,24 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <style>
-    
-      .red
+        <style>
+            .completionList {
+        border:solid 1px Gray;
+        margin:0px;
+        padding:3px;
+        height: 120px;
+        overflow:auto;
+        background-color:#FAEBD7;     
+        } 
+        .listItem {
+        color: #191919;
+        } 
+        .itemHighlighted {
+        background-color: #ADD6FF;       
+        }
+            .red
             {
                 text-align:center;
-                font-size:15px;
             }
             .goo
             {
@@ -45,20 +75,6 @@
                 color:#555555;
                 height:30px;
             }
-             .completionList {
-        border:solid 1px Gray;
-        margin:0px;
-        padding:3px;
-        height: 120px;
-        overflow:auto;
-        background-color:#FAEBD7;     
-        } 
-        .listItem {
-        color: #191919;
-        } 
-        .itemHighlighted {
-        background-color: #ADD6FF;       
-        }
         .dropbox
         {
             width:100%;
@@ -133,11 +149,8 @@
       
         }
         
-    
-    
-    </style>
+        </style>
     </head>
-   
     <body>
         <!-- Static navbar -->
  <form id="form1" runat="server">
@@ -165,14 +178,14 @@
                     <a class="navbar-brand" href="#">Quick Car Wash</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                  <%--  <ul class="nav navbar-nav">
+<%--                    <ul class="nav navbar-nav">
                         <li class="dropdown">
                            
                           <li class="dropdown">
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 <asp:Button ID="Button4" runat="server"  Text="ADD" class="btn btn-primary"></asp:Button> <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> </a>
                             <ul class="dropdown-menu">
-                                <li><a href="Customer-Entry.aspx"><i class="fa fa-home fa-2x" aria-hidden="true"></i>&nbsp;&nbsp&nbsp;Customer Entry</a></li>
+                                <li><a href="Main.aspx"><i class="fa fa-home fa-2x" aria-hidden="true"></i>&nbsp;&nbsp&nbsp;Category</a></li>
                                    <li role="separator" class="divider"></li>
                                 <li><a href="Billing_entry.aspx"><i class="fa fa-hdd-o" aria-hidden="true"></i>&nbsp;&nbsp&nbsp;Sub Category </a></li>
                                  <li role="separator" class="divider"></li>
@@ -221,7 +234,7 @@
         </nav>
         <section class="page">
 
-             <nav class="navbar-aside navbar-static-side" role="navigation">
+                <nav class="navbar-aside navbar-static-side" role="navigation">
                 <div class="sidebar-collapse nano">
                     <div class="nano-content">
                         <ul class="nav metismenu" id="side-menu">
@@ -241,20 +254,9 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                            <ul class="nav nav-second-level collapse">
-                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
-                           </ul>
-                       <ul class="nav nav-second-level collapse">
-                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
-                           </ul>
-                                 <ul class="nav nav-second-level collapse">
-                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
-                           </ul>
-                                 <ul class="nav nav-second-level collapse">
-                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
-                           </ul>
-                       
-                           
+                          
+                  
+                               
                             </li>
                            
 
@@ -281,14 +283,11 @@
                                 <a href="Staff-Entry.aspx"><i class="fa fa-users fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Staff </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
+                                
                            </ul>
-                          <ul class="nav nav-second-level collapse">
-                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
-                           </ul>
-                               <ul class="nav nav-second-level collapse">
+                                       <ul class="nav nav-second-level collapse">
                                     <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
                            </ul>
-                            
                                
                             </li>
                             
@@ -297,8 +296,7 @@
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
                                       <li><a href="Sales_Report.aspx">Billing Report</a></li>
-                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
-                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
+                                 
                            </ul>
                           
                                
@@ -311,112 +309,410 @@
                 </div>
                 
             </nav>
-          
-      
+         
             <div id="wrapper">
                 <div class="content-wrapper container">
                     <div class="row">
                         <div class="col-sm-12">
-                           <div class="page-title">
-                                <h2 style=" color:black">Dashboard  <small></small></h2>
+                            <div class="page-title see2">
+                                <h2>Salary Entry
+                                 </h2>
+                             
                              
   
 
-  
+
 
                                 
                             </div>
                             
                         </div>
                     </div><!-- end .page title-->
-                     <div class="row see">
-   <div style="float:left; width:100%; margin-bottom:30px">
-
- 
-  <div class="top">
-<a href="Customer-Entry.aspx" ><button type="button" class="btn btn-default2 btn-circle btn-xl"><i class="fa fa-product-hunt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label" >Customer entry</span></a></div>
-  <div class="top">
-<a href="Service_entry.aspx" ><button type="button" class="btn btn-default1 btn-circle btn-xl"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span class="col-lg-3 control-label" >Service type</span></a></div>
-
-   <div class="top">
-<a href="Cost_of_Service_entry.aspx" ><button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></button><br />&nbsp;&nbsp;&nbsp;<span >Cost of service entry</span></a></div>
-<div class="top" >
-<a href="Expense_entry.aspx" ><button type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button><br /><span class="col-lg-3 control-label">Expenses entry</span></a></div>
-
-<div class="top" >
-<a href="Billing_entry.aspx" >
-
-<button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-pencil-square" aria-hidden="true"></i></button><br />&nbsp;&nbsp;<span class="col-lg-3 control-label">Billing entry</span></a></div>
+                     <div class="row">
+                    <div class="col-md-12">
+                  
 
 
 
-</div>
-<br />
-<div style="width:100%; clear:both; margin-top:20px"">
-     <div style="float:left; width:50%">
-             <h3 style="clear:both" class="col-lg-3 control-label">Month wise sales</h3>
-            <asp:Chart ID="Chart2" width="400px"   runat="server" Palette="Chocolate"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
-     </div>
-     <div style="float:left; width:50%;">
-                 <h3 class="col-lg-3 control-label">Month wise total vehicle</h3>
 
-              <asp:Chart ID="Chart1" width="400px"   runat="server"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
-      </div>
-</div>
+                    <div class="row see"  >
 
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <div class="container">
 
-
+                           <div class="container">
                         
-                    <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="4" 
+ 
+  <div class="panel panel-default">
+ 
+
+
+
+  
+<div class="col-lg-12">
+
+
+<hr />
+</div>
+
+
+<div class="panel-body">
+<div class="row">
+
+<div class="col-md-4">
+
+                         <div class="form-group"><label class="col-lg-3 control-label">Salary Id</label>
+
+                                    <div class="col-lg-9">
+                                     <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+   <ContentTemplate>
+                                  <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+                                      </ContentTemplate>
+                                <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
+               <%--   <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click"  />--%>
+                  
+                </Triggers>
+                           </asp:UpdatePanel>
+                                    </div>
+                                </div>
+
+
+</div>
+
+
+<div class="col-md-4">
+
+                       <div class="form-group"><label class="col-lg-4 control-label">Salary Date</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
+                                        ontextchanged="TextBox8_TextChanged"></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender3" runat="server" 
+                                        TargetControlID="TextBox8" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
+
+
+</div>
+
+
+
+<div class="col-md-4">
+
+
+ <div class="form-group"><label class="col-lg-4 control-label">Staff Name</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+   <ContentTemplate>
+  
+                                  <asp:TextBox ID="TextBox1" runat="server" AutoPostBack="true" class="form-control input-x2 dropbox"  
+                                      ontextchanged="TextBox1_TextChanged"></asp:TextBox>
+        
+                                        <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchStaffName" FirstRowSelected = "false" CompletionInterval="0" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox1"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div>
+
+</div>
+
+
+       </div>      <br />         
+          
+          
+          <div class="row">
+             <div class="col-md-4">
+
+                             <div class="form-group"><label class="col-lg-4 control-label">From Date</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+   <ContentTemplate>
+  
+                                    <asp:TextBox ID="TextBox3" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
+                                        ontextchanged="TextBox3_TextChanged"></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
+                                        TargetControlID="TextBox3" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div></div>
+
+
+   <div class="col-md-4">
+
+                        <div class="form-group"><label class="col-lg-4 control-label">To Date</label>
+
+                                    <div class="col-lg-8">
+                                     <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+   <ContentTemplate>
+  <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" 
+           ontextchanged="TextBox4_TextChanged"></asp:TextBox>
+                                    <asp:CalendarExtender ID="CalendarExtender2" 
+           runat="server" TargetControlID="TextBox4" Format="MM-dd-yyyy"></asp:CalendarExtender>
+                                      </ContentTemplate>
+                                      </asp:UpdatePanel></div></div></div>
+
+
+</div>
+<div class="row">
+
+<div class="col-md-4 col-md-offset-0">
+                  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+   <ContentTemplate>
+    <br /><asp:Button ID="Button1" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Search" onclick="Button1_Click" 
+                          ></asp:Button> 
+ <asp:Button ID="Button3" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button3_Click" 
+                          ></asp:Button>
+                          </ContentTemplate>
+                           </asp:UpdatePanel>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+  <div class="panel panel-default">
+  <div class="panel-body">
+   <div class="col-md-12">
+  
+     <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+   <ContentTemplate>
+
+
+<div class="col-sm-12">
+<div class="row">
+<div class="col-md-12">
+   <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+   <ContentTemplate>
+   <asp:GridView ID="GridView3" runat="server" Width="100%" CellPadding="3" 
+         Font-Size="16px" 
+           AutoGenerateColumns="False" AllowPaging="True" 
+        onpageindexchanging="GridView3_PageIndexChanging" 
+        onrowdatabound="GridView3_RowDataBound" PageSize="20" BackColor="White" 
+           BorderColor="#CCCCCC" BorderWidth="1px" BorderStyle="None">
+       <Columns>
+       
+         <asp:BoundField HeaderText="Date" DataField="date" 
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
+
+
+                <asp:BoundField HeaderText="Attendance" DataField="option_name" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+              <asp:BoundField HeaderText="Per day salary" DataField="salary_amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+                  <asp:BoundField HeaderText="Paid Amount" DataField="Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+       </Columns>
+       <FooterStyle BackColor="White" ForeColor="#000066" />
+       <HeaderStyle Height="40px" BackColor="#006699" Font-Bold="True" CssClass="red" 
+           ForeColor="White" />
+       <PagerSettings FirstPageText="First" LastPageText="Last" />
+       <PagerStyle Wrap="true" BorderStyle="Solid" Width="100%" 
+           CssClass="gvwCasesPager" BackColor="White" ForeColor="#000066" 
+           HorizontalAlign="Left" />
+       <RowStyle Height="40px" ForeColor="#000066" />
+       <SelectedRowStyle BackColor="#669999" ForeColor="White" Font-Bold="True" />
+       <SortedAscendingCellStyle BackColor="#F1F1F1" />
+       <SortedAscendingHeaderStyle BackColor="#007DBB" />
+       <SortedDescendingCellStyle BackColor="#CAC9C9" />
+       <SortedDescendingHeaderStyle BackColor="#00547E" />
+       </asp:GridView>
+  </ContentTemplate>
+    <Triggers>
+             <%--   <asp:AsyncPostBackTrigger ControlID="GridView2"  />--%>
+              
+                               </Triggers>
+    </asp:UpdatePanel>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Total Salary</label>
+            <asp:TextBox ID="TextBox6" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Total Paid Amount</label>
+            <asp:TextBox ID="TextBox7" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+    <div class="col-md-6">
+  
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Balance Amount</label>
+            <asp:TextBox ID="TextBox2" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Actual Paid Amount</label>
+            <asp:TextBox ID="TextBox5" runat="server" AutoPostBack="true" 
+                BorderColor="#66CCFF" BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" 
+                ForeColor="Black" ontextchanged="TextBox5_TextChanged" style="float:right" 
+                Width="175px"></asp:TextBox>
+        </div>
+    </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+       
+        <div class="form-group">
+            <label class="col-lg-4 control-label">
+            Pending Amount</label>
+            <asp:TextBox ID="TextBox9" runat="server" BorderColor="#66CCFF" 
+                BorderStyle="Solid" Font-Bold="True" Font-Size="Medium" ForeColor="Black" 
+                style="float:right" Width="175px"></asp:TextBox>
+        </div>
+        </div>
+    </div>
+    <br />
+      <div class="col-lg-12">
+        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+            <ContentTemplate>
+                <asp:Button ID="Button2" runat="server" class="btn-primary" Height="30px" 
+                    onclick="Button2_Click" Text="Create" Width="70px" />
+                <asp:Button ID="Button4" runat="server" class="btn-primary" Height="30px" 
+                    onclick="Button4_Click" Text="Clear" Width="70px" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+   
+    </ContentTemplate>
+</asp:UpdatePanel>
+              
+
+        </div>
+        </div>
+        </div>
+
+        <div class="row">
+<div class="col-md-12">
+   <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+   <ContentTemplate>
+   <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="3" 
          Font-Size="16px" 
            AutoGenerateColumns="False" AllowPaging="True" 
         onpageindexchanging="GridView1_PageIndexChanging" 
-        onrowdatabound="GridView1_RowDataBound" ForeColor="#333333" 
-        GridLines="None" PageSize="4">
-       <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+        onrowdatabound="GridView1_RowDataBound" PageSize="20" BackColor="White" 
+           BorderColor="#CCCCCC" BorderWidth="1px" BorderStyle="None">
        <Columns>
-      
-            <asp:BoundField HeaderText="Purchase Invoice" DataField="purchase_invoice" HeaderStyle-CssClass="col-lg-3 control-label"  />
-           <asp:BoundField HeaderText="Product Code" DataField="Product_code" HeaderStyle-CssClass="col-lg-3 control-label"    />
-           <asp:BoundField HeaderText="Product Name" DataField="product_name" HeaderStyle-CssClass="col-lg-3 control-label"   />
-             <asp:BoundField HeaderText="Barcode" DataField="barcode" HeaderStyle-CssClass="col-lg-3 control-label"  />
-              <asp:BoundField HeaderText="MRP" DataField="mrp" HeaderStyle-CssClass="col-lg-3 control-label"  />
-               <asp:BoundField HeaderText="Purchase Price" DataField="purchase_price" HeaderStyle-CssClass="col-lg-3 control-label"  />
-                <asp:BoundField HeaderText="Qty" DataField="qty" HeaderStyle-CssClass="col-lg-3 control-label"  />
-              
+                   <asp:BoundField HeaderText="Salary Id" DataField="Sal_id" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+         <asp:BoundField HeaderText="From Date" DataField="from_date" 
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
+                   <asp:BoundField HeaderText="To Date" DataField="To_date" 
+               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
+
+                <asp:BoundField HeaderText="Staff Name" DataField="Staff_Name" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+              <asp:BoundField HeaderText="Total salary" DataField="Total_Salary" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+                  <asp:BoundField HeaderText="Total Paid Amount" DataField="TotalPaid_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
+                        <asp:BoundField HeaderText="Balance Amount" DataField="Balance_Amount" ItemStyle-Width="10%">
+ 
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle CssClass="Grd1" Width="10%" />
+           </asp:BoundField>
        </Columns>
-       <EditRowStyle BackColor="#999999" />
-       <FooterStyle BackColor="#5D7B9D" ForeColor="White" Font-Bold="True" />
-       <HeaderStyle Height="40px" BackColor="#fafbfc" Font-Bold="True" CssClass="red" ForeColor="#656565" />
+       <FooterStyle BackColor="White" ForeColor="#000066" />
+       <HeaderStyle Height="40px" BackColor="#006699" Font-Bold="True" CssClass="red" 
+           ForeColor="White" />
        <PagerSettings FirstPageText="First" LastPageText="Last" />
        <PagerStyle Wrap="true" BorderStyle="Solid" Width="100%" 
-           CssClass="gvwCasesPager" BackColor="#284775" ForeColor="White" 
-           HorizontalAlign="Center" />
-       <RowStyle Height="40px" BackColor="white" ForeColor="#333333" />
-       <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-       <SortedAscendingCellStyle BackColor="#E9E7E2" />
-       <SortedAscendingHeaderStyle BackColor="#506C8C" />
-       <SortedDescendingCellStyle BackColor="#FFFDF8" />
-       <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-       </asp:GridView>  
+           CssClass="gvwCasesPager" BackColor="White" ForeColor="#000066" 
+           HorizontalAlign="Left" />
+       <RowStyle Height="40px" ForeColor="#000066" />
+       <SelectedRowStyle BackColor="#669999" ForeColor="White" Font-Bold="True" />
+       <SortedAscendingCellStyle BackColor="#F1F1F1" />
+       <SortedAscendingHeaderStyle BackColor="#007DBB" />
+       <SortedDescendingCellStyle BackColor="#CAC9C9" />
+       <SortedDescendingHeaderStyle BackColor="#00547E" />
+       </asp:GridView>
+  </ContentTemplate>
+    <Triggers>
+             <%--   <asp:AsyncPostBackTrigger ControlID="GridView2"  />--%>
+              
+                               </Triggers>
+    </asp:UpdatePanel>
+</div>
+</div>
 
 
-       </div>
-      
-                        
-                    </div><!--end .row-->
-                   </div>            
 
-
-                    <div>
-                    
-                  </div>
-                  </div>
-                  
-                  
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>
+                
                    
+                  
                            
-        
+        </section>
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -495,3 +791,6 @@
         </form>
     </body>
 </html>
+
+
+

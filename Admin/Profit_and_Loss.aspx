@@ -234,7 +234,7 @@
         </nav>
         <section class="page">
 
-             <nav class="navbar-aside navbar-static-side" role="navigation">
+                <nav class="navbar-aside navbar-static-side" role="navigation">
                 <div class="sidebar-collapse nano">
                     <div class="nano-content">
                         <ul class="nav metismenu" id="side-menu">
@@ -245,7 +245,7 @@
                                     <li><a href="Dashboard.aspx">Dashboard </a></li>
                            </ul>
                             </li>
-                            <li>
+              <li>
                                 <a href=""><i class="fa fa-folder-open fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp;Master </span><span class="fa arrow"></span></a>
                           
                           <ul class="nav nav-second-level collapse">
@@ -255,29 +255,30 @@
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
                           
-                                              
+                  
+                               
                             </li>
                            
 
 
                            
 
-                
+                    
 
-                             <li>
+                                 <li>
                                 <a href="Account_ledger.aspx"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i><span class="nav-label">&nbsp;&nbsp; Accounts </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
-                                    <li><a href="Account_ledger.aspx">Account ledger</a></li>
+                                  
                                       <li><a href="Cost_of_Service_entry.aspx">Cost of Service Entry</a></li>  
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
-                                  <li><a href="Expense_ledger.aspx">Expense ledger</a></li
-                                    <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                 
+                                  <li><a href="Account_ledger.aspx">Account ledger</a></li>
+                                     <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
                            </ul>
                           
                                
-                            </li>
-                        
+                            
+                               
+                            
                              <li>
                                 <a href="Staff-Entry.aspx"><i class="fa fa-users fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Staff </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
@@ -287,16 +288,17 @@
                                
                             </li>
                             
-                                  <li>
+                             <li>
                                 <a href="Billing_entry.aspx"><i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Billing </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
-                                  
+                                      <li><a href="Sales_Report.aspx">Billing Report</a></li>
+                                 
                            </ul>
                           
                                
                             </li>
-                      
+                  
                                             
                         </ul>
 
@@ -332,7 +334,7 @@
 
                     <div class="row see"  >
 
-
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     <div class="container">
 
                            <div class="container">

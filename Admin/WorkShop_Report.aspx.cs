@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 #endregion
 
-public partial class Admin_Sales_Report : System.Web.UI.Page
+public partial class Admin_WorkShop_Report : System.Web.UI.Page
 {
     public static int company_id = 0;
     protected void Page_Load(object sender, EventArgs e)
@@ -36,9 +36,6 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
                 con.Close();
             }
 
-<<<<<<< HEAD
-         
-=======
             SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
             SqlCommand cmd10 = new SqlCommand("select * from currentfinancialyear where no='1'", con10);
             SqlDataReader dr10;
@@ -49,30 +46,22 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
                 Label1.Text = dr10["financial_year"].ToString();
                 TextBox3.Text =Convert.ToDateTime(  dr10["start_date"]).ToString("MM-dd-yyyy");
             }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
             showrating();
             BindData();
 
             active();
             created();
-<<<<<<< HEAD
-
-
-=======
-            SearchCustomer();
+            SearchWorkshop();
             show_VehicleNO();
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
          
 
         }
     }
-<<<<<<< HEAD
-=======
     private void show_VehicleNO()
     {
 
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from Customer_Entry where Com_Id='" + company_id + "' ORDER BY Custom_Code asc", con);
+        SqlCommand cmd = new SqlCommand("Select * from WorkshopBilling_Entry where Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con);
         con.Open();
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -81,7 +70,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
 
         DropDownList1.DataSource = ds;
         DropDownList1.DataTextField = "Customer_VehNo";
-        DropDownList1.DataValueField = "Custom_Code";
+        DropDownList1.DataValueField = "Invoice_id";
         DropDownList1.DataBind();
         DropDownList1.Items.Insert(0, new ListItem("All", "0"));
 
@@ -90,11 +79,11 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         con.Close();
     }
 
-    private void SearchCustomer()
+    private void SearchWorkshop()
     {
 
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand cmd = new SqlCommand("Select * from Customer_Entry where Com_Id='" + company_id + "' ORDER BY Custom_Code asc", con);
+        SqlCommand cmd = new SqlCommand("Select * from Workshop_Entry where Com_Id='" + company_id + "' ORDER BY WorkShop_id asc", con);
         con.Open();
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -102,13 +91,12 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
 
 
         DropDownList2.DataSource = ds;
-        DropDownList2.DataTextField = "Custom_Name";
-        DropDownList2.DataValueField = "Custom_Code";
+        DropDownList2.DataTextField = "WorkShop_Name";
+        DropDownList2.DataValueField = "WorkShop_id";
         DropDownList2.DataBind();
         DropDownList2.Items.Insert(0, new ListItem("All", "0"));
         con.Close();
     }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
     private void active()
     {
 
@@ -236,11 +224,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
     protected void BindData()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con);
-=======
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
@@ -326,11 +310,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
 
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "'", con1);
-=======
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
        
         
         DataTable dt1 = new DataTable();
@@ -345,11 +325,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
       
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-<<<<<<< HEAD
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'", con1);
-=======
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -383,16 +359,15 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         TextBox3.Text = "";
         TextBox4.Text = "";
         BindData();
+        SearchWorkshop();
+        show_VehicleNO();
     }
-<<<<<<< HEAD
-    
-=======
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='" + DropDownList1.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where Customer_VehNo='" + DropDownList1.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -404,7 +379,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
     {
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_name='" + DropDownList2.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where Workshop_name='" + DropDownList2.SelectedItem.Text + "'  and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -412,5 +387,4 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         GridView1.DataSource = dt1;
         GridView1.DataBind();
     }
->>>>>>> 0b016b9792bf4c96492fd29d08f8777c86457d6f
 }
