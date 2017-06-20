@@ -219,9 +219,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                              
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LoginLink" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -234,7 +232,7 @@
         </nav>
         <section class="page">
 
-             <nav class="navbar-aside navbar-static-side" role="navigation">
+                <nav class="navbar-aside navbar-static-side" role="navigation">
                 <div class="sidebar-collapse nano">
                     <div class="nano-content">
                         <ul class="nav metismenu" id="side-menu">
@@ -245,7 +243,7 @@
                                     <li><a href="Dashboard.aspx">Dashboard </a></li>
                            </ul>
                             </li>
-                            <li>
+              <li>
                                 <a href=""><i class="fa fa-folder-open fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp;Master </span><span class="fa arrow"></span></a>
                           
                           <ul class="nav nav-second-level collapse">
@@ -254,57 +252,76 @@
                        <ul class="nav nav-second-level collapse">
                                     <li><a href="Service_entry.aspx">Service Type</a></li>
                            </ul>
-                          
-                                              
+                            <ul class="nav nav-second-level collapse">
+                                    <li><a href="Partners_entry.aspx">Partners Type</a></li>
+                           </ul>
+                       <ul class="nav nav-second-level collapse">
+                                    <li><a href="ExpenseName_Entry.aspx">Expense Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="CostofServiceName_Entry.aspx">Cost of Service Name Entry</a></li>
+                           </ul>
+                                 <ul class="nav nav-second-level collapse">
+                                    <li><a href="Workshop_Entry.aspx">Workshop Entry</a></li>
+                           </ul>
+                       
+                           
                             </li>
                            
 
 
                            
 
-                
+                    
 
-                             <li>
+                                 <li>
                                 <a href="Account_ledger.aspx"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i><span class="nav-label">&nbsp;&nbsp; Accounts </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
-                                    <li><a href="Account_ledger.aspx">Account ledger</a></li>
+                                  
                                       <li><a href="Cost_of_Service_entry.aspx">Cost of Service Entry</a></li>  
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
-                                  <li><a href="Expense_ledger.aspx">Expense ledger</a></li
-                                    <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                 
+                                  <li><a href="Account_ledger.aspx">Account ledger</a></li>
+                                     <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
                            </ul>
                           
                                
-                            </li>
-                        
+                            
+                               
+                            
                              <li>
                                 <a href="Staff-Entry.aspx"><i class="fa fa-users fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Staff </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Staff-Entry.aspx">Entry</a></li>
                            </ul>
-                          
+                          <ul class="nav nav-second-level collapse">
+                                    <li><a href="Attendance_entry.aspx">Attendance Entry</a></li>
+                           </ul>
+                               <ul class="nav nav-second-level collapse">
+                                    <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
+                           </ul>
+                            
                                
                             </li>
                             
-                                  <li>
+                             <li>
                                 <a href="Billing_entry.aspx"><i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i> <span class="nav-label">&nbsp;&nbsp; Billing </span><span class="fa arrow"></span></a>
                              <ul class="nav nav-second-level collapse">
                                     <li><a href="Billing_entry.aspx">Billing Entry</a></li>
-                                  
+                                      <li><a href="Sales_Report.aspx">Billing Report</a></li>
+                                  <li><a href="WorkshopBilling_entry.aspx">Workshop Billing Entry</a></li>
+                                    <li><a href="WorkShop_Report.aspx">Workshop Report</a></li>
                            </ul>
                           
                                
                             </li>
-                      
+                  
                                             
                         </ul>
 
                     </div>
                 </div>
                 
-            </nav>
-         
+            </nav>         
             <div id="wrapper">
                 <div class="content-wrapper container">
                     <div class="row">
@@ -332,7 +349,7 @@
 
                     <div class="row see"  >
 
-
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     <div class="container">
 
                            <div class="container">
@@ -418,11 +435,12 @@
   <div class="panel panel-default">
   <div class="panel-body">
    <div class="col-md-12">
+  
      <asp:UpdatePanel ID="UpdatePanel7" runat="server">
    <ContentTemplate>
-<div class="col-sm-12"><h3 style="color: #0000FF" align="center">Income</h3></div>
+<div class="col-sm-12"><h3 style="color: #0000FF;margin-top:10px; font-size:20px; padding:10px;" align="left">Income</h3></div>
 <div class="row" >
-<div class="col-md-6 col-sm-offset-3">
+<div class="col-md-8  ">
    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
    <ContentTemplate>
    <asp:GridView ID="GridView1" runat="server" Width="100%" CellPadding="4" 
@@ -433,15 +451,12 @@
         GridLines="Horizontal" PageSize="20" BackColor="White" BorderColor="#336666" 
            BorderStyle="Double" BorderWidth="3px">
        <Columns>
-            <asp:BoundField HeaderText="Date" DataField="date" 
-                DataFormatString="{0:MM/dd/yyyy}" ItemStyle-Width="7%">
-            <ItemStyle Width="7%" />
-            </asp:BoundField>
+           
            <asp:BoundField HeaderText="Income" DataField="Service_Name" 
                 ItemStyle-Width="30%" >
              <ItemStyle Width="30%" />
             </asp:BoundField>
-             <asp:BoundField HeaderText="Amount" DataField="Amount" ItemStyle-Width="10%" >
+             <asp:BoundField HeaderText="Amount" DataField="Amount" ItemStyle-Width="10%"  >
 
   
             <HeaderStyle CssClass="algin2" />
@@ -470,20 +485,24 @@
               
                                </Triggers>
     </asp:UpdatePanel>
+   
+ 
 </div>
 </div>
 
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8"  style="border:1px solid green;  padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label">Total Income</label>
- <asp:TextBox ID="TextBox1" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
+<asp:TextBox ID="TextBox1" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right" 
+          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
 </div>
+
+ 
 <br />
 <br />
-<div class="col-sm-12"><h3 style="color: #0000FF" align="center">Cost Of Service</h3></div>
+<div class="col-sm-12"><h3 style="color: #0000FF;margin-top:10px; font-size:20px; padding:10px;" align="left">Cost Of Service</h3></div>
 <div class="row">
-<div class="col-md-6 col-sm-offset-3">
+<div class="col-md-8">
    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
    <ContentTemplate>
    <asp:GridView ID="GridView2" runat="server" Width="100%" CellPadding="4" 
@@ -494,10 +513,7 @@
         GridLines="Horizontal" PageSize="20" BackColor="White" 
            BorderColor="#336666" BorderWidth="3px" BorderStyle="Double">
        <Columns>
-       <asp:BoundField HeaderText="Date" DataField="date" 
-                DataFormatString="{0:MM/dd/yyyy}" ItemStyle-Width="7%">
-            <ItemStyle Width="7%" />
-            </asp:BoundField>
+     
          <asp:BoundField HeaderText="Cost of Service" DataField="CostofService_Name" 
                ItemStyle-Width="30%">
            <ItemStyle Width="30%" />
@@ -533,26 +549,26 @@
     </asp:UpdatePanel>
 </div>
 </div>
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label">Total Loss of Service</label>
- <asp:TextBox ID="TextBox2" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
+ <asp:TextBox ID="TextBox2" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right" 
+          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
 </div>
 <br />
 
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8"  style="border:1px solid green; padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label">Gross Profit</label>
- <asp:TextBox ID="TextBox5" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
+ <asp:TextBox ID="TextBox5" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
+          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
 </div>
 <br />
 <br />
 
-<div class="col-sm-12"><h3 style="color: #0000FF" align="center">Expense</h3></div>
+<div class="col-sm-12"><h3 style="color: #0000FF;margin-top:10px; font-size:20px; padding:10px;" align="left">Expense</h3></div>
 <div class="row">
-<div class="col-md-6 col-sm-offset-3">
+<div class="col-md-8">
    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
    <ContentTemplate>
    <asp:GridView ID="GridView3" runat="server" Width="100%" CellPadding="4" 
@@ -563,10 +579,7 @@
         GridLines="Horizontal" PageSize="20" BackColor="White" 
            BorderColor="#336666" BorderWidth="3px" BorderStyle="Double">
        <Columns>
-          <asp:BoundField HeaderText="Date" DataField="date" 
-                DataFormatString="{0:MM/dd/yyyy}" ItemStyle-Width="7%">
-            <ItemStyle Width="7%" />
-            </asp:BoundField>
+       
          <asp:BoundField HeaderText="Expense" DataField="Expense_Name" 
                ItemStyle-Width="30%" >
            <ItemStyle Width="30%" />
@@ -602,23 +615,23 @@
     </asp:UpdatePanel>
 </div>
 </div>
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label">Total Expense</label>
- <asp:TextBox ID="TextBox6" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
+ <asp:TextBox ID="TextBox6" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
+          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
 </div>
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label">Net Operating Income</label>
- <asp:TextBox ID="TextBox7" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
+ <asp:TextBox ID="TextBox7" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
+          BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
 </div>
-<div class="col-md-6 col-sm-offset-5">
+<div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
  <div class="form-group"><label class="col-lg-3 control-label" 
          style="font-size: medium; color: #000000; text-transform: uppercase">Net Income</label>
- <asp:TextBox ID="TextBox8" runat="server" Font-Bold="True" Font-Size="Medium" 
-         class="algin2" BorderColor="Red" BorderStyle="Solid" ForeColor="Black" 
+ <asp:TextBox ID="TextBox8" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right"  
+          BorderColor="Red" BorderStyle="Solid" ForeColor="Black" 
          BackColor="#99CCFF"></asp:TextBox>
 </div>
 </div>

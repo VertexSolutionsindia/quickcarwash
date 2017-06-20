@@ -161,7 +161,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
             CON.Open();
             cmd.ExecuteNonQuery();
             CON.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Staff Entry created successfully')", true);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Employee Entry created successfully')", true);
             BindData();
             show_category();
             getinvoiceno();
@@ -226,7 +226,7 @@ public partial class Admin_Staff_Entry : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         con.Close();
 
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Staff Details deleted successfully')", true);
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Employee Details deleted successfully')", true);
 
         BindData();
         show_category();
