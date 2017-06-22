@@ -52,6 +52,9 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
             }
             DateTime date = DateTime.Now;
             TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+            TextBox4.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+            DateTime date1 = DateTime.Now.AddDays(-6);
+            TextBox3.Text = Convert.ToDateTime(date1).ToString("dd-MM-yyyy");
             showrating();
             getinvoiceno();
             BindData();
@@ -97,18 +100,17 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
             {
                 if (TextBox1.Text != "")
                 {
-                    //        BindData();
-                    //        BindData1();
+                  
                     BindData2();
 
 
                     //        //----------------------------------------------Finding Balance
 
-                    int Tot_Income = Convert.ToInt32(TextBox6.Text);
+                    float Tot_Income = float.Parse(TextBox6.Text);
 
-                    int Tol_CostofService = Convert.ToInt32(TextBox7.Text);
+                    float Tol_CostofService = float.Parse(TextBox7.Text);
 
-                    int Gross_profit = Tot_Income - Tol_CostofService;
+                    float Gross_profit = Tot_Income - Tol_CostofService;
 
                     TextBox2.Text = Convert.ToString(Gross_profit);
                     //        //-------------------------------------------------------------------
@@ -127,10 +129,13 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Select From Date')", true);
         }
-
-        float old = float.Parse(TextBox10.Text);
-        float balnace = float.Parse(TextBox2.Text);
-        TextBox2.Text = (old + balnace).ToString();
+        if (TextBox10.Text != "")
+        {
+            
+            float old = float.Parse(TextBox10.Text);
+            float balnace = float.Parse(TextBox2.Text);
+            TextBox2.Text = (old + balnace).ToString();
+        }
     }
 
     protected void BindData()
@@ -193,18 +198,16 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 if ((TextBox3.Text != "") && (TextBox4.Text != ""))
                 {
                     SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where Staff_Name='" + TextBox1.Text + "' AND date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' AND Com_Id='1' ORDER BY No asc", con1);
+                    SqlCommand CMD = new SqlCommand("select * from Attendance_Entry where Staff_Name='" + TextBox1.Text + "' AND date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' AND Com_Id='"+company_id+"' ORDER BY No asc", con1);
                     DataTable dt1 = new DataTable();
+                    con1.Open();
                     SqlDataAdapter da1 = new SqlDataAdapter(CMD);
                     da1.Fill(dt1);
                     GridView3.DataSource = dt1;
                     GridView3.DataBind();
+                    con1.Close();
                 }
-                else
-                {
-                    GridView3.DataSource = null;
-                    GridView3.DataBind();
-                }
+               
             }
             con.Close();
         }
@@ -455,9 +458,9 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                 SqlCommand cmd = new SqlCommand("insert into Salary_Entry values(@Sal_id,@date,@from_date,@To_date,@Staff_Name,@Total_Salary,@TotalPaid_Amount,@Balance_Amount,@ActualPaid_Amount,@Pending_Amount,@Com_id,@year)", CON);
                 cmd.Parameters.AddWithValue("@Sal_id", Label2.Text);
-                cmd.Parameters.AddWithValue("@date", TextBox8.Text);
-                cmd.Parameters.AddWithValue("@from_date", TextBox3.Text);
-                cmd.Parameters.AddWithValue("@To_date", TextBox4.Text);
+                cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
+                cmd.Parameters.AddWithValue("@from_date",Convert.ToDateTime(  TextBox3.Text).ToString("MM-dd-yyyy"));
+                cmd.Parameters.AddWithValue("@To_date", Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy"));
                 cmd.Parameters.AddWithValue("@Staff_Name", TextBox1.Text);
                 cmd.Parameters.AddWithValue("@Total_Salary", TextBox6.Text);
                 cmd.Parameters.AddWithValue("@TotalPaid_Amount", TextBox7.Text);

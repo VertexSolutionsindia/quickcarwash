@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title></title>
+        <title>Quick car wash</title>
 
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -371,7 +371,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dream Garments</a>
+                    <a class="navbar-brand" href="#">Quick Car Wash</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -479,7 +479,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop outstanding</a></li>
                            </ul>
                           
                                

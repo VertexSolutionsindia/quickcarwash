@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title></title>
+        <title><%=User.Identity.Name%></title>
           <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/0.1.0/css/footable.min.css"
     rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -321,7 +321,7 @@
    <ContentTemplate>   <asp:TextBox ID="TextBox2" runat="server" 
            class="form-control input-x2 dropbox" 
                                          ></asp:TextBox>
-                                 
+                                 <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="TextBox2"></asp:CalendarExtender>
                                     </ContentTemplate>
                                      <Triggers>
                                       <asp:AsyncPostBackTrigger ControlID="Button7" EventName="Click"  />
@@ -343,7 +343,7 @@
    <ContentTemplate>   <asp:TextBox ID="TextBox4" runat="server" 
            class="form-control input-x2 dropbox" 
                                          ></asp:TextBox>
-                                 
+                                   <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox4"></asp:CalendarExtender>
                                     </ContentTemplate>
                                      <Triggers>
                                       <asp:AsyncPostBackTrigger ControlID="Button7" EventName="Click"  />

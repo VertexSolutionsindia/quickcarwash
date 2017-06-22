@@ -274,7 +274,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -570,7 +570,7 @@
           </asp:TemplateField>
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -609,7 +609,7 @@
     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
    <ContentTemplate>
 
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
        
         <asp:Button ID="Button15" runat="server" Text="Button" style="display:none" />
   

@@ -47,7 +47,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
             if (dr10.Read())
             {
                 Label1.Text = dr10["financial_year"].ToString();
-                TextBox3.Text = Convert.ToDateTime(dr10["start_date"]).ToString("MM/dd/yyyy");
+                TextBox3.Text = Convert.ToDateTime(dr10["start_date"]).ToString("dd-MM-yyyy");
             }
             showrating();
             //BindData();
@@ -97,25 +97,30 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
 
 
                 //----------------------------------------------Finding Grossporift
+                if (TextBox1.Text != "" && TextBox2.Text != "")
+                {
+                    int Tot_Income = Convert.ToInt32(TextBox1.Text);
 
-                int Tot_Income = Convert.ToInt32(TextBox1.Text);
 
-                int Tol_CostofService = Convert.ToInt32(TextBox2.Text);
+                    int Tol_CostofService = Convert.ToInt32(TextBox2.Text);
 
-                int Gross_profit = Tot_Income - Tol_CostofService;
+                    int Gross_profit = Tot_Income - Tol_CostofService;
 
-                TextBox5.Text = Convert.ToString(Gross_profit);
-                //-------------------------------------------------------------------
 
-                //------------------------------------------------Finding Net Profit
-                int Total_Grossprofit = Convert.ToInt32(TextBox5.Text);
+                    TextBox5.Text = Convert.ToString(Gross_profit);
 
-                int Total_Expense = Convert.ToInt32(TextBox6.Text);
+                    //-------------------------------------------------------------------
 
-                int NetProfit = Total_Grossprofit - Total_Expense;
+                    //------------------------------------------------Finding Net Profit
+                    int Total_Grossprofit = Convert.ToInt32(TextBox5.Text);
 
-                TextBox7.Text = Convert.ToString(NetProfit);
-                TextBox8.Text = Convert.ToString(NetProfit);
+                    int Total_Expense = Convert.ToInt32(TextBox6.Text);
+
+                    int NetProfit = Total_Grossprofit - Total_Expense;
+
+                    TextBox7.Text = Convert.ToString(NetProfit);
+                    TextBox8.Text = Convert.ToString(NetProfit);
+                }
 
                 //--------------------------------------------------------------------
 
@@ -150,7 +155,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 if (dr.Read())
                 {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select Service_Name,Sum(Amount) as Amount from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by Service_Name", con);
+        SqlCommand CMD = new SqlCommand("select Service_Name,Sum(Amount) as Amount from Billing_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by Service_Name union all select Service_Name,Sum(Amount) as Amount from WorkshopBilling_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by Service_Name", con);
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
         da1.Fill(dt1);
@@ -173,7 +178,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 {
         SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
-        SqlCommand CMD2 = new SqlCommand("select CostofService_Name,Sum(Amount) as Amount from CostOfService_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by CostofService_Name", con2);
+        SqlCommand CMD2 = new SqlCommand("select CostofService_Name,Sum(Amount) as Amount from CostOfService_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by CostofService_Name", con2);
         DataTable dt2 = new DataTable();
         con2.Open();
         SqlDataAdapter da2 = new SqlDataAdapter(CMD2);
@@ -197,7 +202,7 @@ public partial class Admin_Profit_and_Loss : System.Web.UI.Page
                 {
         SqlConnection con2 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT  CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date='" + TextBox3.Text + "' and Com_Id='" + company_id + "' group by date,status,amount,value", con1);
-        SqlCommand CMD2 = new SqlCommand("select Expense_Name,Sum(Amount) as Amount from Expence_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='"+Label1.Text+"' group by Expense_Name", con2);
+        SqlCommand CMD2 = new SqlCommand("select Expense_Name,Sum(Amount) as Amount from Expence_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' group by Expense_Name", con2);
         DataTable dt2 = new DataTable();
         con2.Open();
         SqlDataAdapter da2 = new SqlDataAdapter(CMD2);

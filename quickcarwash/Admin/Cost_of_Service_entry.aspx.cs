@@ -38,6 +38,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                 if (dr.Read())
                 {
                     company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    Label10.Text = dr["company_name"].ToString();
                 }
                 con.Close();
             }
@@ -51,7 +52,9 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
             {
                 Label8.Text = dr10["financial_year"].ToString();
             }
-            DateTime date = DateTime.Now;
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+            DateTime date = now;
             TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             TextBox2.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
             getinvoiceno();
@@ -322,14 +325,13 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
         DateTime date = DateTime.Now;
-        TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
-        TextBox2.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+        TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
+        TextBox12.Text = "";
         TextBox5.Text = "";
         getinvoiceno();
-        getCostofServiceADD_ID();
-        SearchExpense();
-        BindData();
         showpartners();
+        BindData();
+        SearchExpense();
     }
     private void active()
     {
@@ -575,7 +577,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
                     SqlCommand cmd = new SqlCommand("insert into CostOfService_Entry values(@Cost_Id,@date,@CostofService_Name,@Com_Id,@Amount,@year,@status,@value,@partner_name)", CON);
                     cmd.Parameters.AddWithValue("@Cost_Id", Label1.Text);
-                    cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
+                    cmd.Parameters.AddWithValue("@date",Convert.ToDateTime(TextBox8.Text).ToString("MM-dd-yyyy"));
                     cmd.Parameters.AddWithValue("@CostofService_Name", TextBox5.Text);
                     cmd.Parameters.AddWithValue("@Com_Id", company_id);
                     cmd.Parameters.AddWithValue("@Amount", TextBox12.Text);
@@ -589,7 +591,7 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Service Cost Added successfully')", true);
 
                     DateTime date = DateTime.Now;
-                    TextBox8.Text = Convert.ToDateTime(date).ToString("MM-dd-yyyy");
+                    TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
                     TextBox12.Text = "";
                     TextBox5.Text = "";
                     getinvoiceno();
@@ -610,7 +612,30 @@ public partial class Admin_Cost_of_Service_entry : System.Web.UI.Page
 
     protected void Button14_Click(object sender, EventArgs e)
     {
-       
+        foreach (GridViewRow gvrow in GridView1.Rows)
+        {
+            //Finiding checkbox control in gridview for particular row
+            CheckBox chkdelete = (CheckBox)gvrow.FindControl("CheckBox3");
+            //Condition to check checkbox selected or not
+            if (chkdelete.Checked)
+            {
+                //Getting UserId of particular row using datakey value
+                int usrid = Convert.ToInt32(gvrow.Cells[1].Text);
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+
+                con.Open();
+                SqlCommand cmd = new SqlCommand("delete from CostOfService_Entry where Cost_Id='" + usrid + "'  and Com_Id='" + company_id + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+
+
+            }
+        }
+        getinvoiceno();
+        showpartners();
+        BindData();
+        SearchExpense();
     }
     protected void Button8_Click(object sender, EventArgs e)
     {

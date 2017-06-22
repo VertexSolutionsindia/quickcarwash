@@ -129,9 +129,9 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select distinct product_name from product_entry where Com_Id=@Com_Id and " +
-                "product_name like @product_name + '%'";
-                cmd.Parameters.AddWithValue("@product_name", prefixText);
+                cmd.CommandText = "select distinct Customer_name from Billing_Entry where Com_Id=@Com_Id and " +
+                "Customer_name like @Customer_name + '%'";
+                cmd.Parameters.AddWithValue("@Customer_name", prefixText);
                 cmd.Parameters.AddWithValue("@Com_Id", company_id);
                 cmd.Connection = conn;
                 conn.Open();
@@ -140,7 +140,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(sdr["product_name"].ToString());
+                        customers.Add(sdr["Customer_name"].ToString());
                     }
                 }
                 conn.Close();
@@ -160,9 +160,9 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select distinct Vendor_Name from Vendor where Com_Id=@Com_Id and " +
-                "Vendor_Name like @Vendor_Name + '%'";
-                cmd.Parameters.AddWithValue("@Vendor_Name", prefixText);
+                cmd.CommandText = "select distinct Customer_VehNo from BIlling_Entry where Com_Id=@Com_Id and " +
+                "Customer_VehNo like @Customer_VehNo + '%'";
+                cmd.Parameters.AddWithValue("@Customer_VehNo", prefixText);
                 cmd.Parameters.AddWithValue("@Com_Id", company_id);
                 cmd.Connection = conn;
                 conn.Open();
@@ -171,7 +171,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(sdr["Vendor_Name"].ToString());
+                        customers.Add(sdr["Customer_VehNo"].ToString());
                     }
                 }
                 conn.Close();
@@ -232,9 +232,25 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         GridView1.DataBind();
 
     }
-    protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
+    protected void TextBox6_TextChanged(object sender, EventArgs e)
     {
-
+        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='"+TextBox6.Text+"' and  Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
+        DataTable dt1 = new DataTable();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
+    }
+    protected void TextBox5_TextChanged(object sender, EventArgs e)
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_name='" + TextBox5.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con);
+        DataTable dt1 = new DataTable();
+        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+        da1.Fill(dt1);
+        GridView1.DataSource = dt1;
+        GridView1.DataBind();
     }
     private void getinvoiceno()
     {
@@ -325,7 +341,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
       
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -333,10 +349,7 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         GridView1.DataSource = dt1;
         GridView1.DataBind();
     }
-    protected void TextBox6_TextChanged(object sender, EventArgs e)
-    {
-       
-    }
+   
     protected void Button1_Click(object sender, EventArgs e)
     {
         Response.ClearContent();
@@ -372,6 +385,35 @@ public partial class Admin_Sales_Report : System.Web.UI.Page
         da1.Fill(dt1);
         GridView1.DataSource = dt1;
         GridView1.DataBind();
+    }
+    protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                company_id = Convert.ToInt32(dr10["com_id"].ToString());
+                ImageButton img = (ImageButton)sender;
+                GridViewRow row = (GridViewRow)img.NamingContainer;
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+
+                con.Open();
+                SqlCommand cmd = new SqlCommand("delete from Billing_Entry where Invoice_id='" + row.Cells[0].Text + "' and year='" + Label1.Text + "' and Com_Id='" + company_id + "' ", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Invoice Deleted successfully')", true);
+
+                BindData();
+                getinvoiceno();
+            }
+            con10.Close();
+        }
     }
     protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
     {

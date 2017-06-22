@@ -197,7 +197,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -379,8 +379,8 @@
                                     <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox" 
                                         ontextchanged="TextBox8_TextChanged"></asp:TextBox>
                                     <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox8" DaysModeTitleFormat="" Format="MM-dd-yyyy" 
-                                        TodaysDateFormat="MM-dd-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox8" DaysModeTitleFormat="" Format="dd-MM-yyyy" 
+                                        ></asp:CalendarExtender>
                                     </ContentTemplate>
                                      <Triggers>
              <asp:AsyncPostBackTrigger ControlID="Button7" EventName="Click"  />
@@ -820,7 +820,7 @@
           
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -853,7 +853,7 @@
                 </Triggers>
     </asp:UpdatePanel>
 
-    <br /><asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+    <br /><asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" OnClientClick="return confirm('Do you want to delete this entry')" CssClass="buttonbox"  onclick="Button14_Click"/>
       <asp:Button ID="Button3" runat="server" Text="Button" 
         onclick="Button3_Click"></asp:Button>
 

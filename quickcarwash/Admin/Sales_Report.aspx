@@ -282,7 +282,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -350,11 +350,23 @@
 
                     <div class="row see"  >
                     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <br />
 
+                                    <br />
                     <div class="container">
-
+                    
                            <div class="container">
-                        
+                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="TextBox1" Format="dd-MM-yyyy"></asp:CalendarExtender>
+                                      <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                      <asp:CalendarExtender ID="CalendarExtender4" runat="server" TargetControlID="TextBox2" Format="dd-MM-yyyy"></asp:CalendarExtender>
+                                        <asp:DropDownList ID="DropDownList5" runat="server" Height="30px" >
+                                   <asp:ListItem>PDF</asp:ListItem>
+                                   <asp:ListItem>WORD</asp:ListItem>
+                                   <asp:ListItem>EXCEL</asp:ListItem>
+                                </asp:DropDownList>
+                                <asp:Button ID="Button8" runat="server" class="btn-primary"  Width="70px" Height="30px" 
+                                    Text="Report" onclick="Button8_Click" />
  
   <div class="panel panel-default">
  
@@ -400,17 +412,7 @@
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>            
                                       <br />
-                                      <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                      <asp:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="TextBox1" Format="dd-MM-yyyy"></asp:CalendarExtender>
-                                      <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                                      <asp:CalendarExtender ID="CalendarExtender4" runat="server" TargetControlID="TextBox2" Format="dd-MM-yyyy"></asp:CalendarExtender>
-                                        <asp:DropDownList ID="DropDownList5" runat="server" Height="30px" >
-                                   <asp:ListItem>PDF</asp:ListItem>
-                                   <asp:ListItem>WORD</asp:ListItem>
-                                   <asp:ListItem>EXCEL</asp:ListItem>
-                                </asp:DropDownList>
-                                <asp:Button ID="Button8" runat="server" class="btn-primary"  Width="70px" Height="30px" 
-                                    Text="Report" onclick="Button8_Click" />
+                                     
                                       
                                       
                                       
@@ -439,7 +441,11 @@
 <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" 
            class="form-control input-x2 dropbox" 
            onselectedindexchanged="DropDownList1_SelectedIndexChanged"></asp:DropDownList>
-                               
+                               <asp:TextBox ID="TextBox6" runat="server"  class="form-control input-x2 dropbox" AutoPostBack="true" ontextchanged="TextBox6_TextChanged" ></asp:TextBox>
+                                         <asp:AutoCompleteExtender ID="AutoCompleteExtender2" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers1" FirstRowSelected = "false" CompletionInterval="0" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox6"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
                                        <br/>
@@ -452,7 +458,11 @@
 <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true"  
            class="form-control input-x2 dropbox" 
            onselectedindexchanged="DropDownList2_SelectedIndexChanged"></asp:DropDownList>
-                               
+                               <asp:TextBox ID="TextBox5" runat="server"  class="form-control input-x2 dropbox" AutoPostBack="true" ontextchanged="TextBox5_TextChanged" ></asp:TextBox>
+                                         <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="SearchCustomers" FirstRowSelected = "false" CompletionInterval="0" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox5"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div>
                                       
@@ -476,7 +486,6 @@
 
 </div>
 </div>
-
 
 
 
@@ -516,12 +525,13 @@
              <asp:BoundField HeaderText="Customer Name" DataField="Customer_name" >
              <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-             <asp:BoundField HeaderText="Mobile No" DataField="Mobile_No" >
-            <HeaderStyle CssClass="Grd1" />
-           </asp:BoundField>
             <asp:BoundField HeaderText="Address" DataField="Address">
               <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
+             <asp:BoundField HeaderText="Mobile No" DataField="Mobile_No" >
+            <HeaderStyle CssClass="Grd1" />
+           </asp:BoundField>
+           
               <asp:BoundField HeaderText="Service Name" DataField="Service_Name">
              <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
@@ -529,6 +539,15 @@
 
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
+
+           <asp:TemplateField>
+          <ItemTemplate>
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
+          
+          </ItemTemplate>
+          
+          </asp:TemplateField>
+
   
        </Columns>
        <FooterStyle BackColor="White" ForeColor="#000066" />

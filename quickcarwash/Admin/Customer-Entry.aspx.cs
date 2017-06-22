@@ -36,6 +36,7 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
                 if (dr.Read())
                 {
                     company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    Label8.Text = dr["company_name"].ToString();
                 }
                 con.Close();
             }
@@ -241,11 +242,11 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        if (TextBox3.Text != "")
+        if (TextBox3.Text == "")
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter customer name')", true);
         }
-        else if (TextBox9.Text != "")
+        else if (TextBox9.Text == "")
             {
              ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please enter Mobile No')", true);
         }
@@ -342,22 +343,22 @@ public partial class Admin_Customer_Entry : System.Web.UI.Page
     }
     protected void ImageButton9_Click(object sender, ImageClickEventArgs e)
     {
-       
-        ImageButton img = (ImageButton)sender;
-        GridViewRow row = (GridViewRow)img.NamingContainer;
-        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+      
+           ImageButton img = (ImageButton)sender;
+           GridViewRow row = (GridViewRow)img.NamingContainer;
+           SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
 
-        con.Open();
-        SqlCommand cmd = new SqlCommand("delete from Customer_Entry where Custom_Code='" + row.Cells[1].Text + "' and Com_Id='" + company_id + "' ", con);
-        cmd.ExecuteNonQuery();
-        con.Close();
+           con.Open();
+           SqlCommand cmd = new SqlCommand("delete from Customer_Entry where Custom_Code='" + row.Cells[1].Text + "' and Com_Id='" + company_id + "' ", con);
+           cmd.ExecuteNonQuery();
+           con.Close();
 
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Customer Details deleted successfully')", true);
+           ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Customer Details deleted successfully')", true);
 
-        BindData();
-        show_category();
-        getinvoiceno();
-
+           BindData();
+           show_category();
+           getinvoiceno();
+      
 
     }
     private void getinvoiceno()

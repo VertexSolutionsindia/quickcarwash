@@ -11,7 +11,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-        <title>Quick Car Wash</title>
+        <title><%=User.Identity.Name%></title>
      
       
     <script>
@@ -229,7 +229,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Quick Car Wash</a>
+                    <a class="navbar-brand" href="#"><asp:Label ID="Label10" runat="server" Text="Label"></asp:Label></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                 <%--    <ul class="nav navbar-nav">
@@ -336,7 +336,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -487,8 +487,12 @@
                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
    <ContentTemplate>
    
-                                  <asp:DropDownList ID="DropDownList3" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" onselectedindexchanged="DropDownList3_SelectedIndexChanged"></asp:DropDownList>
-                              
+                                 <asp:TextBox ID="TextBox6" runat="server" AutoPostBack="true" class="form-control input-x2 dropbox" > </asp:TextBox>
+                              <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox6" WatermarkText="Enter Employee Name"></asp:TextBoxWatermarkExtender>
+                          <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="Searchemployee" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox6"  CompletionListCssClass="completionList"
+     CompletionListItemCssClass="listItem"
+     CompletionListHighlightedItemCssClass="itemHighlighted">
+      </asp:AutoCompleteExtender>
                                     </ContentTemplate>
                                      <Triggers>
                         </Triggers>
@@ -515,7 +519,7 @@
                                     </ContentTemplate>
                                      <Triggers>
              
-                    <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
+                    <asp:AsyncPostBackTrigger ControlID="TextBox6" EventName="TextChanged"  />
                    
                 </Triggers>
                            </asp:UpdatePanel>
@@ -533,7 +537,7 @@
                                     </ContentTemplate>
                                      <Triggers>
              
-                    <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
+                    <asp:AsyncPostBackTrigger ControlID="TextBox6" EventName="TextChanged"  />
                      <asp:AsyncPostBackTrigger ControlID="DropDownList1" EventName="SelectedIndexChanged"  />
                 </Triggers>
                            </asp:UpdatePanel>
@@ -551,7 +555,7 @@
                                     </ContentTemplate>
                                      <Triggers>
              
-                    <asp:AsyncPostBackTrigger ControlID="DropDownList3" EventName="SelectedIndexChanged"  />
+                      <asp:AsyncPostBackTrigger ControlID="TextBox6" EventName="TextChanged"  />
                    
                 </Triggers>
                            </asp:UpdatePanel>
@@ -631,7 +635,7 @@
           </asp:TemplateField>
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -667,7 +671,7 @@
 
     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
         <asp:Button ID="Button3" runat="server" Text="Button" style="display:none"  />
   
   

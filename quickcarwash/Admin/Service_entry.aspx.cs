@@ -34,6 +34,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
                 if (dr.Read())
                 {
                     company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    Label3.Text = dr["company_name"].ToString();
                 }
                 con.Close();
             }
@@ -132,7 +133,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
 
                 SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd1 = new SqlCommand("select * from Product_entry where Service_name='" + TextBox4.Text + "' ", con1);
+                SqlCommand cmd1 = new SqlCommand("select * from Product_entry where code='"+Label1.Text+"' or Service_name='" + TextBox4.Text + "' ", con1);
                 con1.Open();
                 SqlDataReader dr1;
                 dr1 = cmd1.ExecuteReader();
@@ -358,7 +359,7 @@ public partial class Admin_Service_entry : System.Web.UI.Page
 
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         con1.Open();
-        string query = "Select COUNT(code) from Product_entry where Com_Id='" + company_id + "'";
+        string query = "Select max(code) from Product_entry where Com_Id='" + company_id + "'";
         SqlCommand cmd1 = new SqlCommand(query, con1);
         SqlDataReader dr = cmd1.ExecuteReader();
         if (dr.Read())

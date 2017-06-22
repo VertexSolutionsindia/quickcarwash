@@ -145,7 +145,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Com_Id", company_id);
         cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
         cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+        cmd.Parameters.AddWithValue("@status", "Customer Bill-" + TextBox14.Text+""+DropDownList1.SelectedItem.Text);
         cmd.Parameters.AddWithValue("@value", value);
         cmd.Parameters.AddWithValue("@year", Label8.Text);
        
@@ -163,7 +163,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         TextBox4.Text = "";
         TextBox5.Text = "";
         TextBox6.Text = "";
-     
+        TextBox15.Text = "";
         DateTime date = DateTime.Now;
         TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
                 }
@@ -256,6 +256,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         TextBox5.Text = "";
         TextBox6.Text = "";
         TextBox1.Text = "";
+        TextBox15.Text = "";
         getinvoiceno();
         show_category();
         show_VehicleNO();
@@ -660,14 +661,29 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
             if (dr10.Read())
             {
                 company_id = Convert.ToInt32(dr10["com_id"].ToString());
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='" + DropDownList2.SelectedItem.Text + "' and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+
+                if (DropDownList2.SelectedItem.Text == "All")
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_VehNo='" + DropDownList2.SelectedItem.Text + "' and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
                   }
             con10.Close();
         }
@@ -684,14 +700,29 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
             if (dr10.Read())
             {
                 company_id = Convert.ToInt32(dr10["com_id"].ToString());
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_name='" + DropDownList5.SelectedItem.Text + "' and  year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+
+                if (DropDownList5.SelectedItem.Text == "All")
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where  year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Customer_name='" + DropDownList5.SelectedItem.Text + "' and  year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
                   }
             con10.Close();
         }
@@ -708,14 +739,29 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
             if (dr10.Read())
             {
                 company_id = Convert.ToInt32(dr10["com_id"].ToString());
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-        SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Mobile_No='" + DropDownList6.SelectedItem.Text + "' and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
-        DataTable dt1 = new DataTable();
-        con1.Open();
-        SqlDataAdapter da1 = new SqlDataAdapter(CMD);
-        da1.Fill(dt1);
-        GridView1.DataSource = dt1;
-        GridView1.DataBind();
+                if (DropDownList6.SelectedItem.Text == "All")
+                {
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where  year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
+                else
+                {
+
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand CMD = new SqlCommand("select * from Billing_Entry where Mobile_No='" + DropDownList6.SelectedItem.Text + "' and year='" + Label8.Text + "' and Com_Id='" + company_id + "' ORDER BY Invoice_id asc", con1);
+                    DataTable dt1 = new DataTable();
+                    con1.Open();
+                    SqlDataAdapter da1 = new SqlDataAdapter(CMD);
+                    da1.Fill(dt1);
+                    GridView1.DataSource = dt1;
+                    GridView1.DataBind();
+                }
             }
             con10.Close();
         }
@@ -726,6 +772,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         DropDownList2.Items.Clear();
         DropDownList5.Items.Clear();
         DropDownList6.Items.Clear();
+        TextBox15.Text = "";
         TextBox1.Text = "";
         show_VehicleNO();
         SearchMobileno();
@@ -943,7 +990,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
                      
                         cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
                         cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-                        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+                        cmd.Parameters.AddWithValue("@status", "Customer Bill- " + TextBox3.Text+" - "+DropDownList1.SelectedItem.Text+ " service");
                         cmd.Parameters.AddWithValue("@value", value);
                      
                         CON.Open();
@@ -960,6 +1007,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
                         TextBox4.Text = "";
                         TextBox5.Text = "";
                         TextBox6.Text = "";
+                        TextBox15.Text = "";
                         DateTime date = DateTime.Now;
                         TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
                     }
@@ -977,7 +1025,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@Com_Id", company_id);
                         cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
                         cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-                        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+                        cmd.Parameters.AddWithValue("@status", "Customer Bill- " + TextBox3.Text+" - "+DropDownList1.SelectedItem.Text+ " service");
                         cmd.Parameters.AddWithValue("@value", value);
                         cmd.Parameters.AddWithValue("@year", Label8.Text);
                         CON.Open();
@@ -994,6 +1042,7 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
                         TextBox4.Text = "";
                         TextBox5.Text = "";
                         TextBox6.Text = "";
+                        TextBox15.Text = "";
                         DateTime date = DateTime.Now;
                         TextBox8.Text = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
                     }
@@ -1161,5 +1210,35 @@ public partial class Admin_Billing_entry : System.Web.UI.Page
         show_category();
         show_VehicleNO();
       
+    }
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchCustomers(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct Customer_VehNo  from Billing_Entry where Com_Id=@Com_Id and " +
+                "Customer_VehNo like @Customer_VehNo + '%'";
+                cmd.Parameters.AddWithValue("@Customer_VehNo", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["Customer_VehNo"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
+        }
     }
 }

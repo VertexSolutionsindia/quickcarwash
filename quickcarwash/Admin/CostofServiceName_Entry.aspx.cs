@@ -34,6 +34,7 @@ public partial class Admin_CostofServiceName_Entry : System.Web.UI.Page
                 if (dr.Read())
                 {
                     company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    Label3.Text = dr["company_name"].ToString();
                 }
                 con.Close();
             }
@@ -75,6 +76,7 @@ public partial class Admin_CostofServiceName_Entry : System.Web.UI.Page
         this.ModalPopupExtender3.Hide();
         BindData();
         getinvoiceno();
+        SearchServicename();
     }
     protected void Button17_Click(object sender, EventArgs e)
     {
@@ -120,7 +122,7 @@ public partial class Admin_CostofServiceName_Entry : System.Web.UI.Page
         }
         BindData();
         getinvoiceno();
-
+        SearchServicename();
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -235,7 +237,7 @@ public partial class Admin_CostofServiceName_Entry : System.Web.UI.Page
         BindData();
 
         getinvoiceno();
-
+        SearchServicename();
 
     }
     

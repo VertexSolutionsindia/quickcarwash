@@ -11,7 +11,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-        <title>Quick Car Wash</title>
+        <title><%=User.Identity.Name%></title>
      
       
     <script>
@@ -229,7 +229,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Quick Car Wash</a>
+                    <a class="navbar-brand" href="#"><asp:Label ID="Label10" runat="server" Text="Label"></asp:Label></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                 <%--    <ul class="nav navbar-nav">
@@ -336,7 +336,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop outstanding</a></li>
                            </ul>
                           
                                
@@ -462,8 +462,8 @@
                                      <asp:UpdatePanel ID="UpdatePanel17" runat="server">
    <ContentTemplate>
                                     <asp:TextBox ID="TextBox8" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
-                                    <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox8"  Format="dd-MM-yyyy" 
+                                    <asp:CalendarExtender ID="CalendarExtender1" runat="server" Format="dd-MM-yyyy" 
+                                        TargetControlID="TextBox8"  
                                        ></asp:CalendarExtender>
                                     </ContentTemplate>
                                      <Triggers>
@@ -601,7 +601,7 @@
                                  
                                 
                                 </div>
-                                 <div class="form-group"><label class="col-lg-3 control-label">Paid By</label>
+                                 <div class="form-group"><label class="col-lg-3 control-label">Partner Name</label>
                               
                                     <div class="col-lg-9">
                                      <asp:UpdatePanel ID="UpdatePanel5" runat="server" >
@@ -677,7 +677,7 @@
           </asp:TemplateField>
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -713,7 +713,7 @@
 
     <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
         <asp:Button ID="Button3" runat="server" Text="Button" style="display:none"  />
   
   
@@ -732,7 +732,7 @@
        
         <tr>
         <td>
-            <asp:Label ID="Label2" runat="server" class="col-lg-3 control-label" Width="200px" Text="Expense Code"></asp:Label></td>
+            <asp:Label ID="Label2" runat="server" class="col-lg-3 control-label" Width="200px" Text="Service Code"></asp:Label></td>
         <td>
             <asp:Label ID="Label4" runat="server" Text=""></asp:Label></td>
         </tr>
@@ -746,7 +746,7 @@
         </tr>
         <tr>
         <td>
-            <asp:Label ID="Label30" runat="server" class="col-lg-3 control-label" Width="200px" Text="Expense Name"></asp:Label></td>
+            <asp:Label ID="Label30" runat="server" class="col-lg-3 control-label" Width="200px" Text="Service Name"></asp:Label></td>
         <td>
             <asp:DropDownList ID="DropDownList4" class="form-control input-x2 dropbox" runat="server"></asp:DropDownList></td>
         </tr>

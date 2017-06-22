@@ -34,6 +34,7 @@ public partial class Admin_ExpenseName_Entry : System.Web.UI.Page
                 if (dr.Read())
                 {
                     company_id = Convert.ToInt32(dr["com_id"].ToString());
+                    Label3.Text = dr["company_name"].ToString();
                 }
                 con.Close();
             }
@@ -110,7 +111,7 @@ public partial class Admin_ExpenseName_Entry : System.Web.UI.Page
                 SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
 
                 con.Open();
-                SqlCommand cmd = new SqlCommand("delete from Product_entry where code='" + usrid+"'  and Com_Id='" + company_id + "'", con);
+                SqlCommand cmd = new SqlCommand("delete from ExpenceName_Add where ExpName_Code='" + usrid + "'  and Com_Id='" + company_id + "'", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 

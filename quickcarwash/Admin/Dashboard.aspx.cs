@@ -27,7 +27,17 @@ public partial class RabbitDashboard : System.Web.UI.Page
         }
         if (!IsPostBack)
         {
-
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from currentfinancialyear where no='1'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                Label3.Text = dr10["financial_year"].ToString();
+                TextBox1.Text = Convert.ToDateTime(dr10["start_date"]).ToString("dd-MM-yyyy");
+            }
+            con10.Close();
             if (User.Identity.IsAuthenticated)
             {
                 SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
@@ -43,142 +53,50 @@ public partial class RabbitDashboard : System.Web.UI.Page
             }
 
 
-            DataTable dt = new DataTable();
-           using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
+
+
+
+            float value1 = 0;
+            float value2 = 0;
+            SqlConnection con22 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd22 = new SqlCommand("select date,sum(Amount) as Credit  from Billing_Entry where  Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con22);
+            SqlDataReader dr22;
+            con22.Open();
+            dr22 = cmd22.ExecuteReader();
+            if (dr22.Read())
             {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("select  CONVERT(VARCHAR(10),Month(date),101),sum(Amount) from Billing_Entry group by Month(date)", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                con.Close();
+                value1 = float.Parse(dr22["Credit"].ToString());
             }
-            string[] x = new string[dt.Rows.Count];
-            int[] y = new int[dt.Rows.Count];
-            for (int i = 0; i < dt.Rows.Count; i++)
+            con22.Close();
+
+            SqlConnection con23 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd23 = new SqlCommand("select date,sum(Amount) as Credit  from WorkshopBilling_Entry where  Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con23);
+            SqlDataReader dr23;
+            con23.Open();
+            dr23 = cmd23.ExecuteReader();
+            if (dr23.Read())
             {
-                if (dt.Rows[i][0].ToString() == "1")
-                {
-                    x[i] = "Jan";
-                }
-                if (dt.Rows[i][0].ToString() == "2")
-                {
-                    x[i] = "Feb";
-                }
-                if (dt.Rows[i][0].ToString() == "3")
-                {
-                    x[i] = "Mar";
-                }
-                if (dt.Rows[i][0].ToString() == "3")
-                {
-                    x[i] = "Apr";
-                }
-                if (dt.Rows[i][0].ToString() == "5")
-                {
-                    x[i] = "May";
-                }
-                if (dt.Rows[i][0].ToString() == "6")
-                {
-                    x[i] = "Jun";
-                }
-                 if (dt.Rows[i][0].ToString() == "7")
-                {
-                    x[i] = "Jul";
-                }
-                 if (dt.Rows[i][0].ToString() == "8")
-                 {
-                     x[i] = "Aug";
-                 }
-                 if (dt.Rows[i][0].ToString() == "9")
-                 {
-                     x[i] = "Sep";
-                 }
-                 if (dt.Rows[i][0].ToString() == "10")
-                 {
-                     x[i] = "Oct";
-                 }
-                 if (dt.Rows[i][0].ToString() == "11")
-                 {
-                     x[i] = "Oct";
-                 }
-                 if (dt.Rows[i][0].ToString() == "12")
-                 {
-                     x[i] = "Dec";
-                 }
-                y[i] = Convert.ToInt32(dt.Rows[i][1]);
+                value2 = float.Parse(dr23["Credit"].ToString());
             }
-            Chart2.Series[0].Points.DataBindXY(x, y);
+            con23.Close();
+
+            Label4.Text = (value1 + value2).ToString();
+
+            SqlConnection con24 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd24 = new SqlCommand("select date,sum(Amount) as Credit  from Expence_Entry where  Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con24);
+            SqlDataReader dr24;
+            con24.Open();
+            dr24 = cmd24.ExecuteReader();
+            if (dr24.Read())
+            {
+                Label5.Text = dr24["Credit"].ToString();
+            }
+            con24.Close();
+
+
         }
 
 
-      
-        if(!IsPostBack)
-{
-DataTable dt = new DataTable();
-using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]))
-{
-con.Open();
-SqlCommand cmd = new SqlCommand("select CONVERT(VARCHAR(10),Month(date),101),sum(Invoice_id) from Billing_Entry group by Month(date)", con);
-SqlDataAdapter da = new SqlDataAdapter(cmd);
-da.Fill(dt);
-con.Close();
-}
-string []x=new string[dt.Rows.Count];
-int [] y = new int[dt.Rows.Count];
-for(int i=0;i<dt.Rows.Count;i++)
-{
-    if (dt.Rows[i][0].ToString() == "1")
-    {
-        x[i] = "Jan";
-    }
-    if (dt.Rows[i][0].ToString() == "2")
-    {
-        x[i] = "Feb";
-    }
-    if (dt.Rows[i][0].ToString() == "3")
-    {
-        x[i] = "Mar";
-    }
-    if (dt.Rows[i][0].ToString() == "3")
-    {
-        x[i] = "Apr";
-    }
-    if (dt.Rows[i][0].ToString() == "5")
-    {
-        x[i] = "May";
-    }
-    if (dt.Rows[i][0].ToString() == "6")
-    {
-        x[i] = "Jun";
-    }
-    if (dt.Rows[i][0].ToString() == "7")
-    {
-        x[i] = "Jul";
-    }
-    if (dt.Rows[i][0].ToString() == "8")
-    {
-        x[i] = "Aug";
-    }
-    if (dt.Rows[i][0].ToString() == "9")
-    {
-        x[i] = "Sep";
-    }
-    if (dt.Rows[i][0].ToString() == "10")
-    {
-        x[i] = "Oct";
-    }
-    if (dt.Rows[i][0].ToString() == "11")
-    {
-        x[i] = "Oct";
-    }
-    if (dt.Rows[i][0].ToString() == "12")
-    {
-        x[i] = "Dec";
-    }
-y[i] = Convert.ToInt32(dt.Rows[i][1]);
-}
-Chart1.Series[0].Points.DataBindXY(x,y);
-}
-       
     }
     protected void LoginLink_OnClick(object sender, EventArgs e)
     {
@@ -205,5 +123,44 @@ Chart1.Series[0].Points.DataBindXY(x,y);
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
 
+    }
+    protected void TextBox2_TextChanged(object sender, EventArgs e)
+    {
+        float value1 = 0;
+        float value2 = 0;
+        SqlConnection con22 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd22 = new SqlCommand("select date,sum(Amount) as Credit  from Billing_Entry where date between '" + Convert.ToDateTime(TextBox1.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox2.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con22);
+        SqlDataReader dr22;
+        con22.Open();
+        dr22 = cmd22.ExecuteReader();
+        if (dr22.Read())
+        {
+            value1   =float.Parse( dr22["Credit"].ToString());
+        }
+        con22.Close();
+
+        SqlConnection con23 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd23 = new SqlCommand("select date,sum(Amount) as Credit  from WorkshopBilling_Entry where date between '" + Convert.ToDateTime(TextBox1.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox2.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con23);
+        SqlDataReader dr23;
+        con23.Open();
+        dr23 = cmd23.ExecuteReader();
+        if (dr23.Read())
+        {
+            value2 = float.Parse(dr23["Credit"].ToString());
+        }
+        con23.Close();
+
+        Label4.Text = (value1 + value2).ToString();
+
+        SqlConnection con24 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+        SqlCommand cmd24 = new SqlCommand("select date,sum(Amount) as Credit  from Expence_Entry where date between '" + Convert.ToDateTime(TextBox1.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox2.Text).ToString("MM-dd-yyyy") + "' and  Com_Id='" + company_id + "' and year='" + Label3.Text + "' group by date ", con24);
+        SqlDataReader dr24;
+        con24.Open();
+        dr24 = cmd24.ExecuteReader();
+        if (dr24.Read())
+        {
+            Label5.Text = dr24["Credit"].ToString();
+        }
+        con24.Close();
     }
 }

@@ -238,7 +238,7 @@ public partial class Admin_WorkShop_Report : System.Web.UI.Page
       
         SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         //SqlCommand CMD = new SqlCommand("SELECT CONVERT(datetime,date,101) as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM sales_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(paid_amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_entry as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' group by date,status,paid_amount,value union SELECT DISTINCT date as Date, status as Particulars,sum(amount) as Debit,isnull(sum(value),0) as Credit FROM purchase_amount as a where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "'   group by date,status,amount,value", con1);
-        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where date between '" + TextBox3.Text + "' and '" + TextBox4.Text + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
+        SqlCommand CMD = new SqlCommand("select * from WorkshopBilling_Entry where date between '" + Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy") + "' and '" + Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy") + "' and Com_Id='" + company_id + "' and year='" + Label1.Text + "' ORDER BY Invoice_id asc", con1);
         DataTable dt1 = new DataTable();
         con1.Open();
         SqlDataAdapter da1 = new SqlDataAdapter(CMD);
@@ -381,70 +381,115 @@ public partial class Admin_WorkShop_Report : System.Web.UI.Page
     
     protected void Button5_Click(object sender, EventArgs e)
     {
-        if (User.Identity.IsAuthenticated)
+        if (TextBox9.Text == "")
         {
-            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
-            SqlDataReader dr10;
-            con10.Open();
-            dr10 = cmd10.ExecuteReader();
-            if (dr10.Read())
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Please select date')", true);
+        }
+        else
+        {
+            if (User.Identity.IsAuthenticated)
             {
-                company_id = Convert.ToInt32(dr10["com_id"].ToString());
-                foreach (GridViewRow row in GridView1.Rows)
+                SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+                SqlDataReader dr10;
+                con10.Open();
+                dr10 = cmd10.ExecuteReader();
+                if (dr10.Read())
                 {
+                    company_id = Convert.ToInt32(dr10["com_id"].ToString());
+                    foreach (GridViewRow row in GridView1.Rows)
+                    {
 
-                    SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO workshop_report_details VALUES(@invoice_no,@Invoice_id,@date,@Workshop_name,@Mobile_No,@Address,@Customer_VehNo,@Service_Name,@Amount,@Com_Id,@year)", con);
+                        SqlCommand cmd = new SqlCommand("INSERT INTO workshop_report_details VALUES(@invoice_no,@Invoice_id,@date,@Workshop_name,@Mobile_No,@Address,@Customer_VehNo,@Service_Name,@Amount,@Com_Id,@year)", con);
 
-                    cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
-                    cmd.Parameters.AddWithValue("@Invoice_id", row.Cells[0].Text);
-                    cmd.Parameters.AddWithValue("@date", row.Cells[1].Text);
-                    cmd.Parameters.AddWithValue("@Workshop_name", row.Cells[3].Text);
-                    cmd.Parameters.AddWithValue("@Mobile_No", row.Cells[4].Text);
-                    cmd.Parameters.AddWithValue("@Address", row.Cells[5].Text);
+                        cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
+                        cmd.Parameters.AddWithValue("@Invoice_id", row.Cells[0].Text);
+                        cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(row.Cells[1].Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@Workshop_name", row.Cells[3].Text);
+                        cmd.Parameters.AddWithValue("@Mobile_No", row.Cells[4].Text);
+                        cmd.Parameters.AddWithValue("@Address", row.Cells[5].Text);
 
-                    cmd.Parameters.AddWithValue("@Customer_VehNo", row.Cells[2].Text);
-                    cmd.Parameters.AddWithValue("@Service_Name", row.Cells[6].Text);
-                    cmd.Parameters.AddWithValue("@Amount", row.Cells[7].Text);
-                    cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                    cmd.Parameters.AddWithValue("@year", Label1.Text);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
+                        cmd.Parameters.AddWithValue("@Customer_VehNo", row.Cells[2].Text);
+                        cmd.Parameters.AddWithValue("@Service_Name", row.Cells[6].Text);
+                        cmd.Parameters.AddWithValue("@Amount", row.Cells[7].Text);
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                        cmd.Parameters.AddWithValue("@year", Label1.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
 
 
 
-                SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd1 = new SqlCommand("select * from workshop_report where invoice_no='" + Label1.Text + "' and year='" + Label1.Text + "' AND Com_Id='" + company_id + "'  ", con1);
-                con1.Open();
-                SqlDataReader dr1;
-                dr1 = cmd1.ExecuteReader();
-                if (dr1.HasRows)
-                {
-                    int value = 0;
-                    SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand cmd = new SqlCommand("update workshop_report set date=@date,from_date=@from_date,to_date=@to_date,workshop_name=@workshop_name,work_add,@work_add,work_mobile=@work_mobile,vehicleno=@vehicleno,total_Amount=@total_Amount,grand_total=@grand_total where invoice_no=@invoice_no and Com_Id=@Com_id and year=@year", CON);
-                    cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(TextBox9.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@From_date", Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@to_date", Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@workshop_name", HttpUtility.HtmlDecode(TextBox2.Text));
-                    cmd.Parameters.AddWithValue("@work_add", HttpUtility.HtmlDecode(TextBox5.Text));
-                    cmd.Parameters.AddWithValue("@work_mobile", HttpUtility.HtmlDecode(TextBox6.Text));
-                    cmd.Parameters.AddWithValue("@vehicleno", HttpUtility.HtmlDecode(TextBox1.Text));
-                    cmd.Parameters.AddWithValue("@total_Amount", HttpUtility.HtmlDecode(TextBox7.Text));
-                    cmd.Parameters.AddWithValue("@grand_total", TextBox8.Text);
-                    cmd.Parameters.AddWithValue("@Com_Id", company_id);
-                    cmd.Parameters.AddWithValue("@year", Label1.Text);
+                    SqlConnection con1 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                    SqlCommand cmd1 = new SqlCommand("select * from workshop_report where invoice_no='" + Label1.Text + "' and year='" + Label1.Text + "' AND Com_Id='" + company_id + "'  ", con1);
+                    con1.Open();
+                    SqlDataReader dr1;
+                    dr1 = cmd1.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
+                        int value = 0;
+                        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlCommand cmd = new SqlCommand("update workshop_report set date=@date,from_date=@from_date,to_date=@to_date,workshop_name=@workshop_name,work_add,@work_add,work_mobile=@work_mobile,vehicleno=@vehicleno,total_Amount=@total_Amount,grand_total=@grand_total where invoice_no=@invoice_no and Com_Id=@Com_id and year=@year", CON);
+                        cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
+                        cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(TextBox9.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@From_date", Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@to_date", Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@workshop_name", HttpUtility.HtmlDecode(TextBox2.Text));
+                        cmd.Parameters.AddWithValue("@work_add", HttpUtility.HtmlDecode(TextBox5.Text));
+                        cmd.Parameters.AddWithValue("@work_mobile", HttpUtility.HtmlDecode(TextBox6.Text));
+                        cmd.Parameters.AddWithValue("@vehicleno", HttpUtility.HtmlDecode(TextBox1.Text));
+                        cmd.Parameters.AddWithValue("@total_Amount", HttpUtility.HtmlDecode(TextBox7.Text));
+                        cmd.Parameters.AddWithValue("@grand_total", TextBox8.Text);
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                        cmd.Parameters.AddWithValue("@year", Label1.Text);
 
-                    CON.Open();
-                    cmd.ExecuteNonQuery();
-                    CON.Close();
+                        CON.Open();
+                        cmd.ExecuteNonQuery();
+                        CON.Close();
 
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop entry updated successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop entry updated successfully')", true);
+                        getinvoiceno();
+                        BindData();
+                        TextBox1.Text = "";
+                        TextBox16.Text = "";
+                        TextBox2.Text = "";
+                        TextBox3.Text = "";
+                        TextBox4.Text = "";
+                        TextBox5.Text = "";
+                        TextBox6.Text = "";
+                        TextBox7.Text = "";
+                        TextBox9.Text = "";
+                        TextBox8.Text = "";
+                        GridView1.DataSource = null;
+                        GridView1.DataBind();
+                    }
+                    else
+                    {
+                        int value = 0;
+                        SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                        SqlCommand cmd = new SqlCommand("insert into workshop_report values(@invoice_no,@date,@from_date,@to_date,@workshop_name,@work_add,@work_mobile,@vehicleno,@total_Amount,@grand_total,@Com_Id,@year)", CON);
+                        cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
+                        cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(TextBox9.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@From_date", Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@to_date", Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy"));
+                        cmd.Parameters.AddWithValue("@workshop_name", HttpUtility.HtmlDecode(TextBox2.Text));
+                        cmd.Parameters.AddWithValue("@work_add", HttpUtility.HtmlDecode(TextBox5.Text));
+                        cmd.Parameters.AddWithValue("@work_mobile", HttpUtility.HtmlDecode(TextBox6.Text));
+                        cmd.Parameters.AddWithValue("@vehicleno", HttpUtility.HtmlDecode(TextBox1.Text));
+                        cmd.Parameters.AddWithValue("@total_Amount", HttpUtility.HtmlDecode(TextBox7.Text));
+                        cmd.Parameters.AddWithValue("@grand_total", TextBox8.Text);
+                        cmd.Parameters.AddWithValue("@Com_Id", company_id);
+                        cmd.Parameters.AddWithValue("@year", Label1.Text);
+                        CON.Open();
+                        cmd.ExecuteNonQuery();
+                        CON.Close();
+                    }
+
+
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop entry created successfully')", true);
                     getinvoiceno();
                     BindData();
                     TextBox1.Text = "";
@@ -459,47 +504,9 @@ public partial class Admin_WorkShop_Report : System.Web.UI.Page
                     TextBox8.Text = "";
                     GridView1.DataSource = null;
                     GridView1.DataBind();
-                }
-                else
-                {
-                    int value = 0;
-                    SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                    SqlCommand cmd = new SqlCommand("insert into workshop_report values(@invoice_no,@date,@from_date,@to_date,@workshop_name,@work_add,@work_mobile,@vehicleno,@total_Amount,@grand_total,@Com_Id,@year)", CON);
-                    cmd.Parameters.AddWithValue("@invoice_no", Label3.Text);
-                    cmd.Parameters.AddWithValue("@date", Convert.ToDateTime(TextBox9.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@From_date", Convert.ToDateTime(TextBox3.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@to_date", Convert.ToDateTime(TextBox4.Text).ToString("MM-dd-yyyy"));
-                    cmd.Parameters.AddWithValue("@workshop_name", HttpUtility.HtmlDecode(TextBox2.Text));
-                    cmd.Parameters.AddWithValue("@work_add", HttpUtility.HtmlDecode(TextBox5.Text));
-                    cmd.Parameters.AddWithValue("@work_mobile", HttpUtility.HtmlDecode(TextBox6.Text));
-                    cmd.Parameters.AddWithValue("@vehicleno", HttpUtility.HtmlDecode(TextBox1.Text));
-                    cmd.Parameters.AddWithValue("@total_Amount", HttpUtility.HtmlDecode(TextBox7.Text));
-                    cmd.Parameters.AddWithValue("@grand_total", TextBox8.Text);
-                    cmd.Parameters.AddWithValue("@Com_Id",company_id);
-                    cmd.Parameters.AddWithValue("@year", Label1.Text);
-                    CON.Open();
-                    cmd.ExecuteNonQuery();
-                    CON.Close();
-                }
+                } con10.Close();
 
-
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert Message", "alert('Workshop entry created successfully')", true);
-                getinvoiceno();
-                BindData();
-                TextBox1.Text = "";
-                TextBox16.Text = "";
-                TextBox2.Text = "";
-                TextBox3.Text = "";
-                TextBox4.Text = "";
-                TextBox5.Text = "";
-                TextBox6.Text = "";
-                TextBox7.Text = "";
-                TextBox9.Text = "";
-                TextBox8.Text = "";
-                GridView1.DataSource = null;
-                GridView1.DataBind();
-            } con10.Close();
-          
+            }
         }
     }
     protected void Button6_Click(object sender, EventArgs e)

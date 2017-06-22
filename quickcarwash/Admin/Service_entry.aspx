@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Quick Car Wash</title>
+        <title><%=User.Identity.Name%></title>
       
 
               <script type="text/javascript">
@@ -91,7 +91,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Quick Car Wash</a>
+                    <a class="navbar-brand" href="#"><asp:Label ID="Label2" runat="server" Text="Label"></asp:Label></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                <%--     <ul class="nav navbar-nav">
@@ -165,7 +165,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Quick Car Wash</a>
+                    <a class="navbar-brand" href="#"><asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></a>
                 </div>
                 <div id="Div1" class="navbar-collapse collapse">
              <%--       <ul class="nav navbar-nav">
@@ -209,9 +209,7 @@
                             <a href="#" class="dropdown-toggle button-wave" data-toggle="dropdown" role="button" ><img src="../default-profile-pic.png" alt="" width="25px"><%=User.Identity.Name%></b></span>  <span class="fa fa-caret-down" aria-hidden="true" style=""></a>
                             <ul class="dropdown-menu">
                                 <li><a href="Profile_main.aspx"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="Seetings.aspx"><i class="fa fa-calendar"></i>Settings</a></li>                         
-                                <li><a href="Advanced_Settings.aspx"><i class="fa fa-envelope"></i>Advanced Settings</a></li>
-                                <li><a href="#"><i class="fa fa-barcode"></i>Custom Field</a></li>
+                           
                                 <li class="divider"></li>
                                
                                  <li ><a href="#" ><asp:LinkButton id="LinkButton1" Text="Log Out"  class="fa fa-sign-out" aria-hidden="true"
@@ -274,7 +272,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -386,7 +384,7 @@
                                     <asp:Panel ID="Panel1" runat="server" DefaultButton="Button1">
                                      <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>
-                                    <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox4" runat="server" class="form-control"></asp:TextBox>
                                     </ContentTemplate>
                                      <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
@@ -405,7 +403,14 @@
                                     <asp:Panel ID="Panel3" runat="server" DefaultButton="Button1">
                                      <asp:UpdatePanel ID="UpdatePanel4" runat="server">
    <ContentTemplate>
-                                    <asp:TextBox ID="TextBox2" runat="server" class="form-control input-x2 dropbox"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox2" runat="server" class="form-control"></asp:TextBox>
+                                    <asp:RegularExpressionValidator id="RegularExpressionValidator1"
+                   ControlToValidate="TextBox2"
+                   ValidationExpression="\d+"
+                   Display="Static"
+                   EnableClientScript="true"
+                   ErrorMessage="Please enter valid amount in Amount field"
+                   runat="server"/>
                                     </ContentTemplate>
                                      <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click"  />
@@ -548,7 +553,7 @@
           </asp:TemplateField>
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -587,7 +592,7 @@
     <asp:UpdatePanel ID="UpdatePanel10" runat="server">
    <ContentTemplate>
 
-    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+    <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
        
         <asp:Button ID="Button15" runat="server" Text="Button" style="display:none" />
   

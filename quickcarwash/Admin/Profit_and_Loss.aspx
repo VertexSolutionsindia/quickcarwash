@@ -282,6 +282,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
+                                      <li><a href="Sales_payment_outstanding.aspx">Workshop outstanding</a></li>
                            </ul>
                           
                                
@@ -380,7 +381,7 @@
                                     <asp:TextBox ID="TextBox3" runat="server" class="form-control input-x2 dropbox"  AutoPostBack="true"
                                         ontextchanged="TextBox3_TextChanged"></asp:TextBox>
                                       <asp:CalendarExtender ID="CalendarExtender1" runat="server" 
-                                        TargetControlID="TextBox3" Format="MM-dd-yyyy" TodaysDateFormat="dd-MM-yyyy"></asp:CalendarExtender>
+                                        TargetControlID="TextBox3" Format="dd-MM-yyyy" ></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div></div>
 
@@ -397,7 +398,7 @@
   <asp:TextBox ID="TextBox4" runat="server" class="form-control input-x2 dropbox" AutoPostBack="true" 
            ontextchanged="TextBox4_TextChanged"></asp:TextBox>
                                     <asp:CalendarExtender ID="CalendarExtender2" 
-           runat="server" TargetControlID="TextBox4" Format="MM-dd-yyyy"></asp:CalendarExtender>
+           runat="server" TargetControlID="TextBox4" Format="dd-MM-yyyy"></asp:CalendarExtender>
                                       </ContentTemplate>
                                       </asp:UpdatePanel></div></div></div>
 

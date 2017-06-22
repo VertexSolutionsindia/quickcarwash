@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title> The Quick Car Wash</title>
+    <title>Quickcarwash</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     	<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.min.csss">
   		<link type="text/css" rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
@@ -113,10 +113,8 @@
 }
 .b .panel {
     border-color: #e3e8ed;
-    background-color:transparent;
-  margin-top:160px;
-
-   
+    background-color:white;
+    margin-top: -20px;
 }
  .panel {
     
@@ -221,7 +219,7 @@
 .panel-heading 
 {
      border-color: #e3e8ed;
- 
+   
     
     border-bottom: 1px solid transparent;
     border-top-right-radius: 3px;
@@ -233,39 +231,32 @@
    
      display:inline-block;
      float:left;
-       background-image:url('img1.jpg');
-       background-position:center;
-       background-repeat:no-repeat;
+  
     }
     .a
     {
         float:left;
         width:30%;
-        background-color:transparent;
-       
-  
+    height:100px;
+        background-color:white;
+        font-family:'Open Sans', sans-serif;
         
     }
     .b
     {
         float:left;
          width:40%;
-         height:100px;
+         height:400px;
         
-        margin-left:400px;
-          margin-top:200px;
+        
+          margin-top:100px;
          
-    }
-    .b table
-    {
-         margin-top:-100px;
-        
     }
     
     .c
     {
         float:left;
-          width:30%;
+           width:30%;
        
         background-color:white;
     }
@@ -285,14 +276,11 @@
         .a
         {
             width:100%;
-         height:300px;
-      
-        
+         
         }
         .b
         {
             width:100%;
-           
          
         }
         .c
@@ -303,29 +291,33 @@
     } 
     </style>
 </head>
-<body style="color:#FFE4B5">
+<body>
     <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
- 
+    <div style="float:left;">
+    <img src="logo.png" width="200" height="60" alt="Quickcarwah">
+ </div>
     <div class="top">
-    <div class="a">
-   
     
-    </div>
-    <br /><br /><br /><br /><br />
-     <h3 style="color: #800000; font-family: Century; font-size: large; font-weight: 600; margin-top:60px;" align="center">THE QUICK CAR WASH</h3>
+    <div class="a"></div>
+    <div class="b" >
+ <div class="panel-heading"  >
+   <img src="logo.png" width="80" height="60" border="0" alt="Quickcarwash">
+  
+   </div>
+     <br />
      
 
-
-    <div class="b" style="margin-top:80px;">
- 
+     <div>
      
-    
-   
-      <table >
+     
+     </div>
+
+     <div class="panel">
+      <table>
       <tr>
-      <td><span style="font-weight:bold;color:#000000">UserName : </span><span class="star">*</span></td>
+      <td><span style="font-weight:bold">Email</span><span class="star">*</span></td>
        </tr>
       <tr>
       <td> <asp:TextBox ID="TextBox1" runat="server" CssClass="textbox" 
@@ -334,7 +326,7 @@
       </tr>
      
       <tr>
-      <td><span style="font-weight:bold;color:#000000">Password : </span><span class="star">*</span></td>
+      <td><span style="font-weight:bold">Password</span><span class="star">*</span></td>
       </tr>
       <tr>
       <td>   
@@ -358,9 +350,9 @@
       
       
       </table>
-      
+      </div>
        <p style="text-align:right;margin-right:50px; text-decoration:none;"><a style="text-decoration:none;  color: #656565;" href="">  
-           <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click1"><span style="color:White"></span></asp:LinkButton></a></p>
+           <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click1">Forgot password?</asp:LinkButton></a></p>
     
         <asp:Panel ID="Panel1" runat="server"  BorderColor="#999999" BackColor="White" BorderWidth="1px" CssClass="panelx" style="display:none">
 
@@ -416,12 +408,10 @@
     <div class="c"></div>
 
     </div>
-
-
  
      <div style="clear:both; text-align:center;    color: #656565;">
     
-   <%-- <p><small>©2014 Dreamgarment, All Rights Reserved.</small></p>--%>
+    <p><small>©2014 Vertex Solutions, All Rights Reserved.</small></p>
     </div>
     </form>
 </body>

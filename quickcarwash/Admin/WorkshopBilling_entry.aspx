@@ -198,7 +198,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop outstanding</a></li>
                            </ul>
                           
                                
@@ -804,7 +804,7 @@
           
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this entry')" />
           
           </ItemTemplate>
           
@@ -837,8 +837,8 @@
                 </Triggers>
     </asp:UpdatePanel>
 
-    <br /><asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
-      <asp:Button ID="Button3" runat="server" Text="Button" 
+    <br /><asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
+      <asp:Button ID="Button3" runat="server" Text="Export to excel" 
         onclick="Button3_Click"></asp:Button>
 
      <asp:UpdatePanel ID="UpdatePanel9" runat="server">

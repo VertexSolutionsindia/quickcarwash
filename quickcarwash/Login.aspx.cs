@@ -43,7 +43,7 @@ public partial class Loginrabbit : System.Web.UI.Page
                         1,                                   // version
                         this.TextBox1.Text.Trim(),   // get username  from the form
                         DateTime.Now,                        // issue time is now
-                        DateTime.Now.AddMinutes(1000),         // expires in 10 hours
+                        DateTime.Now.AddMinutes(10),         // expires in 10 minutes
                         false,      // cookie is not persistent
                         "Superuser"                              // role assignment is stored
                     // in userData
@@ -76,7 +76,7 @@ public partial class Loginrabbit : System.Web.UI.Page
 
         }
 
-
+        con1.Close();
 
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
         SqlCommand cmd = new SqlCommand("select * from user_details", con);
@@ -235,6 +235,7 @@ public partial class Loginrabbit : System.Web.UI.Page
                  Label2.Text = "The username and password you entered don't match.";
              }
         }
+        con.Close();
        
     }
     protected void LinkButton1_Click(object sender, EventArgs e)

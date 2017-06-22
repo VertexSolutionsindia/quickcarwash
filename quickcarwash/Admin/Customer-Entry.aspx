@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Quick Car Wash</title>
+        <title><%=User.Identity.Name%></title>
       
 
               <script type="text/javascript">
@@ -29,6 +29,7 @@
                  
                  </style>
 
+                
 
                   <script type="text/javascript" language="javascript">
                       document.getElementById("TextBox5")
@@ -101,7 +102,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Quick Car Wash</a>
+                    <a class="navbar-brand" href="#"><asp:Label ID="Label8" runat="server" Text="Label"></asp:Label></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <%--  <ul class="nav navbar-nav">
@@ -208,7 +209,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                       <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                       <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -493,8 +494,8 @@
 
  <div class="row">
  
- <div class="col-sm-4">
- <div class="col-sm-12">
+ <div class="col-sm-6">
+
                           <div class="form-group"><label class="col-lg-4 control-label">Vehicle No : </label>
                               
                                     <div class="col-lg-8">
@@ -510,15 +511,14 @@
                   <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click"  />
                 </Triggers>
                            </asp:UpdatePanel>
-                                    
-                                    </div>
+                                  
                                 
                                 
                                 </div></div>
  </div>
 
- <div class="col-sm-4">
- <div class="col-lg-12">
+ <div class="col-sm-6">
+
                               <div class="form-group"><label class="col-lg-4 control-label">Mobile No : </label>
                               
                                     <div class="col-lg-8">
@@ -534,7 +534,7 @@
                 </Triggers>
                            </asp:UpdatePanel>
                                     
-                                    </div>
+                                
                                 
                                 
                                 </div></div>
@@ -542,12 +542,13 @@
  
  </div>
 
+ <br />
+ <br />
+ <div class="col-sm-6">
 
- <div class="col-sm-4">
- <div class="col-sm-12">
-          <div class="form-group"><label class="col-lg-5 control-label">Customer Name : </label>
+          <div class="form-group"><label class="col-lg-4 control-label">Customer Name : </label>
                               
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-8">
                                      <asp:UpdatePanel ID="UpdatePanel14" runat="server">
    <ContentTemplate>
                                   <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control" 
@@ -560,7 +561,7 @@
                 </Triggers>
                            </asp:UpdatePanel>
                                     
-                                    </div>
+                                 
             
                                 
                                 </div></div>
@@ -568,14 +569,14 @@
  </div>
  
  
- </div>
- <br />
- <div class="row">
+ 
+
+
  <div class="col-sm-6">
  
-  <div class="form-group"><label class="col-lg-3 control-label">Vehicle Brand : </label>
+  <div class="form-group"><label class="col-lg-4 control-label">Vehicle Brand : </label>
                               
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-8">
                                      <asp:UpdatePanel ID="UpdatePanel17" runat="server">
    <ContentTemplate>
                                    <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control" 
@@ -594,11 +595,12 @@
                                 </div>
  
  </div>
-
+ <br />
+ <br />
  <div class="col-sm-6">
-  <div class="form-group"><label class="col-lg-3 control-label">Vehicle Make : </label>
+  <div class="form-group"><label class="col-lg-4 control-label">Vehicle Make : </label>
                               
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-8">
                                      <asp:UpdatePanel ID="UpdatePanel18" runat="server">
    <ContentTemplate>
                                     <asp:DropDownList ID="DropDownList6" runat="server" CssClass="form-control" 
@@ -612,22 +614,21 @@
                            </asp:UpdatePanel>
                                     
                                     </div>
-            
+                                    </div>
+             </div>
+             </div>
                              <asp:UpdatePanel ID="UpdatePanel19" runat="server">
    <ContentTemplate>           
  <asp:Button ID="Button7" runat="server" class="btn-primary" Width="70px" Height="30px"  Text="Clear" onclick="Button7_Click" 
                           ></asp:Button>&nbsp;                       
                           </ContentTemplate>
                            </asp:UpdatePanel>   
-                                </div>
+                              
                
        
                           
  
- </div>
  
- </div>
-
 
  </div>
 
@@ -715,7 +716,7 @@
            <asp:BoundField HeaderText="E-Mail ID" DataField="Emailid" >
            <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
-           <asp:BoundField HeaderText="Cutomer Vehicle No" DataField="Customer_VehNo" >
+           <asp:BoundField HeaderText="Customer Vehicle No" DataField="Customer_VehNo" >
             <HeaderStyle CssClass="Grd1" />
            </asp:BoundField>
             <asp:BoundField HeaderText="Vehicle Brand" DataField="Vehicle_Brand" >
@@ -734,7 +735,7 @@
           </asp:TemplateField>
            <asp:TemplateField>
           <ItemTemplate>
-              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" />
+              <asp:ImageButton ID="ImageButton9" runat="server" ImageUrl="~/delete3.png" Height="20px" Width="20px"  onclick="ImageButton9_Click" OnClientClick="return confirm('Do you want to delete this?')" />
           
           </ItemTemplate>
           
@@ -769,7 +770,7 @@
 
      
       <br />
-              <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return validate1()" onclick="Button14_Click"/>
+              <asp:Button ID="Button14" runat="server" Text="Delete Seleted Rows" CssClass="buttonbox" OnClientClick="return confirm('Do you want to delete this entry')" onclick="Button14_Click"/>
               <asp:Button ID="Button5" runat="server" Text="Export To Excel"  onclick="Button5_Click"></asp:Button>
      <asp:UpdatePanel ID="UpdatePanel9" runat="server">
    <ContentTemplate>

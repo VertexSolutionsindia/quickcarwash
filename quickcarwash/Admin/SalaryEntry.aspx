@@ -284,7 +284,7 @@
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
                                        <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
                                          <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
-                                           <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                           <li><a href="Sales_payment_outstanding.aspx">Workshop Outstanding</a></li>
                            </ul>
                           
                                
@@ -673,13 +673,18 @@
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle CssClass="Grd1" Width="10%" />
            </asp:BoundField>
+           <asp:BoundField HeaderText=" Salary Date" DataField="date" 
+               ItemStyle-Width="10%" DataFormatString="{0:dd/MM/yyyy}" >
+           <HeaderStyle CssClass="Grd1" />
+           <ItemStyle Width="10%" CssClass="Grd1" />
+           </asp:BoundField>
          <asp:BoundField HeaderText="From Date" DataField="from_date" 
-               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+               ItemStyle-Width="10%" DataFormatString="{0:dd/MM/yyyy}" >
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle Width="10%" CssClass="Grd1" />
            </asp:BoundField>
                    <asp:BoundField HeaderText="To Date" DataField="To_date" 
-               ItemStyle-Width="10%" DataFormatString="{0:MM/dd/yyyy}" >
+               ItemStyle-Width="10%" DataFormatString="{0:dd/MM/yyyy}" >
            <HeaderStyle CssClass="Grd1" />
            <ItemStyle Width="10%" CssClass="Grd1" />
            </asp:BoundField>
@@ -719,7 +724,7 @@
 
            <asp:TemplateField HeaderStyle-CssClass="Grd1" ItemStyle-CssClass="Grd1">
            <ItemTemplate>
-           <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/delete3.png" Width="20px" Height="20px" onclick="ImageButton1_Click"></asp:ImageButton>
+           <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/delete3.png" Width="20px" Height="20px" onclick="ImageButton1_Click" OnClientClick="return confirm('Do you want to delete this entry')"></asp:ImageButton>
            </ItemTemplate>
            
            </asp:TemplateField>

@@ -973,7 +973,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Com_Id", company_id);
         cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
         cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+        cmd.Parameters.AddWithValue("@status", "Workshop Bill-" + TextBox3.Text);
         cmd.Parameters.AddWithValue("@value", value);
         cmd.Parameters.AddWithValue("@year", Label8.Text);
        
@@ -1092,7 +1092,7 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@Com_Id", company_id);
                         cmd.Parameters.AddWithValue("@Customer_VehNo", HttpUtility.HtmlDecode(TextBox15.Text));
                         cmd.Parameters.AddWithValue("@Service_Name", HttpUtility.HtmlDecode(DropDownList1.SelectedItem.Text));
-                        cmd.Parameters.AddWithValue("@status", "Sales-" + TextBox14.Text);
+                        cmd.Parameters.AddWithValue("@status", "Workshop Bill-" + TextBox3.Text);
                         cmd.Parameters.AddWithValue("@value", value);
                         cmd.Parameters.AddWithValue("@year", Label8.Text);
                         CON.Open();
@@ -1408,6 +1408,36 @@ public partial class Admin_WorkshopBilling_entry : System.Web.UI.Page
                 con2.Close();
             }
             con1000.Close();
+        }
+    }
+    [System.Web.Script.Services.ScriptMethod()]
+    [System.Web.Services.WebMethod]
+
+    public static List<string> SearchCustomers(string prefixText, int count)
+    {
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = ConfigurationManager.AppSettings["connection"];
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct Customer_VehNo  from WorkshopBilling_Entry where Com_Id=@Com_Id and " +
+                "Customer_VehNo like @Customer_VehNo + '%'";
+                cmd.Parameters.AddWithValue("@Customer_VehNo", prefixText);
+                cmd.Parameters.AddWithValue("@Com_id", company_id);
+                cmd.Connection = conn;
+                conn.Open();
+                List<string> customers = new List<string>();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(sdr["Customer_VehNo"].ToString());
+                    }
+                }
+                conn.Close();
+                return customers;
+            }
         }
     }
 }

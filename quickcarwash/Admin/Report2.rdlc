@@ -565,7 +565,7 @@
         <Top>6.81037cm</Top>
         <Left>0.37193cm</Left>
         <Height>1.8cm</Height>
-        <Width>18.42784cm</Width>
+        <Width>18.42783cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -674,7 +674,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Mobile Number :</Value>
+                <Value>Mobile :</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -685,10 +685,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>1.28799cm</Top>
-        <Left>0.36195cm</Left>
+        <Top>2.34076cm</Top>
+        <Left>0.45486cm</Left>
         <Height>0.57354cm</Height>
-        <Width>2.97625cm</Width>
+        <Width>2.28833cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -718,9 +718,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
-        <Top>1.86153cm</Top>
-        <Left>0.36195cm</Left>
-        <Height>0.57354cm</Height>
+        <Top>1.33711cm</Top>
+        <Left>0.38431cm</Left>
+        <Height>0.54328cm</Height>
         <Width>2.97625cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
@@ -748,9 +748,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Address</rd:DefaultName>
-        <Top>1.89681cm</Top>
+        <Top>1.33711cm</Top>
         <Left>3.3382cm</Left>
-        <Height>1.04979cm</Height>
+        <Height>0.85196cm</Height>
         <Width>9.33979cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
@@ -778,8 +778,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Mobile_number</rd:DefaultName>
-        <Top>1.27741cm</Top>
-        <Left>3.38878cm</Left>
+        <Top>2.36546cm</Top>
+        <Left>3.3382cm</Left>
         <Height>0.57354cm</Height>
         <Width>9.28921cm</Width>
         <ZIndex>10</ZIndex>

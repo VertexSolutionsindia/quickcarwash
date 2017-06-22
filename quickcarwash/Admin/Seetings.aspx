@@ -8,7 +8,7 @@
          <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Dream Garments</title>
+        <title>Quick car wash</title>
       
 
               <script type="text/javascript">
@@ -333,7 +333,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dream Garments</a>
+                    <a class="navbar-brand" href="#">Quick car wash</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

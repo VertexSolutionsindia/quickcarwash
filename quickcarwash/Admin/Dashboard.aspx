@@ -269,7 +269,7 @@
                                     <li><a href="Expense_entry.aspx">Expense Entry</a></li>
                                   <li><a href="Account_ledger.aspx">Account ledger</a></li>
                                      <li><a href="Profit_and_Loss.aspx">Profit and Loss</a></li>
-                                     <li><a href="Sales_payment_outstanding.aspx">Wrokshop outstanding</a></li>
+                                     <li><a href="Sales_payment_outstanding.aspx">Workshop outstanding</a></li>
                            </ul>
                           
                                
@@ -287,7 +287,7 @@
                                <ul class="nav nav-second-level collapse">
                                     <li><a href="SalaryEntry.aspx">Salary Entry</a></li>
                            </ul>
-                            
+                          
                                
                             </li>
                             
@@ -328,6 +328,79 @@
                             
                         </div>
                     </div><!-- end .page title-->
+                    Financial year :<asp:Label ID="Label3" runat="server" Text="From date"></asp:Label>
+                    <br />
+                    <br />
+                    <asp:Label ID="Label1" runat="server" Text="From date"></asp:Label>
+                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+<asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="TextBox1" Format="dd-MM-yyyy"></asp:CalendarExtender>
+                     <asp:Label ID="Label2" runat="server" Text="To date"></asp:Label>
+                    <asp:TextBox ID="TextBox2" runat="server" ontextchanged="TextBox2_TextChanged" AutoPostBack="true"></asp:TextBox>
+                    <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="TextBox2" Format="dd-MM-yyyy"></asp:CalendarExtender>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 margin-b-30">
+                            <div class="tile red">
+                                <div class="tile-title clearfix">
+                                    Total Income
+                                    <span class="pull-right"><i class="fa fa-caret-up"></i> 33%</span>
+                                </div><!--.tile-title-->
+                                <div class="tile-body clearfix">
+                                    <i class="fa fa-cart-plus"></i>
+                                    <h4 class="pull-right"><asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></h4>
+                                </div><!--.tile-body-->
+                                <div class="tile-footer">
+                                    <a href="#">View Details...</a>
+                                </div><!--.tile footer-->
+                            </div><!-- .tile-->
+                        </div><!--end .col-->
+                        <div class="col-sm-6 col-md-3 margin-b-30">
+                            <div class="tile green">
+                                <div class="tile-title clearfix">
+                                    Total expenses
+                                    <span class="pull-right"><i class="fa fa-caret-up"></i> 33%</span>
+                                </div><!--.tile-title-->
+                                <div class="tile-body clearfix">
+                                    <i class="fa fa-credit-card"></i>
+                                    <h4 class="pull-right"><asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h4>
+                                </div><!--.tile-body-->
+                                <div class="tile-footer">
+                                    <a href="Expense_entry.aspx">View Details...</a>
+                                </div><!--.tile footer-->
+                            </div><!-- .tile-->
+                        </div><!--end .col-->
+                        <div class="col-sm-6 col-md-3 margin-b-30">
+                            <div class="tile blue">
+                                <div class="tile-title clearfix">
+                                    Total salry
+                                    <span class="pull-right"><i class="fa fa-caret-up"></i> 50%</span>
+                                </div><!--.tile-title-->
+                                <div class="tile-body clearfix">
+                                    <i class="fa fa-users"></i>
+                                    <h4 class="pull-right">2.5K</h4>
+                                </div><!--.tile-body-->
+                                <div class="tile-footer">
+                                    <a href="SalaryEntry.aspx">View Details...</a>
+                                </div><!--.tile footer-->
+                            </div><!-- .tile-->
+                        </div><!--end .col-->
+                        <div class="col-sm-6 col-md-3 margin-b-30">
+                            <div class="tile purple">
+                                <div class="tile-title clearfix">
+                                    Total service cost
+                                    <span class="pull-right"><i class="fa fa-caret-up"></i> 33%</span>
+                                </div><!--.tile-title-->
+                                <div class="tile-body clearfix">
+                                    <i class="fa fa-cart-plus"></i>
+                                    <h4 class="pull-right">2.5K</h4>
+                                </div><!--.tile-body-->
+                                <div class="tile-footer">
+                                    <a href="#">View Details...</a>
+                                </div><!--.tile footer-->
+                            </div><!-- .tile-->
+                        </div><!--end .col-->
+                    </div><!--end .row-->
                      <div class="row see">
    <div style="float:left; width:100%; margin-bottom:30px">
 
@@ -351,17 +424,7 @@
 
 </div>
 <br />
-<div style="width:100%; clear:both; margin-top:20px"">
-     <div style="float:left; width:50%">
-             <h3 style="clear:both" class="col-lg-3 control-label">Month wise sales</h3>
-            <asp:Chart ID="Chart2" width="400px"   runat="server" Palette="Chocolate"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
-     </div>
-     <div style="float:left; width:50%;">
-                 <h3 class="col-lg-3 control-label">Month wise total vehicle</h3>
 
-              <asp:Chart ID="Chart1" width="400px"   runat="server"><Series><asp:Series Name="Series1"></asp:Series></Series><ChartAreas><asp:ChartArea Name="ChartArea1"></asp:ChartArea></ChartAreas></asp:Chart>
-      </div>
-</div>
 
 
 
@@ -410,7 +473,7 @@
                     <div>
                     
                   </div>
-                  </div>
+    </div>
                   
                   
                    
