@@ -487,7 +487,8 @@
                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
    <ContentTemplate>
    
-                                 <asp:TextBox ID="TextBox6" runat="server" AutoPostBack="true" class="form-control input-x2 dropbox" > </asp:TextBox>
+                                 <asp:TextBox ID="TextBox6" runat="server" AutoPostBack="true" 
+                                     class="form-control input-x2 dropbox" ontextchanged="TextBox6_TextChanged" > </asp:TextBox>
                               <asp:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TextBox6" WatermarkText="Enter Employee Name"></asp:TextBoxWatermarkExtender>
                           <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" MinimumPrefixLength="1" ServiceMethod="Searchemployee" FirstRowSelected = "false" CompletionInterval="100" EnableCaching="false" CompletionSetCount="10" TargetControlID="TextBox6"  CompletionListCssClass="completionList"
      CompletionListItemCssClass="listItem"

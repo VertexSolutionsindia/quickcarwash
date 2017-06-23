@@ -551,7 +551,7 @@
 </div>
 </div>
 <div class="col-md-8" style="border:1px solid green;  padding:20px; margin-left:-6px;">
- <div class="form-group"><label class="col-lg-3 control-label">Total Loss of Service</label>
+ <div class="form-group"><label class="col-lg-3 control-label">Total Cost of Service</label>
  <asp:TextBox ID="TextBox2" runat="server" Font-Bold="True" Font-Size="Medium" Width="175px" style="float:right" 
           BorderColor="#66CCFF" BorderStyle="Solid" ForeColor="Black"></asp:TextBox>
 </div>
@@ -581,7 +581,7 @@
            BorderColor="#336666" BorderWidth="3px" BorderStyle="Double">
        <Columns>
        
-         <asp:BoundField HeaderText="Expense" DataField="Expense_Name" 
+         <asp:BoundField HeaderText="Expense" DataField="status" 
                ItemStyle-Width="30%" >
            <ItemStyle Width="30%" />
            </asp:BoundField>

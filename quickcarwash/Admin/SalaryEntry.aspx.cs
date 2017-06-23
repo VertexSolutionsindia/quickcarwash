@@ -454,9 +454,9 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
             if (dr.Read())
             {
                 company_id = Convert.ToInt32(dr["com_id"].ToString());
-
+                string status="Week salary amount";
                 SqlConnection CON = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
-                SqlCommand cmd = new SqlCommand("insert into Salary_Entry values(@Sal_id,@date,@from_date,@To_date,@Staff_Name,@Total_Salary,@TotalPaid_Amount,@Balance_Amount,@ActualPaid_Amount,@Pending_Amount,@Com_id,@year)", CON);
+                SqlCommand cmd = new SqlCommand("insert into Salary_Entry values(@Sal_id,@date,@from_date,@To_date,@Staff_Name,@Total_Salary,@TotalPaid_Amount,@Balance_Amount,@ActualPaid_Amount,@Pending_Amount,@Com_id,@year,@status)", CON);
                 cmd.Parameters.AddWithValue("@Sal_id", Label2.Text);
                 cmd.Parameters.AddWithValue("@date",Convert.ToDateTime( TextBox8.Text).ToString("MM-dd-yyyy"));
                 cmd.Parameters.AddWithValue("@from_date",Convert.ToDateTime(  TextBox3.Text).ToString("MM-dd-yyyy"));
@@ -469,7 +469,7 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Pending_Amount", TextBox9.Text);
                 cmd.Parameters.AddWithValue("@Com_Id", company_id);
                 cmd.Parameters.AddWithValue("@year", Label1.Text);
-
+                cmd.Parameters.AddWithValue("@status",status);
                 CON.Open();
                 cmd.ExecuteNonQuery();
                 CON.Close();
@@ -510,8 +510,7 @@ public partial class Admin_SalaryEntry : System.Web.UI.Page
                
                 TextBox1.Text = "";
                 TextBox2.Text = "";
-                TextBox3.Text = "";
-                TextBox4.Text = "";
+               
                 TextBox5.Text = "";
                 TextBox6.Text = "";
                 TextBox7.Text = "";

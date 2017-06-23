@@ -431,7 +431,26 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
 
     protected void Button14_Click(object sender, EventArgs e)
     {
+        foreach (GridViewRow gvrow in GridView1.Rows)
+        {
+            //Finiding checkbox control in gridview for particular row
+            CheckBox chkdelete = (CheckBox)gvrow.FindControl("CheckBox3");
+            //Condition to check checkbox selected or not
+            if (chkdelete.Checked)
+            {
+                //Getting UserId of particular row using datakey value
+                int usrid = Convert.ToInt32(gvrow.Cells[1].Text);
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
 
+                con.Open();
+                SqlCommand cmd = new SqlCommand("delete from Attendance_Entry where No='" + usrid + "' and Com_Id='" + company_id + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+            }
+        }
+        BindData();
+        getinvoiceno();
     }
     protected void Button8_Click(object sender, EventArgs e)
     {
@@ -549,5 +568,49 @@ public partial class Admin_Attendance_entry : System.Web.UI.Page
             }
         }
     }
-   
+
+    protected void TextBox6_TextChanged(object sender, EventArgs e)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            SqlConnection con10 = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+            SqlCommand cmd10 = new SqlCommand("select * from user_details where Name='" + User.Identity.Name + "'", con10);
+            SqlDataReader dr10;
+            con10.Open();
+            dr10 = cmd10.ExecuteReader();
+            if (dr10.Read())
+            {
+                company_id = Convert.ToInt32(dr10["com_id"].ToString());
+                SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["connection"]);
+                con.Open();
+                SqlCommand cmd2 = new SqlCommand("Select * from Staff_Entry where Emp_Name='" + TextBox6.Text + "' and Com_Id='" + company_id + "'", con);
+                SqlDataReader dr1;
+                dr1 = cmd2.ExecuteReader();
+                if (dr1.Read())
+                {
+
+                    if (DropDownList1.SelectedItem.Text == "Present")
+                    {
+                        TextBox1.Text = dr1["salary"].ToString();
+
+                    }
+                    if (DropDownList1.SelectedItem.Text == "Absent")
+                    {
+                        TextBox1.Text = "0";
+
+                    }
+                    if (DropDownList1.SelectedItem.Text == "Half day present")
+                    {
+                        float value = float.Parse(dr1["salary"].ToString());
+                        TextBox1.Text = (value / 2).ToString();
+                    }
+
+
+
+                }
+                con.Close();
+            }
+            con10.Close();
+        }
+    }
 }
